@@ -1,0 +1,545 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="11/28/2019 1:32:48 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="MOS-L1-DMSIZO"
+  DTS:CreatorName="VALEANT\Dmitry.Sizov"
+  DTS:DTSID="{503F59C7-2577-45E5-BC69-B709CA0B0760}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="16.0.5397.1"
+  DTS:LocaleID="1049"
+  DTS:ObjectName="Load AlphaRM full"
+  DTS:PackageType="5"
+  DTS:VersionBuild="49"
+  DTS:VersionGUID="{C2610D65-90B2-437B-99FE-F23B74B5636A}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:PackageParameters>
+    <DTS:PackageParameter
+      DTS:CreationName=""
+      DTS:DataType="11"
+      DTS:DTSID="{06F862A1-96EC-4148-8035-3EC6C9D6DEB7}"
+      DTS:ObjectName="LoadAdditionalAssortment">
+      <DTS:Property
+        DTS:DataType="11"
+        DTS:Name="ParameterValue">-1</DTS:Property>
+    </DTS:PackageParameter>
+    <DTS:PackageParameter
+      DTS:CreationName=""
+      DTS:DataType="11"
+      DTS:DTSID="{919961E6-E5D0-4C78-94E3-F201DC86DD9C}"
+      DTS:ObjectName="LoadDI">
+      <DTS:Property
+        DTS:DataType="11"
+        DTS:Name="ParameterValue">-1</DTS:Property>
+    </DTS:PackageParameter>
+    <DTS:PackageParameter
+      DTS:CreationName=""
+      DTS:DataType="11"
+      DTS:DTSID="{E7268CFC-A04E-4197-B058-442816DE9D40}"
+      DTS:ObjectName="LoadOFD">
+      <DTS:Property
+        DTS:DataType="11"
+        DTS:Name="ParameterValue">-1</DTS:Property>
+    </DTS:PackageParameter>
+    <DTS:PackageParameter
+      DTS:CreationName=""
+      DTS:DataType="11"
+      DTS:DTSID="{FF9A0383-F6F5-40B6-8D28-06B4F167AD4F}"
+      DTS:ObjectName="LoadRetail">
+      <DTS:Property
+        DTS:DataType="11"
+        DTS:Name="ParameterValue">-1</DTS:Property>
+    </DTS:PackageParameter>
+    <DTS:PackageParameter
+      DTS:CreationName=""
+      DTS:DataType="11"
+      DTS:DTSID="{73AE353E-F818-49DE-ACBE-70E7C251328A}"
+      DTS:ObjectName="PerformSynchronization">
+      <DTS:Property
+        DTS:DataType="11"
+        DTS:Name="ParameterValue">-1</DTS:Property>
+    </DTS:PackageParameter>
+    <DTS:PackageParameter
+      DTS:CreationName=""
+      DTS:DataType="8"
+      DTS:DTSID="{D28A25B7-7861-4F43-ADC0-EEFE597996E9}"
+      DTS:ObjectName="PeriodKeyFrom">
+      <DTS:Property
+        DTS:DataType="8"
+        DTS:Name="ParameterValue">202301</DTS:Property>
+    </DTS:PackageParameter>
+    <DTS:PackageParameter
+      DTS:CreationName=""
+      DTS:DataType="8"
+      DTS:DTSID="{0A757D36-4A4C-41B9-ABA2-B9662025EDD8}"
+      DTS:ObjectName="PeriodKeyIn">
+      <DTS:Property
+        DTS:DataType="8"
+        DTS:Name="ParameterValue">'202301','202302','202303','2023Q1'</DTS:Property>
+    </DTS:PackageParameter>
+    <DTS:PackageParameter
+      DTS:CreationName=""
+      DTS:DataType="8"
+      DTS:DTSID="{818CEBC4-63BF-48FB-978F-3276CE505333}"
+      DTS:ObjectName="PeriodKeyTo">
+      <DTS:Property
+        DTS:DataType="8"
+        DTS:Name="ParameterValue">202306</DTS:Property>
+    </DTS:PackageParameter>
+    <DTS:PackageParameter
+      DTS:CreationName=""
+      DTS:DataType="11"
+      DTS:DTSID="{9B9B3A68-B2FA-4022-8586-A51F1EDC5957}"
+      DTS:ObjectName="ProcessingDisabled">
+      <DTS:Property
+        DTS:DataType="11"
+        DTS:Name="ParameterValue">0</DTS:Property>
+    </DTS:PackageParameter>
+  </DTS:PackageParameters>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{0724BA85-6134-4613-9DE2-F53C4B3A43AE}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="NeedCheckAdditionalAssortmentData">
+      <DTS:VariableValue
+        DTS:DataType="11">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{2ED61934-BE47-426B-A388-37A3D1476F16}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="NeedCheckOFDData">
+      <DTS:VariableValue
+        DTS:DataType="11">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{AA7398B3-9543-4626-8916-EF7AB5EEE92C}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="NeedCheckRetailData">
+      <DTS:VariableValue
+        DTS:DataType="11">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{CDF90C1A-4A32-412C-BE9F-33E2FE255AE2}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="@[$Package::LoadOFD] &amp;&amp; !@[User::NeedCheckOFDData]"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="ProcessOFDCube">
+      <DTS:VariableValue
+        DTS:DataType="11">-1</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{106D65CC-72F8-4EC2-BB7E-67DD442A1154}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="(@[$Package::LoadAdditionalAssortment] || @[$Package::LoadRetail]) &amp;&amp; !@[User::NeedCheckRetailData] &amp;&amp; !@[User::NeedCheckAdditionalAssortmentData]"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="ProcessRetailCube">
+      <DTS:VariableValue
+        DTS:DataType="11">-1</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{6195365D-8AAA-4DD4-9A19-7D3A6F2511C1}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="VariableName_NeedCheckAdditionalAssortmentData">
+      <DTS:VariableValue
+        DTS:DataType="8">NeedCheckAdditionalAssortmentData</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{1A05E842-63F4-496A-BE1B-9EF79DAEAE24}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="VariableName_NeedCheckOFDData">
+      <DTS:VariableValue
+        DTS:DataType="8">NeedCheckOFDData</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{71198E90-F3CB-48C0-858F-1D37692515C4}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="VariableName_NeedCheckRetailData">
+      <DTS:VariableValue
+        DTS:DataType="8">NeedCheckRetailData</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Add our IDs"
+      DTS:CreationName="Microsoft.ExecutePackageTask"
+      DTS:DelayValidation="True"
+      DTS:Description="Р—Р°РїСѓСЃРє РїР°РєРµС‚Р° Add our IDs.dtsx"
+      DTS:DTSID="{d9bcb795-26a5-4776-bea2-f89a68c60db2}"
+      DTS:ExecutableType="Microsoft.ExecutePackageTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Add our IDs"
+      DTS:TaskContact="Microsoft Corporation; Microsoft SQL Server; Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <ExecutePackageTask>
+          <UseProjectReference>True</UseProjectReference>
+          <PackageName>Add our IDs.dtsx</PackageName>
+        </ExecutePackageTask>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Additional assortment load full"
+      DTS:CreationName="Microsoft.ExecutePackageTask"
+      DTS:Description="Р—Р°РїСѓСЃРє РїР°РєРµС‚Р° Additional assortment load full.dtsx"
+      DTS:DTSID="{63CCD856-9AB9-44B5-A1E0-3FBB95FA44C3}"
+      DTS:ExecutableType="Microsoft.ExecutePackageTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Additional assortment load full"
+      DTS:TaskContact="Microsoft Corporation; Microsoft SQL Server; Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:PropertyExpression
+        DTS:Name="Disable">! @[$Package::LoadAdditionalAssortment]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <ExecutePackageTask>
+          <UseProjectReference>True</UseProjectReference>
+          <PackageName>Additional assortment load full.dtsx</PackageName>
+          <ParameterAssignment>
+            <ParameterName>VariableName_NeedCheckIncomingData</ParameterName>
+            <BindedVariableOrParameterName>User::VariableName_NeedCheckAdditionalAssortmentData</BindedVariableOrParameterName>
+          </ParameterAssignment>
+        </ExecutePackageTask>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Common dimensions load full"
+      DTS:CreationName="Microsoft.ExecutePackageTask"
+      DTS:Description="Р—Р°РїСѓСЃРє РїР°РєРµС‚Р° Common dimensions load full.dtsx"
+      DTS:DTSID="{3D8A8C54-9749-43D7-B399-E9D7400D9916}"
+      DTS:ExecutableType="Microsoft.ExecutePackageTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Common dimensions load full"
+      DTS:TaskContact="Microsoft Corporation; Microsoft SQL Server; Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:PropertyExpression
+        DTS:Name="Disable">!( @[$Package::LoadDI] || @[$Package::LoadRetail] || @[$Package::LoadAdditionalAssortment] )</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <ExecutePackageTask>
+          <UseProjectReference>True</UseProjectReference>
+          <PackageName>Common dimensions load full.dtsx</PackageName>
+        </ExecutePackageTask>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\DI load full"
+      DTS:CreationName="Microsoft.ExecutePackageTask"
+      DTS:Description="Р—Р°РїСѓСЃРє РїР°РєРµС‚Р° DI load full.dtsx"
+      DTS:DTSID="{068A7CA9-DC7D-4890-8F4A-90C353530EDE}"
+      DTS:ExecutableType="Microsoft.ExecutePackageTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="DI load full"
+      DTS:TaskContact="Microsoft Corporation; Microsoft SQL Server; Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:PropertyExpression
+        DTS:Name="Disable">! @[$Package::LoadDI]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <ExecutePackageTask>
+          <UseProjectReference>True</UseProjectReference>
+          <PackageName>DI load full.dtsx</PackageName>
+          <ParameterAssignment>
+            <ParameterName>PeriodKeyIn</ParameterName>
+            <BindedVariableOrParameterName>$Package::PeriodKeyIn</BindedVariableOrParameterName>
+          </ParameterAssignment>
+        </ExecutePackageTask>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\OFD load full"
+      DTS:CreationName="Microsoft.ExecutePackageTask"
+      DTS:Description="Р—Р°РїСѓСЃРє РїР°РєРµС‚Р° OFD load full.dtsx"
+      DTS:DTSID="{33A1E96E-90E5-4707-B358-16DA8F927B28}"
+      DTS:ExecutableType="Microsoft.ExecutePackageTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="OFD load full"
+      DTS:TaskContact="Microsoft Corporation; Microsoft SQL Server; Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:PropertyExpression
+        DTS:Name="Disable">!@[$Package::LoadOFD]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <ExecutePackageTask>
+          <UseProjectReference>True</UseProjectReference>
+          <PackageName>OFD load full.dtsx</PackageName>
+          <ParameterAssignment>
+            <ParameterName>PeriodKeyFrom</ParameterName>
+            <BindedVariableOrParameterName>$Package::PeriodKeyFrom</BindedVariableOrParameterName>
+          </ParameterAssignment>
+          <ParameterAssignment>
+            <ParameterName>PeriodKeyTo</ParameterName>
+            <BindedVariableOrParameterName>$Package::PeriodKeyTo</BindedVariableOrParameterName>
+          </ParameterAssignment>
+        </ExecutePackageTask>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Process all cubes"
+      DTS:CreationName="Microsoft.ExecutePackageTask"
+      DTS:Description="Р—Р°РїСѓСЃРє РїР°РєРµС‚Р° Process all cubes.dtsx"
+      DTS:DTSID="{EB75499D-D380-4AF2-8BBC-197DB0B4F114}"
+      DTS:ExecutableType="Microsoft.ExecutePackageTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Process all cubes"
+      DTS:TaskContact="Microsoft Corporation; Microsoft SQL Server; Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:PropertyExpression
+        DTS:Name="Disable">! (@[$Package::ProcessingDisabled] == False || @[$Package::PerformSynchronization] == True)</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <ExecutePackageTask>
+          <UseProjectReference>True</UseProjectReference>
+          <PackageName>Process all cubes_v2.dtsx</PackageName>
+          <ParameterAssignment>
+            <ParameterName>ProcessDI</ParameterName>
+            <BindedVariableOrParameterName>$Package::LoadDI</BindedVariableOrParameterName>
+          </ParameterAssignment>
+          <ParameterAssignment>
+            <ParameterName>ProcessOFD</ParameterName>
+            <BindedVariableOrParameterName>User::ProcessOFDCube</BindedVariableOrParameterName>
+          </ParameterAssignment>
+          <ParameterAssignment>
+            <ParameterName>ProcessRetail</ParameterName>
+            <BindedVariableOrParameterName>User::ProcessRetailCube</BindedVariableOrParameterName>
+          </ParameterAssignment>
+          <ParameterAssignment>
+            <ParameterName>PerformSynchronization</ParameterName>
+            <BindedVariableOrParameterName>$Package::PerformSynchronization</BindedVariableOrParameterName>
+          </ParameterAssignment>
+        </ExecutePackageTask>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Retail load full"
+      DTS:CreationName="Microsoft.ExecutePackageTask"
+      DTS:Description="Р—Р°РїСѓСЃРє РїР°РєРµС‚Р° Retail load full.dtsx"
+      DTS:DTSID="{FF0ECDE4-5AAE-454C-8664-27755CFC2155}"
+      DTS:ExecutableType="Microsoft.ExecutePackageTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Retail load full"
+      DTS:TaskContact="Microsoft Corporation; Microsoft SQL Server; Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:PropertyExpression
+        DTS:Name="Disable">!@[$Package::LoadRetail]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <ExecutePackageTask>
+          <UseProjectReference>True</UseProjectReference>
+          <PackageName>Retail load full.dtsx</PackageName>
+          <ParameterAssignment>
+            <ParameterName>VariableName_NeedCheckIncomingData</ParameterName>
+            <BindedVariableOrParameterName>User::VariableName_NeedCheckRetailData</BindedVariableOrParameterName>
+          </ParameterAssignment>
+        </ExecutePackageTask>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{540D1512-68F7-4860-B815-C29E9B505268}"
+      DTS:From="Package\OFD load full"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Common dimensions load full" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{8D74FB05-5415-45B6-8A5B-97D70B51242E}"
+      DTS:From="Package\Retail load full"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\DI load full" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
+      DTS:CreationName=""
+      DTS:DTSID="{1553840E-67D5-4E12-A924-262A445B51BF}"
+      DTS:From="Package\DI load full"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2"
+      DTS:To="Package\Add our IDs" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 3]"
+      DTS:CreationName=""
+      DTS:DTSID="{A0A91F7A-8D64-48AE-9D72-1CD4C766E733}"
+      DTS:From="Package\Common dimensions load full"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 3"
+      DTS:To="Package\Retail load full" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 5]"
+      DTS:CreationName=""
+      DTS:DTSID="{321C48C3-73B6-47F0-96B0-9AD1CE695A6D}"
+      DTS:From="Package\Add our IDs"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 5"
+      DTS:To="Package\Process all cubes" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="224,42"
+          Id="Package\Add our IDs"
+          TopLeft="348.285714285714,430.833333333333" />
+        <NodeLayout
+          Size="224,42"
+          Id="Package\Additional assortment load full"
+          TopLeft="698.285714285714,206.666666666667" />
+        <NodeLayout
+          Size="224,42"
+          Id="Package\Common dimensions load full"
+          TopLeft="348.285714285714,130.166666666667" />
+        <NodeLayout
+          Size="224,42"
+          Id="Package\DI load full"
+          TopLeft="348.285714285714,280.5" />
+        <NodeLayout
+          Size="224,42"
+          Id="Package\OFD load full"
+          TopLeft="348.285714285714,55" />
+        <NodeLayout
+          Size="224,42"
+          Id="Package\Process all cubes"
+          TopLeft="348.285714285714,506" />
+        <NodeLayout
+          Size="224,42"
+          Id="Package\Retail load full"
+          TopLeft="348.285714285714,205.333333333333" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="460.285714285714,97">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,33.1666666666667"
+              Start="0,0"
+              End="0,25.6666666666667">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,25.6666666666667" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="460.285714285714,247.333333333333">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,33.1666666666667"
+              Start="0,0"
+              End="0,25.6666666666667">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,25.6666666666667" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="460.285714285714,322.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,108.333333333333"
+              Start="0,0"
+              End="0,100.833333333333">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,100.833333333333" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 3]"
+          TopLeft="460.285714285714,172.166666666667">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,33.1666666666667"
+              Start="0,0"
+              End="0,25.6666666666667">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,25.6666666666667" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 5]"
+          TopLeft="460.285714285714,472.833333333333">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,33.1666666666666"
+              Start="0,0"
+              End="0,25.6666666666666">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,25.6666666666666" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

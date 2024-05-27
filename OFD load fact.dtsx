@@ -1,0 +1,1150 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="11/28/2019 2:53:57 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="MOS-L1-DMSIZO"
+  DTS:CreatorName="VALEANT\Dmitry.Sizov"
+  DTS:DTSID="{7C46773D-A471-47CA-A00F-7E068555D31C}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="16.0.5397.1"
+  DTS:LocaleID="1049"
+  DTS:ObjectName="OFD load fact"
+  DTS:PackageType="5"
+  DTS:VersionBuild="120"
+  DTS:VersionGUID="{22325CE7-BC4C-4C0A-9BC5-EF4D8BDED5BC}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:PackageParameters>
+    <DTS:PackageParameter
+      DTS:CreationName=""
+      DTS:DataType="8"
+      DTS:DTSID="{82625D4D-11B4-449E-93F0-A2553B72FBBF}"
+      DTS:ObjectName="PeriodKeyFrom">
+      <DTS:Property
+        DTS:DataType="8"
+        DTS:Name="ParameterValue">202307</DTS:Property>
+    </DTS:PackageParameter>
+    <DTS:PackageParameter
+      DTS:CreationName=""
+      DTS:DataType="8"
+      DTS:DTSID="{EED01702-8514-4A75-97E4-4609B269732C}"
+      DTS:ObjectName="PeriodKeyTo">
+      <DTS:Property
+        DTS:DataType="8"
+        DTS:Name="ParameterValue">202307</DTS:Property>
+    </DTS:PackageParameter>
+  </DTS:PackageParameters>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{E3FEAE9B-077E-4323-BD81-CAEBC4483715}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="GETDATE()"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="CheckDate">
+      <DTS:VariableValue
+        DTS:DataType="7">5/27/2024 5:27:32 PM</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{BA6336B8-B5EF-4058-9A44-7C7C869D0E09}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="CheckDifferencesResult">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{76076557-47F8-4A35-B6CF-224F7331BD71}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="CheckMissedIntervalsResult">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{60949E9B-33D5-464C-AE48-EE58749ACB3C}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="CheckResult">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{9BECB9B1-950B-47E5-A410-05573A1CDA5B}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="@[$Package::PeriodKeyFrom]"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="period_key_from">
+      <DTS:VariableValue
+        DTS:DataType="8">202307</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{DBA8D5DD-AA9D-4F3E-9FB1-0F33B2704180}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="@[$Package::PeriodKeyTo]"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="period_key_to">
+      <DTS:VariableValue
+        DTS:DataType="8">202307</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{B14FC1AF-24F9-4F48-A83D-28CB66C93E78}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="&quot;SELECT &#xA;&#x9; [PERIOD_KEY]&#xA;&#x9;,[brickOFDId]&#xA;&#x9;,[ClassifierId]&#xA;&#x9;,[Sum_is0]&#xA;&#x9;,[SellingSumRounded]&#xA;&#x9;,[SellingCountRounded]&#xA;&#x9;,CAST([LastUpdated] AS smalldatetime) [LastUpdated] &#xA;FROM &quot; + @[User::Table_Source] + &quot;&#xA;&#xA;WHERE [PERIOD_KEY] BETWEEN &quot; + @[User::period_key_from]+&quot;01&quot; + &quot; AND &quot; +  @[User::period_key_to]+&quot;31&quot;"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="SQL_DataSource">
+      <DTS:VariableValue
+        DTS:DataType="8">SELECT 
+	 [PERIOD_KEY]
+	,[brickOFDId]
+	,[ClassifierId]
+	,[Sum_is0]
+	,[SellingSumRounded]
+	,[SellingCountRounded]
+	,CAST([LastUpdated] AS smalldatetime) [LastUpdated] 
+FROM [Valeant].[AggregateL6_day]
+
+WHERE [PERIOD_KEY] BETWEEN 20230701 AND 20230731</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{FF18F9C9-4CCE-4401-9455-2CC2DE070EEF}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="&quot;&#xA;delete&#xA;[AlphaRM].[stg].[OFD_AggL6day]&#xA;&#xA;&quot;+ &quot;&#xA;&#xA;WHERE [PERIOD_KEY] BETWEEN &quot; + @[User::period_key_from]+&quot;01&quot; + &quot; AND &quot; +  @[User::period_key_to]+&quot;31&#xA;&#xA;&#xA;insert into [AlphaRM].[stg].[OFD_AggL6day]&#xA;(&#xA;[PERIOD_KEY]&#xA;,[brickOFDId]&#xA;,[ClassifierId]&#xA;,[Sum_is0]&#xA;,[SellingSumRounded]&#xA;,[SellingCountRounded]&#xA;,[LastUpdated]&#xA;)&#xA;SELECT &#xA;[PERIOD_KEY]&#xA;,[brickOFDId]&#xA;,[ClassifierId]&#xA;,[Sum_is0]&#xA;,[SellingSumRounded]&#xA;,[SellingCountRounded]&#xA;,[LastUpdated]&#xA;FROM &#xA;[AlphaRM].[stg].[OFD_AggL6day_PartitionBuffer]&#xA;&quot;"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="SQL_Insert_Destination">
+      <DTS:VariableValue
+        DTS:DataType="8">
+delete
+[AlphaRM].[stg].[OFD_AggL6day]
+
+
+
+WHERE [PERIOD_KEY] BETWEEN 20230701 AND 20230731
+
+
+insert into [AlphaRM].[stg].[OFD_AggL6day]
+(
+[PERIOD_KEY]
+,[brickOFDId]
+,[ClassifierId]
+,[Sum_is0]
+,[SellingSumRounded]
+,[SellingCountRounded]
+,[LastUpdated]
+)
+SELECT 
+[PERIOD_KEY]
+,[brickOFDId]
+,[ClassifierId]
+,[Sum_is0]
+,[SellingSumRounded]
+,[SellingCountRounded]
+,[LastUpdated]
+FROM 
+[AlphaRM].[stg].[OFD_AggL6day_PartitionBuffer]
+</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{85585002-1093-4AF3-807D-9C0045E7D147}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="SQL_Switch_Partition">
+      <DTS:VariableValue
+        DTS:DataType="8">EXECUTE [partitioning].[OFD_AggL6day_SwitchBuffer]</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{B4FBF03B-E2A1-4E04-A91D-59AB31FCFD7D}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="&quot;TRUNCATE TABLE &quot; + @[User::Table_Destination_PartitionBuffer]"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="SQL_Truncate_PartitionBuffer">
+      <DTS:VariableValue
+        DTS:DataType="8">TRUNCATE TABLE [stg].[OFD_AggL6day_PartitionBuffer]</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{E1B7F5F8-9969-4032-9F56-C7613506B612}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="Table_Destination_PartitionBuffer">
+      <DTS:VariableValue
+        DTS:DataType="8">[stg].[OFD_AggL6day_PartitionBuffer]</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{4072E369-5D6B-43B8-9D2F-233FF990027E}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="Table_Source">
+      <DTS:VariableValue
+        DTS:DataType="8">[Valeant].[AggregateL6_day]</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\CheckIncomingData"
+      DTS:CreationName="STOCK:SEQUENCE"
+      DTS:Description="Sequence Container"
+      DTS:DTSID="{615AC67A-8778-4044-AE12-3473D3D227B4}"
+      DTS:ExecutableType="STOCK:SEQUENCE"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="CheckIncomingData">
+      <DTS:Variables />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\CheckIncomingData\SQL_check_differences"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:DTSID="{6C9F37D6-47BB-4BCF-A1B3-196016E8C2A3}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="SQL_check_differences"
+          DTS:ThreadHint="1">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{62F7315D-A03B-4B98-BB05-3E0A3F2C814D}"
+              SQLTask:SqlStatementSource="EXECUTE [check].[CheckOfdIncomingData] ?"
+              SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+              <SQLTask:ResultBinding
+                SQLTask:ResultName="0"
+                SQLTask:DtsVariableName="User::CheckDifferencesResult" />
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="0"
+                SQLTask:DtsVariableName="User::CheckDate"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="7"
+                SQLTask:ParameterSize="-1" />
+            </SQLTask:SqlTaskData>
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\CheckIncomingData\SQL_check_missed_intervals"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{482EEE39-48B8-42CB-B4DB-77F3973FC52A}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="SQL_check_missed_intervals"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{62F7315D-A03B-4B98-BB05-3E0A3F2C814D}"
+              SQLTask:SqlStatementSource="EXECUTE [check].CheckOfdMissedIntervals ?, ?"
+              SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+              <SQLTask:ResultBinding
+                SQLTask:ResultName="0"
+                SQLTask:DtsVariableName="User::CheckMissedIntervalsResult" />
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="0"
+                SQLTask:DtsVariableName="$Project::SqlMailProfileName"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="130"
+                SQLTask:ParameterSize="-1" />
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="1"
+                SQLTask:DtsVariableName="$Project::MailRecipients"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="130"
+                SQLTask:ParameterSize="-1" />
+            </SQLTask:SqlTaskData>
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\DFT_AggregateL6_day"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:DelayValidation="True"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{018C9FE4-2E11-41D8-AB6B-DD52B8C67F2F}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="DFT_AggregateL6_day"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:PropertyExpression
+        DTS:Name="[ADOScr_OFD_OUT_Valeant_AggregateL6_day].[SqlCommand]">@[User::SQL_DataSource]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <pipeline
+          autoAdjustBufferSize="true"
+          defaultBufferMaxRows="1048576"
+          defaultBufferSize="104857600"
+          version="1">
+          <components>
+            <component
+              refId="Package\DFT_AggregateL6_day\ADOScr_OFD_OUT_Valeant_AggregateL6_day"
+              componentClassID="Microsoft.ManagedComponentHost"
+              contactInfo="Consumes data from SQL Server, OLE DB, ODBC, or Oracle, using the corresponding .NET Framework data provider. Use a Transact-SQL statement to define the result set. For example, extract data from SQL Server with the .NET Framework data provider for SQL Server.;Microsoft Corporation; Microsoft SQL Server; © Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="Consumes data from SQL Server, OLE DB, ODBC, or Oracle, using the corresponding .NET Framework data provider. Use a Transact-SQL statement to define the result set. For example, extract data from SQL Server with the .NET Framework data provider for SQL Server."
+              name="ADOScr_OFD_OUT_Valeant_AggregateL6_day"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SQL statement used by the component to extract data."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT 
+	 [PERIOD_KEY]
+	,[brickOFDId]
+	,[ClassifierId]
+	,[Sum_is0]
+	,[SellingSumRounded]
+	,[SellingCountRounded]
+	,CAST([LastUpdated] AS smalldatetime) [LastUpdated] 
+FROM [Valeant].[AggregateL6_day]
+
+WHERE [PERIOD_KEY] BETWEEN 20230701 AND 20230731</property>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether to allow non-string external columns to be implicitly converted to strings at the output columns."
+                  name="AllowImplicitStringConversion">true</property>
+                <property
+                  dataType="System.String"
+                  description="The Source database table name."
+                  expressionType="Notify"
+                  name="TableOrViewName"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specify the mode to retrieve external column information"
+                  name="AccessMode"
+                  typeConverter="Microsoft.SqlServer.Dts.Pipeline.DataReaderSourceAdapter+EnumToStringConverter">2</property>
+                <property
+                  dataType="System.String"
+                  name="UserComponentTypeName">Microsoft.DataReaderSourceAdapter</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT_AggregateL6_day\ADOScr_OFD_OUT_Valeant_AggregateL6_day.Connections[IDbConnection]"
+                  connectionManagerID="{A4966149-DC5E-4785-A788-7F0E62DE2685}:invalid"
+                  connectionManagerRefId="{A4966149-DC5E-4785-A788-7F0E62DE2685}:invalid"
+                  description="Managed connection manager"
+                  name="IDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\DFT_AggregateL6_day\ADOScr_OFD_OUT_Valeant_AggregateL6_day.Outputs[ADO NET Source Output]"
+                  name="ADO NET Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT_AggregateL6_day\ADOScr_OFD_OUT_Valeant_AggregateL6_day.Outputs[ADO NET Source Output].Columns[PERIOD_KEY]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT_AggregateL6_day\ADOScr_OFD_OUT_Valeant_AggregateL6_day.Outputs[ADO NET Source Output].ExternalColumns[PERIOD_KEY]"
+                      lineageId="Package\DFT_AggregateL6_day\ADOScr_OFD_OUT_Valeant_AggregateL6_day.Outputs[ADO NET Source Output].Columns[PERIOD_KEY]"
+                      name="PERIOD_KEY"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT_AggregateL6_day\ADOScr_OFD_OUT_Valeant_AggregateL6_day.Outputs[ADO NET Source Output].Columns[brickOFDId]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT_AggregateL6_day\ADOScr_OFD_OUT_Valeant_AggregateL6_day.Outputs[ADO NET Source Output].ExternalColumns[brickOFDId]"
+                      length="50"
+                      lineageId="Package\DFT_AggregateL6_day\ADOScr_OFD_OUT_Valeant_AggregateL6_day.Outputs[ADO NET Source Output].Columns[brickOFDId]"
+                      name="brickOFDId"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT_AggregateL6_day\ADOScr_OFD_OUT_Valeant_AggregateL6_day.Outputs[ADO NET Source Output].Columns[ClassifierId]"
+                      dataType="i8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT_AggregateL6_day\ADOScr_OFD_OUT_Valeant_AggregateL6_day.Outputs[ADO NET Source Output].ExternalColumns[ClassifierId]"
+                      lineageId="Package\DFT_AggregateL6_day\ADOScr_OFD_OUT_Valeant_AggregateL6_day.Outputs[ADO NET Source Output].Columns[ClassifierId]"
+                      name="ClassifierId"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT_AggregateL6_day\ADOScr_OFD_OUT_Valeant_AggregateL6_day.Outputs[ADO NET Source Output].Columns[Sum_is0]"
+                      dataType="bool"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT_AggregateL6_day\ADOScr_OFD_OUT_Valeant_AggregateL6_day.Outputs[ADO NET Source Output].ExternalColumns[Sum_is0]"
+                      lineageId="Package\DFT_AggregateL6_day\ADOScr_OFD_OUT_Valeant_AggregateL6_day.Outputs[ADO NET Source Output].Columns[Sum_is0]"
+                      name="Sum_is0"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT_AggregateL6_day\ADOScr_OFD_OUT_Valeant_AggregateL6_day.Outputs[ADO NET Source Output].Columns[SellingSumRounded]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT_AggregateL6_day\ADOScr_OFD_OUT_Valeant_AggregateL6_day.Outputs[ADO NET Source Output].ExternalColumns[SellingSumRounded]"
+                      lineageId="Package\DFT_AggregateL6_day\ADOScr_OFD_OUT_Valeant_AggregateL6_day.Outputs[ADO NET Source Output].Columns[SellingSumRounded]"
+                      name="SellingSumRounded"
+                      precision="19"
+                      scale="4"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT_AggregateL6_day\ADOScr_OFD_OUT_Valeant_AggregateL6_day.Outputs[ADO NET Source Output].Columns[SellingCountRounded]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT_AggregateL6_day\ADOScr_OFD_OUT_Valeant_AggregateL6_day.Outputs[ADO NET Source Output].ExternalColumns[SellingCountRounded]"
+                      lineageId="Package\DFT_AggregateL6_day\ADOScr_OFD_OUT_Valeant_AggregateL6_day.Outputs[ADO NET Source Output].Columns[SellingCountRounded]"
+                      name="SellingCountRounded"
+                      precision="19"
+                      scale="4"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DFT_AggregateL6_day\ADOScr_OFD_OUT_Valeant_AggregateL6_day.Outputs[ADO NET Source Output].Columns[LastUpdated]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DFT_AggregateL6_day\ADOScr_OFD_OUT_Valeant_AggregateL6_day.Outputs[ADO NET Source Output].ExternalColumns[LastUpdated]"
+                      lineageId="Package\DFT_AggregateL6_day\ADOScr_OFD_OUT_Valeant_AggregateL6_day.Outputs[ADO NET Source Output].Columns[LastUpdated]"
+                      name="LastUpdated"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DFT_AggregateL6_day\ADOScr_OFD_OUT_Valeant_AggregateL6_day.Outputs[ADO NET Source Output].ExternalColumns[PERIOD_KEY]"
+                      dataType="i4"
+                      name="PERIOD_KEY" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_AggregateL6_day\ADOScr_OFD_OUT_Valeant_AggregateL6_day.Outputs[ADO NET Source Output].ExternalColumns[brickOFDId]"
+                      dataType="wstr"
+                      length="50"
+                      name="brickOFDId" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_AggregateL6_day\ADOScr_OFD_OUT_Valeant_AggregateL6_day.Outputs[ADO NET Source Output].ExternalColumns[ClassifierId]"
+                      dataType="i8"
+                      name="ClassifierId" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_AggregateL6_day\ADOScr_OFD_OUT_Valeant_AggregateL6_day.Outputs[ADO NET Source Output].ExternalColumns[Sum_is0]"
+                      dataType="bool"
+                      name="Sum_is0" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_AggregateL6_day\ADOScr_OFD_OUT_Valeant_AggregateL6_day.Outputs[ADO NET Source Output].ExternalColumns[SellingSumRounded]"
+                      dataType="numeric"
+                      name="SellingSumRounded"
+                      precision="19"
+                      scale="4" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_AggregateL6_day\ADOScr_OFD_OUT_Valeant_AggregateL6_day.Outputs[ADO NET Source Output].ExternalColumns[SellingCountRounded]"
+                      dataType="numeric"
+                      name="SellingCountRounded"
+                      precision="19"
+                      scale="4" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_AggregateL6_day\ADOScr_OFD_OUT_Valeant_AggregateL6_day.Outputs[ADO NET Source Output].ExternalColumns[LastUpdated]"
+                      dataType="dbTimeStamp"
+                      name="LastUpdated" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\DFT_AggregateL6_day\ADOScr_OFD_OUT_Valeant_AggregateL6_day.Outputs[ADO NET Source Error Output]"
+                  isErrorOut="true"
+                  name="ADO NET Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT_AggregateL6_day\ADOScr_OFD_OUT_Valeant_AggregateL6_day.Outputs[ADO NET Source Error Output].Columns[PERIOD_KEY]"
+                      dataType="i4"
+                      lineageId="Package\DFT_AggregateL6_day\ADOScr_OFD_OUT_Valeant_AggregateL6_day.Outputs[ADO NET Source Error Output].Columns[PERIOD_KEY]"
+                      name="PERIOD_KEY" />
+                    <outputColumn
+                      refId="Package\DFT_AggregateL6_day\ADOScr_OFD_OUT_Valeant_AggregateL6_day.Outputs[ADO NET Source Error Output].Columns[brickOFDId]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\DFT_AggregateL6_day\ADOScr_OFD_OUT_Valeant_AggregateL6_day.Outputs[ADO NET Source Error Output].Columns[brickOFDId]"
+                      name="brickOFDId" />
+                    <outputColumn
+                      refId="Package\DFT_AggregateL6_day\ADOScr_OFD_OUT_Valeant_AggregateL6_day.Outputs[ADO NET Source Error Output].Columns[ClassifierId]"
+                      dataType="i8"
+                      lineageId="Package\DFT_AggregateL6_day\ADOScr_OFD_OUT_Valeant_AggregateL6_day.Outputs[ADO NET Source Error Output].Columns[ClassifierId]"
+                      name="ClassifierId" />
+                    <outputColumn
+                      refId="Package\DFT_AggregateL6_day\ADOScr_OFD_OUT_Valeant_AggregateL6_day.Outputs[ADO NET Source Error Output].Columns[Sum_is0]"
+                      dataType="bool"
+                      lineageId="Package\DFT_AggregateL6_day\ADOScr_OFD_OUT_Valeant_AggregateL6_day.Outputs[ADO NET Source Error Output].Columns[Sum_is0]"
+                      name="Sum_is0" />
+                    <outputColumn
+                      refId="Package\DFT_AggregateL6_day\ADOScr_OFD_OUT_Valeant_AggregateL6_day.Outputs[ADO NET Source Error Output].Columns[SellingSumRounded]"
+                      dataType="numeric"
+                      lineageId="Package\DFT_AggregateL6_day\ADOScr_OFD_OUT_Valeant_AggregateL6_day.Outputs[ADO NET Source Error Output].Columns[SellingSumRounded]"
+                      name="SellingSumRounded"
+                      precision="19"
+                      scale="4" />
+                    <outputColumn
+                      refId="Package\DFT_AggregateL6_day\ADOScr_OFD_OUT_Valeant_AggregateL6_day.Outputs[ADO NET Source Error Output].Columns[SellingCountRounded]"
+                      dataType="numeric"
+                      lineageId="Package\DFT_AggregateL6_day\ADOScr_OFD_OUT_Valeant_AggregateL6_day.Outputs[ADO NET Source Error Output].Columns[SellingCountRounded]"
+                      name="SellingCountRounded"
+                      precision="19"
+                      scale="4" />
+                    <outputColumn
+                      refId="Package\DFT_AggregateL6_day\ADOScr_OFD_OUT_Valeant_AggregateL6_day.Outputs[ADO NET Source Error Output].Columns[LastUpdated]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\DFT_AggregateL6_day\ADOScr_OFD_OUT_Valeant_AggregateL6_day.Outputs[ADO NET Source Error Output].Columns[LastUpdated]"
+                      name="LastUpdated" />
+                    <outputColumn
+                      refId="Package\DFT_AggregateL6_day\ADOScr_OFD_OUT_Valeant_AggregateL6_day.Outputs[ADO NET Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT_AggregateL6_day\ADOScr_OFD_OUT_Valeant_AggregateL6_day.Outputs[ADO NET Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT_AggregateL6_day\ADOScr_OFD_OUT_Valeant_AggregateL6_day.Outputs[ADO NET Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT_AggregateL6_day\ADOScr_OFD_OUT_Valeant_AggregateL6_day.Outputs[ADO NET Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DFT_AggregateL6_day\OLEDst_OFD_AggL6day_PartitionBuffer"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="OLEDst_OFD_AggL6day_PartitionBuffer"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[stg].[OFD_AggL6day_PartitionBuffer]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable">User::Table_Destination_PartitionBuffer</property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1251</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">4</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">ROWS_PER_BATCH = 1048576</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">1048576</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DFT_AggregateL6_day\OLEDst_OFD_AggL6day_PartitionBuffer.Connections[OleDbConnection]"
+                  connectionManagerID="{62F7315D-A03B-4B98-BB05-3E0A3F2C814D}:invalid"
+                  connectionManagerRefId="{62F7315D-A03B-4B98-BB05-3E0A3F2C814D}:invalid"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\DFT_AggregateL6_day\OLEDst_OFD_AggL6day_PartitionBuffer.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DFT_AggregateL6_day\OLEDst_OFD_AggL6day_PartitionBuffer.Inputs[OLE DB Destination Input].Columns[PERIOD_KEY]"
+                      cachedDataType="i4"
+                      cachedName="PERIOD_KEY"
+                      externalMetadataColumnId="Package\DFT_AggregateL6_day\OLEDst_OFD_AggL6day_PartitionBuffer.Inputs[OLE DB Destination Input].ExternalColumns[PERIOD_KEY]"
+                      lineageId="Package\DFT_AggregateL6_day\ADOScr_OFD_OUT_Valeant_AggregateL6_day.Outputs[ADO NET Source Output].Columns[PERIOD_KEY]" />
+                    <inputColumn
+                      refId="Package\DFT_AggregateL6_day\OLEDst_OFD_AggL6day_PartitionBuffer.Inputs[OLE DB Destination Input].Columns[brickOFDId]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="brickOFDId"
+                      externalMetadataColumnId="Package\DFT_AggregateL6_day\OLEDst_OFD_AggL6day_PartitionBuffer.Inputs[OLE DB Destination Input].ExternalColumns[brickOFDId]"
+                      lineageId="Package\DFT_AggregateL6_day\ADOScr_OFD_OUT_Valeant_AggregateL6_day.Outputs[ADO NET Source Output].Columns[brickOFDId]" />
+                    <inputColumn
+                      refId="Package\DFT_AggregateL6_day\OLEDst_OFD_AggL6day_PartitionBuffer.Inputs[OLE DB Destination Input].Columns[ClassifierId]"
+                      cachedDataType="i8"
+                      cachedName="ClassifierId"
+                      externalMetadataColumnId="Package\DFT_AggregateL6_day\OLEDst_OFD_AggL6day_PartitionBuffer.Inputs[OLE DB Destination Input].ExternalColumns[ClassifierId]"
+                      lineageId="Package\DFT_AggregateL6_day\ADOScr_OFD_OUT_Valeant_AggregateL6_day.Outputs[ADO NET Source Output].Columns[ClassifierId]" />
+                    <inputColumn
+                      refId="Package\DFT_AggregateL6_day\OLEDst_OFD_AggL6day_PartitionBuffer.Inputs[OLE DB Destination Input].Columns[Sum_is0]"
+                      cachedDataType="bool"
+                      cachedName="Sum_is0"
+                      externalMetadataColumnId="Package\DFT_AggregateL6_day\OLEDst_OFD_AggL6day_PartitionBuffer.Inputs[OLE DB Destination Input].ExternalColumns[Sum_is0]"
+                      lineageId="Package\DFT_AggregateL6_day\ADOScr_OFD_OUT_Valeant_AggregateL6_day.Outputs[ADO NET Source Output].Columns[Sum_is0]" />
+                    <inputColumn
+                      refId="Package\DFT_AggregateL6_day\OLEDst_OFD_AggL6day_PartitionBuffer.Inputs[OLE DB Destination Input].Columns[SellingSumRounded]"
+                      cachedDataType="numeric"
+                      cachedName="SellingSumRounded"
+                      cachedPrecision="19"
+                      cachedScale="4"
+                      externalMetadataColumnId="Package\DFT_AggregateL6_day\OLEDst_OFD_AggL6day_PartitionBuffer.Inputs[OLE DB Destination Input].ExternalColumns[SellingSumRounded]"
+                      lineageId="Package\DFT_AggregateL6_day\ADOScr_OFD_OUT_Valeant_AggregateL6_day.Outputs[ADO NET Source Output].Columns[SellingSumRounded]" />
+                    <inputColumn
+                      refId="Package\DFT_AggregateL6_day\OLEDst_OFD_AggL6day_PartitionBuffer.Inputs[OLE DB Destination Input].Columns[SellingCountRounded]"
+                      cachedDataType="numeric"
+                      cachedName="SellingCountRounded"
+                      cachedPrecision="19"
+                      cachedScale="4"
+                      externalMetadataColumnId="Package\DFT_AggregateL6_day\OLEDst_OFD_AggL6day_PartitionBuffer.Inputs[OLE DB Destination Input].ExternalColumns[SellingCountRounded]"
+                      lineageId="Package\DFT_AggregateL6_day\ADOScr_OFD_OUT_Valeant_AggregateL6_day.Outputs[ADO NET Source Output].Columns[SellingCountRounded]" />
+                    <inputColumn
+                      refId="Package\DFT_AggregateL6_day\OLEDst_OFD_AggL6day_PartitionBuffer.Inputs[OLE DB Destination Input].Columns[LastUpdated]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="LastUpdated"
+                      externalMetadataColumnId="Package\DFT_AggregateL6_day\OLEDst_OFD_AggL6day_PartitionBuffer.Inputs[OLE DB Destination Input].ExternalColumns[LastUpdated]"
+                      lineageId="Package\DFT_AggregateL6_day\ADOScr_OFD_OUT_Valeant_AggregateL6_day.Outputs[ADO NET Source Output].Columns[LastUpdated]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DFT_AggregateL6_day\OLEDst_OFD_AggL6day_PartitionBuffer.Inputs[OLE DB Destination Input].ExternalColumns[PERIOD_KEY]"
+                      dataType="i4"
+                      name="PERIOD_KEY" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_AggregateL6_day\OLEDst_OFD_AggL6day_PartitionBuffer.Inputs[OLE DB Destination Input].ExternalColumns[brickOFDId]"
+                      dataType="wstr"
+                      length="50"
+                      name="brickOFDId" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_AggregateL6_day\OLEDst_OFD_AggL6day_PartitionBuffer.Inputs[OLE DB Destination Input].ExternalColumns[ClassifierId]"
+                      dataType="i8"
+                      name="ClassifierId" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_AggregateL6_day\OLEDst_OFD_AggL6day_PartitionBuffer.Inputs[OLE DB Destination Input].ExternalColumns[Sum_is0]"
+                      dataType="bool"
+                      name="Sum_is0" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_AggregateL6_day\OLEDst_OFD_AggL6day_PartitionBuffer.Inputs[OLE DB Destination Input].ExternalColumns[SellingSumRounded]"
+                      dataType="numeric"
+                      name="SellingSumRounded"
+                      precision="19"
+                      scale="4" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_AggregateL6_day\OLEDst_OFD_AggL6day_PartitionBuffer.Inputs[OLE DB Destination Input].ExternalColumns[SellingCountRounded]"
+                      dataType="numeric"
+                      name="SellingCountRounded"
+                      precision="19"
+                      scale="4" />
+                    <externalMetadataColumn
+                      refId="Package\DFT_AggregateL6_day\OLEDst_OFD_AggL6day_PartitionBuffer.Inputs[OLE DB Destination Input].ExternalColumns[LastUpdated]"
+                      dataType="dbTimeStamp"
+                      name="LastUpdated" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DFT_AggregateL6_day\OLEDst_OFD_AggL6day_PartitionBuffer.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\DFT_AggregateL6_day\OLEDst_OFD_AggL6day_PartitionBuffer.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DFT_AggregateL6_day\OLEDst_OFD_AggL6day_PartitionBuffer.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DFT_AggregateL6_day\OLEDst_OFD_AggL6day_PartitionBuffer.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DFT_AggregateL6_day\OLEDst_OFD_AggL6day_PartitionBuffer.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DFT_AggregateL6_day\OLEDst_OFD_AggL6day_PartitionBuffer.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\DFT_AggregateL6_day.Paths[ADO NET Source Output]"
+              endId="Package\DFT_AggregateL6_day\OLEDst_OFD_AggL6day_PartitionBuffer.Inputs[OLE DB Destination Input]"
+              name="ADO NET Source Output"
+              startId="Package\DFT_AggregateL6_day\ADOScr_OFD_OUT_Valeant_AggregateL6_day.Outputs[ADO NET Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\set_check_result"
+      DTS:CreationName="Microsoft.ExpressionTask"
+      DTS:Description="Expression Task"
+      DTS:DTSID="{04DFCF59-94A6-4D83-8D2E-05D2E740940B}"
+      DTS:ExecutableType="Microsoft.ExpressionTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="set_check_result"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <ExpressionTask
+          Expression="@[User::CheckResult] = ( @[User::CheckDifferencesResult] + @[User::CheckMissedIntervalsResult]  ) &gt; 0 ? 1 : 0" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\SQL_clear_buffer"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:DTSID="{7e819fe5-c39f-4b28-985e-d60a53b7b154}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="SQL_clear_buffer"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:PropertyExpression
+        DTS:Name="SqlStatementSource">@[User::SQL_Truncate_PartitionBuffer]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{62F7315D-A03B-4B98-BB05-3E0A3F2C814D}"
+          SQLTask:SqlStatementSource="TRUNCATE TABLE [stg].[OFD_AggL6day_PartitionBuffer]" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\SQL_delete_insert_destination"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:DTSID="{fa4d55ce-c542-4350-9445-a617e909dba7}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="SQL_delete_insert_destination"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:PropertyExpression
+        DTS:Name="SqlStatementSource">@[User::SQL_Insert_Destination]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{62F7315D-A03B-4B98-BB05-3E0A3F2C814D}"
+          SQLTask:SqlStatementSource="&#xA;delete&#xA;[AlphaRM].[stg].[OFD_AggL6day]&#xA;&#xA;&#xA;&#xA;WHERE [PERIOD_KEY] BETWEEN 20230701 AND 20230731&#xA;&#xA;&#xA;insert into [AlphaRM].[stg].[OFD_AggL6day]&#xA;(&#xA;[PERIOD_KEY]&#xA;,[brickOFDId]&#xA;,[ClassifierId]&#xA;,[Sum_is0]&#xA;,[SellingSumRounded]&#xA;,[SellingCountRounded]&#xA;,[LastUpdated]&#xA;)&#xA;SELECT &#xA;[PERIOD_KEY]&#xA;,[brickOFDId]&#xA;,[ClassifierId]&#xA;,[Sum_is0]&#xA;,[SellingSumRounded]&#xA;,[SellingCountRounded]&#xA;,[LastUpdated]&#xA;FROM &#xA;[AlphaRM].[stg].[OFD_AggL6day_PartitionBuffer]&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\SQL_send_check_data_report"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:DTSID="{DD67457E-9E6B-4106-9A06-C0D5DE0F794B}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="SQL_send_check_data_report"
+      DTS:ThreadHint="1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{F3FF52B2-226D-4CBC-BDFC-F604DDDDFEB3}"
+          SQLTask:SqlStatementSource="EXECUTE [check].SendDifferencesReport_Ofd ?, ?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="$Project::SqlMailProfileName"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="130"
+            SQLTask:ParameterSize="-1" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="1"
+            SQLTask:DtsVariableName="$Project::MailRecipients"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="130"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\SQL_switch_partition 1"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Disabled="True"
+      DTS:DTSID="{2550b6a3-c59a-40e3-b69a-9ac41de41b67}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="SQL_switch_partition 1"
+      DTS:ThreadHint="2">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{62F7315D-A03B-4B98-BB05-3E0A3F2C814D}"
+          SQLTask:SqlStatementSource="EXECUTE [partitioning].[OFD_AggL6day_SwitchBuffer]" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{3F98B13D-CE57-4AD9-A24D-9821E49C3734}"
+      DTS:From="Package\DFT_AggregateL6_day"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\CheckIncomingData" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{569012A4-619B-410D-B2FD-33CC87146538}"
+      DTS:EvalOp="3"
+      DTS:Expression="@[User::CheckResult] == 1"
+      DTS:From="Package\set_check_result"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\SQL_send_check_data_report" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
+      DTS:CreationName=""
+      DTS:DTSID="{1D93EE5D-0EB5-4F2F-B156-CFD817A903DE}"
+      DTS:EvalOp="3"
+      DTS:Expression="@[User::CheckResult] == 0"
+      DTS:From="Package\set_check_result"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2"
+      DTS:To="Package\SQL_delete_insert_destination" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 4]"
+      DTS:CreationName=""
+      DTS:DTSID="{D946EC94-F464-48FC-9D09-EAD0EFF0931D}"
+      DTS:From="Package\SQL_clear_buffer"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 4"
+      DTS:To="Package\DFT_AggregateL6_day" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 7]"
+      DTS:CreationName=""
+      DTS:DTSID="{F84FD114-2806-4B01-90A6-B127718B082E}"
+      DTS:From="Package\CheckIncomingData"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 7"
+      DTS:To="Package\set_check_result" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="200,42"
+          Id="Package\CheckIncomingData\SQL_check_differences"
+          TopLeft="10,20" />
+        <NodeLayout
+          Size="214,42"
+          Id="Package\CheckIncomingData\SQL_check_missed_intervals"
+          TopLeft="222,20" />
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="445,120"
+          Size="445,163"
+          Id="Package\CheckIncomingData"
+          TopLeft="100.398412698413,182.2" />
+        <NodeLayout
+          Size="186,42"
+          Id="Package\DFT_AggregateL6_day"
+          TopLeft="298.898412698413,86.6" />
+        <NodeLayout
+          Size="157,42"
+          Id="Package\set_check_result"
+          TopLeft="207.398412698413,372.8" />
+        <NodeLayout
+          Size="160,42"
+          Id="Package\SQL_clear_buffer"
+          TopLeft="202.898412698413,10" />
+        <NodeLayout
+          Size="219,42"
+          Id="Package\SQL_send_check_data_report"
+          TopLeft="43.3984126984128,451.4" />
+        <NodeLayout
+          Size="222,42"
+          Id="Package\SQL_delete_insert_destination"
+          TopLeft="412,458.4" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="391.898412698413,128.6">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-69,53.6"
+              Start="0,0"
+              End="-69,46.1">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,22.8" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,22.8"
+                    Point2="0,26.8"
+                    Point3="-4,26.8" />
+                  <mssgle:LineSegment
+                    End="-65,26.8" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-65,26.8"
+                    Point2="-69,26.8"
+                    Point3="-69,30.8" />
+                  <mssgle:LineSegment
+                    End="-69,46.1" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="261.06507936508,414.8">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-108.166666666667,36.6"
+              Start="0,0"
+              End="-108.166666666667,29.1">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,10.8615384615385" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,10.8615384615385"
+                    Point2="0,14.8615384615385"
+                    Point3="-4,14.8615384615385" />
+                  <mssgle:LineSegment
+                    End="-104.166666666667,14.8615384615385" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-104.166666666667,14.8615384615385"
+                    Point2="-108.166666666667,14.8615384615385"
+                    Point3="-108.166666666667,18.8615384615385" />
+                  <mssgle:LineSegment
+                    End="-108.166666666667,29.1" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-153.547552083334,19.8615384615385,198.9284375,16"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="310.731746031746,414.8">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="212.268253968254,43.6"
+              Start="0,0"
+              End="212.268253968254,36.1">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,13.7039092055485" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,13.7039092055485"
+                    Point2="0,17.7039092055485"
+                    Point3="4,17.7039092055485" />
+                  <mssgle:LineSegment
+                    End="208.268253968254,17.7039092055485" />
+                  <mssgle:CubicBezierSegment
+                    Point1="208.268253968254,17.7039092055485"
+                    Point2="212.268253968254,17.7039092055485"
+                    Point3="212.268253968254,21.7039092055485" />
+                  <mssgle:LineSegment
+                    End="212.268253968254,36.1" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="6.46727151537681,22.7039092055485,199.3337109375,16"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 4]"
+          TopLeft="282.898412698413,52">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="109,34.6"
+              Start="0,0"
+              End="109,27.1">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,13.3" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,13.3"
+                    Point2="0,17.3"
+                    Point3="4,17.3" />
+                  <mssgle:LineSegment
+                    End="105,17.3" />
+                  <mssgle:CubicBezierSegment
+                    Point1="105,17.3"
+                    Point2="109,17.3"
+                    Point3="109,21.3" />
+                  <mssgle:LineSegment
+                    End="109,27.1" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 7]"
+          TopLeft="322.898412698413,345.2">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-36.9999999999998,27.6"
+              Start="0,0"
+              End="-36.9999999999998,20.1">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,9.80000000000001" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,9.80000000000001"
+                    Point2="0,13.8"
+                    Point3="-4,13.8" />
+                  <mssgle:LineSegment
+                    End="-32.9999999999998,13.8" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-32.9999999999998,13.8"
+                    Point2="-36.9999999999998,13.8"
+                    Point3="-36.9999999999998,17.8" />
+                  <mssgle:LineSegment
+                    End="-36.9999999999998,20.1" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="178,42"
+          Id="Package\SQL_switch_partition 1"
+          TopLeft="755,432" />
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\DFT_AggregateL6_day">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="297,42"
+          Id="Package\DFT_AggregateL6_day\ADOScr_OFD_OUT_Valeant_AggregateL6_day"
+          TopLeft="171.25,31" />
+        <NodeLayout
+          Size="265,42"
+          Id="Package\DFT_AggregateL6_day\OLEDst_OFD_AggL6day_PartitionBuffer"
+          TopLeft="187.25,164" />
+        <EdgeLayout
+          Id="Package\DFT_AggregateL6_day.Paths[ADO NET Source Output]"
+          TopLeft="319.75,73">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,91"
+              Start="0,0"
+              End="0,83.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,83.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT_AggregateL6_day\ADOScr_OFD_OUT_Valeant_AggregateL6_day">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\DFT_AggregateL6_day\OLEDst_OFD_AggL6day_PartitionBuffer">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PrecedenceConstraint
+    design-time-name="Package.PrecedenceConstraints[Constraint 1]">
+    <ShowAnnotation>ConstraintOptions</ShowAnnotation>
+  </PrecedenceConstraint>
+  <PrecedenceConstraint
+    design-time-name="Package.PrecedenceConstraints[Constraint 2]">
+    <ShowAnnotation>ConstraintOptions</ShowAnnotation>
+  </PrecedenceConstraint>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

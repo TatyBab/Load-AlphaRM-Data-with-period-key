@@ -1,0 +1,2977 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="11/29/2019 9:53:58 AM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="MOS-L1-DMSIZO"
+  DTS:CreatorName="VALEANT\Dmitry.Sizov"
+  DTS:DTSID="{A5AF0CC1-40B1-4E2F-BC99-B5ACD7D80196}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="16.0.5397.1"
+  DTS:LocaleID="1049"
+  DTS:ObjectName="DI load dimensions"
+  DTS:PackageType="5"
+  DTS:VersionBuild="24"
+  DTS:VersionGUID="{7E3DAD7C-CC74-4765-AF68-6AEB13E3D99D}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{A4DB643F-5F8A-4765-B7CB-7DC07105C7CC}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="BrandDataExists">
+      <DTS:VariableValue
+        DTS:DataType="3">1</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{79EA565D-75B4-4A4D-B474-72ED188E4D9E}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="diBricksDataExists">
+      <DTS:VariableValue
+        DTS:DataType="3">1</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{422DE23A-7859-42BC-9DC9-D4B53F07F74F}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="diSellTypeDataExists">
+      <DTS:VariableValue
+        DTS:DataType="3">1</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{C999AD42-C14E-4889-A3BB-9EDEB782EA65}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="diTypeDataExists">
+      <DTS:VariableValue
+        DTS:DataType="3">1</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{B9D27CBB-F2A3-4F42-8D6D-05CD6BFE6EE0}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="INNGroupDataExists">
+      <DTS:VariableValue
+        DTS:DataType="3">1</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{B4CEFFC2-06E7-44DF-9F12-BBE3B6A582F8}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="wdiSellTypeDataExists">
+      <DTS:VariableValue
+        DTS:DataType="3">1</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\CheckBrandDataExists"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:DTSID="{A4AAE6BA-EA81-41C1-9950-F2C283326A34}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="CheckBrandDataExists"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{F9BEB98F-BB20-4EA6-896E-43F424A8F2D8}"
+          SQLTask:SqlStatementSource="IF EXISTS(SELECT * FROM Valeant.Brand)&#xA;&#x9;SELECT 1&#xA;ELSE&#xA;&#x9;SELECT 0"
+          SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="0"
+            SQLTask:DtsVariableName="User::BrandDataExists" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\CheckdiBricksDataExists"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:DTSID="{7214DA24-A4EA-43C9-B8CD-EFC3FB91C9D9}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="CheckdiBricksDataExists"
+      DTS:ThreadHint="1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{F9BEB98F-BB20-4EA6-896E-43F424A8F2D8}"
+          SQLTask:SqlStatementSource="IF EXISTS(SELECT * FROM Valeant.diBricks)&#xA;&#x9;SELECT 1&#xA;ELSE&#xA;&#x9;SELECT 0"
+          SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="0"
+            SQLTask:DtsVariableName="User::diBricksDataExists" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\CheckdiSellTypeDataExists"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:DTSID="{BC94BCE9-2710-4631-90F4-AB2C0402C47B}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="CheckdiSellTypeDataExists"
+      DTS:ThreadHint="2">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{F9BEB98F-BB20-4EA6-896E-43F424A8F2D8}"
+          SQLTask:SqlStatementSource="IF EXISTS(SELECT * FROM Valeant.diSellType)&#xA;&#x9;SELECT 1&#xA;ELSE&#xA;&#x9;SELECT 0"
+          SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="0"
+            SQLTask:DtsVariableName="User::diSellTypeDataExists" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\CheckdiTypeDataExists"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:DTSID="{0909B8B9-8925-42AB-906E-16AF5AC5BFDB}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="CheckdiTypeDataExists"
+      DTS:ThreadHint="3">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{F9BEB98F-BB20-4EA6-896E-43F424A8F2D8}"
+          SQLTask:SqlStatementSource="IF EXISTS(SELECT * FROM Valeant.diType)&#xA;&#x9;SELECT 1&#xA;ELSE&#xA;&#x9;SELECT 0"
+          SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="0"
+            SQLTask:DtsVariableName="User::diTypeDataExists" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\CheckINNGroupDataExists"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:DTSID="{E056DAF2-A1E4-4E48-92D2-904C25DCF9C8}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="CheckINNGroupDataExists"
+      DTS:ThreadHint="4">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{F9BEB98F-BB20-4EA6-896E-43F424A8F2D8}"
+          SQLTask:SqlStatementSource="IF EXISTS(SELECT * FROM Valeant.INNGroup)&#xA;&#x9;SELECT 1&#xA;ELSE&#xA;&#x9;SELECT 0"
+          SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="0"
+            SQLTask:DtsVariableName="User::INNGroupDataExists" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\CheckwdiSellTypeDataExists"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:DTSID="{C047F858-F24A-465C-997F-6FF162BB2FAF}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="CheckwdiSellTypeDataExists"
+      DTS:ThreadHint="5">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{F9BEB98F-BB20-4EA6-896E-43F424A8F2D8}"
+          SQLTask:SqlStatementSource="IF EXISTS(SELECT * FROM Valeant.wdiSellType)&#xA;&#x9;SELECT 1&#xA;ELSE&#xA;&#x9;SELECT 0"
+          SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="0"
+            SQLTask:DtsVariableName="User::wdiSellTypeDataExists" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\LoadBrandData"
+      DTS:CreationName="STOCK:SEQUENCE"
+      DTS:Description="Sequence Container"
+      DTS:DTSID="{2B29EDCB-375F-43C3-9193-76889D11B182}"
+      DTS:ExecutableType="STOCK:SEQUENCE"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="LoadBrandData">
+      <DTS:Variables />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\LoadBrandData\Brand"
+          DTS:CreationName="Microsoft.Pipeline"
+          DTS:DelayValidation="True"
+          DTS:Description="Data Flow Task"
+          DTS:DTSID="{0b492036-131c-43e4-a1ce-dacb53079de5}"
+          DTS:ExecutableType="Microsoft.Pipeline"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Brand"
+          DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <pipeline
+              version="1">
+              <components>
+                <component
+                  refId="Package\LoadBrandData\Brand\OLE DB Destination"
+                  componentClassID="Microsoft.OLEDBDestination"
+                  contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+                  description="OLE DB Destination"
+                  name="OLE DB Destination"
+                  usesDispositions="true"
+                  version="4">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                      name="CommandTimeout">0</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the name of the database object used to open a rowset."
+                      name="OpenRowset">[stg].[Brand]</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the variable that contains the name of the database object used to open a rowset."
+                      name="OpenRowsetVariable"></property>
+                    <property
+                      dataType="System.String"
+                      description="The SQL command to be executed."
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the column code page to use when code page information is unavailable from the data source."
+                      name="DefaultCodePage">1251</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Forces the use of the DefaultCodePage property value when describing character data."
+                      name="AlwaysUseDefaultCodePage">false</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the mode used to access the database."
+                      name="AccessMode"
+                      typeConverter="AccessMode">3</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                      name="FastLoadKeepIdentity">false</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                      name="FastLoadKeepNulls">false</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                      name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                      name="FastLoadMaxInsertCommitSize">2147483647</property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\LoadBrandData\Brand\OLE DB Destination.Connections[OleDbConnection]"
+                      connectionManagerID="{F3FF52B2-226D-4CBC-BDFC-F604DDDDFEB3}:invalid"
+                      connectionManagerRefId="{F3FF52B2-226D-4CBC-BDFC-F604DDDDFEB3}:invalid"
+                      description="The OLE DB runtime connection used to access the database."
+                      name="OleDbConnection" />
+                  </connections>
+                  <inputs>
+                    <input
+                      refId="Package\LoadBrandData\Brand\OLE DB Destination.Inputs[OLE DB Destination Input]"
+                      errorOrTruncationOperation="Insert"
+                      errorRowDisposition="FailComponent"
+                      hasSideEffects="true"
+                      name="OLE DB Destination Input">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\LoadBrandData\Brand\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Id]"
+                          cachedDataType="i8"
+                          cachedName="Id"
+                          externalMetadataColumnId="Package\LoadBrandData\Brand\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Id]"
+                          lineageId="Package\LoadBrandData\Brand\OLE DB Source.Outputs[OLE DB Source Output].Columns[Id]" />
+                        <inputColumn
+                          refId="Package\LoadBrandData\Brand\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Value]"
+                          cachedDataType="wstr"
+                          cachedLength="300"
+                          cachedName="Value"
+                          externalMetadataColumnId="Package\LoadBrandData\Brand\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Value]"
+                          lineageId="Package\LoadBrandData\Brand\OLE DB Source.Outputs[OLE DB Source Output].Columns[Value]" />
+                      </inputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\LoadBrandData\Brand\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Id]"
+                          dataType="i4"
+                          name="Id" />
+                        <externalMetadataColumn
+                          refId="Package\LoadBrandData\Brand\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Value]"
+                          dataType="wstr"
+                          length="300"
+                          name="Value" />
+                      </externalMetadataColumns>
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\LoadBrandData\Brand\OLE DB Destination.Outputs[OLE DB Destination Error Output]"
+                      exclusionGroup="1"
+                      isErrorOut="true"
+                      name="OLE DB Destination Error Output"
+                      synchronousInputId="Package\LoadBrandData\Brand\OLE DB Destination.Inputs[OLE DB Destination Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\LoadBrandData\Brand\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\LoadBrandData\Brand\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\LoadBrandData\Brand\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\LoadBrandData\Brand\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\LoadBrandData\Brand\OLE DB Source"
+                  componentClassID="Microsoft.OLEDBSource"
+                  contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+                  description="OLE DB Source"
+                  name="OLE DB Source"
+                  usesDispositions="true"
+                  version="7">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                      name="CommandTimeout">0</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the name of the database object used to open a rowset."
+                      name="OpenRowset">[Valeant].[Brand]</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the variable that contains the name of the database object used to open a rowset."
+                      name="OpenRowsetVariable"></property>
+                    <property
+                      dataType="System.String"
+                      description="The SQL command to be executed."
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                    <property
+                      dataType="System.String"
+                      description="The variable that contains the SQL command to be executed."
+                      name="SqlCommandVariable"></property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the column code page to use when code page information is unavailable from the data source."
+                      name="DefaultCodePage">1251</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Forces the use of the DefaultCodePage property value when describing character data."
+                      name="AlwaysUseDefaultCodePage">false</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the mode used to access the database."
+                      name="AccessMode"
+                      typeConverter="AccessMode">0</property>
+                    <property
+                      dataType="System.String"
+                      description="The mappings between the parameters in the SQL command and variables."
+                      name="ParameterMapping"></property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\LoadBrandData\Brand\OLE DB Source.Connections[OleDbConnection]"
+                      connectionManagerID="{F9BEB98F-BB20-4EA6-896E-43F424A8F2D8}:invalid"
+                      connectionManagerRefId="{F9BEB98F-BB20-4EA6-896E-43F424A8F2D8}:invalid"
+                      description="The OLE DB runtime connection used to access the database."
+                      name="OleDbConnection" />
+                  </connections>
+                  <outputs>
+                    <output
+                      refId="Package\LoadBrandData\Brand\OLE DB Source.Outputs[OLE DB Source Output]"
+                      name="OLE DB Source Output">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\LoadBrandData\Brand\OLE DB Source.Outputs[OLE DB Source Output].Columns[Id]"
+                          dataType="i8"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\LoadBrandData\Brand\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Id]"
+                          lineageId="Package\LoadBrandData\Brand\OLE DB Source.Outputs[OLE DB Source Output].Columns[Id]"
+                          name="Id"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\LoadBrandData\Brand\OLE DB Source.Outputs[OLE DB Source Output].Columns[Value]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\LoadBrandData\Brand\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Value]"
+                          length="300"
+                          lineageId="Package\LoadBrandData\Brand\OLE DB Source.Outputs[OLE DB Source Output].Columns[Value]"
+                          name="Value"
+                          truncationRowDisposition="FailComponent" />
+                      </outputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\LoadBrandData\Brand\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Id]"
+                          dataType="i8"
+                          name="Id" />
+                        <externalMetadataColumn
+                          refId="Package\LoadBrandData\Brand\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Value]"
+                          dataType="wstr"
+                          length="300"
+                          name="Value" />
+                      </externalMetadataColumns>
+                    </output>
+                    <output
+                      refId="Package\LoadBrandData\Brand\OLE DB Source.Outputs[OLE DB Source Error Output]"
+                      isErrorOut="true"
+                      name="OLE DB Source Error Output">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\LoadBrandData\Brand\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Id]"
+                          dataType="i8"
+                          lineageId="Package\LoadBrandData\Brand\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Id]"
+                          name="Id" />
+                        <outputColumn
+                          refId="Package\LoadBrandData\Brand\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Value]"
+                          dataType="wstr"
+                          length="300"
+                          lineageId="Package\LoadBrandData\Brand\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Value]"
+                          name="Value" />
+                        <outputColumn
+                          refId="Package\LoadBrandData\Brand\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\LoadBrandData\Brand\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\LoadBrandData\Brand\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\LoadBrandData\Brand\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+              </components>
+              <paths>
+                <path
+                  refId="Package\LoadBrandData\Brand.Paths[OLE DB Source Output]"
+                  endId="Package\LoadBrandData\Brand\OLE DB Destination.Inputs[OLE DB Destination Input]"
+                  name="OLE DB Source Output"
+                  startId="Package\LoadBrandData\Brand\OLE DB Source.Outputs[OLE DB Source Output]" />
+              </paths>
+            </pipeline>
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\LoadBrandData\Truncate stg_Brand"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:DTSID="{E9C2005B-6EC4-4B03-9537-EFEA3C355D28}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Truncate stg_Brand"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{F3FF52B2-226D-4CBC-BDFC-F604DDDDFEB3}"
+              SQLTask:SqlStatementSource="TRUNCATE TABLE stg.Brand" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+      <DTS:PrecedenceConstraints>
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\LoadBrandData.PrecedenceConstraints[Constraint]"
+          DTS:CreationName=""
+          DTS:DTSID="{4B2651B8-01A5-4B76-9EED-70FB38429667}"
+          DTS:From="Package\LoadBrandData\Truncate stg_Brand"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint"
+          DTS:To="Package\LoadBrandData\Brand" />
+      </DTS:PrecedenceConstraints>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\LoaddiBricksData"
+      DTS:CreationName="STOCK:SEQUENCE"
+      DTS:Description="Sequence Container"
+      DTS:DTSID="{49AA00B0-9142-4C97-99C1-B8DD527756F8}"
+      DTS:ExecutableType="STOCK:SEQUENCE"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="LoaddiBricksData">
+      <DTS:Variables />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\LoaddiBricksData\diBricks"
+          DTS:CreationName="Microsoft.Pipeline"
+          DTS:DelayValidation="True"
+          DTS:Description="Data Flow Task"
+          DTS:DTSID="{9746397a-39d5-40d7-8f1a-383420cc5888}"
+          DTS:ExecutableType="Microsoft.Pipeline"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="diBricks"
+          DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <pipeline
+              version="1">
+              <components>
+                <component
+                  refId="Package\LoaddiBricksData\diBricks\OLE DB Destination"
+                  componentClassID="Microsoft.OLEDBDestination"
+                  contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+                  description="OLE DB Destination"
+                  name="OLE DB Destination"
+                  usesDispositions="true"
+                  version="4">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                      name="CommandTimeout">0</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the name of the database object used to open a rowset."
+                      name="OpenRowset">[stg].[diBricks]</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the variable that contains the name of the database object used to open a rowset."
+                      name="OpenRowsetVariable"></property>
+                    <property
+                      dataType="System.String"
+                      description="The SQL command to be executed."
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the column code page to use when code page information is unavailable from the data source."
+                      name="DefaultCodePage">1251</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Forces the use of the DefaultCodePage property value when describing character data."
+                      name="AlwaysUseDefaultCodePage">false</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the mode used to access the database."
+                      name="AccessMode"
+                      typeConverter="AccessMode">3</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                      name="FastLoadKeepIdentity">false</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                      name="FastLoadKeepNulls">false</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                      name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                      name="FastLoadMaxInsertCommitSize">2147483647</property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\LoaddiBricksData\diBricks\OLE DB Destination.Connections[OleDbConnection]"
+                      connectionManagerID="{F3FF52B2-226D-4CBC-BDFC-F604DDDDFEB3}:invalid"
+                      connectionManagerRefId="{F3FF52B2-226D-4CBC-BDFC-F604DDDDFEB3}:invalid"
+                      description="The OLE DB runtime connection used to access the database."
+                      name="OleDbConnection" />
+                  </connections>
+                  <inputs>
+                    <input
+                      refId="Package\LoaddiBricksData\diBricks\OLE DB Destination.Inputs[OLE DB Destination Input]"
+                      errorOrTruncationOperation="Insert"
+                      errorRowDisposition="FailComponent"
+                      hasSideEffects="true"
+                      name="OLE DB Destination Input">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\LoaddiBricksData\diBricks\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[brickId]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="brickId"
+                          externalMetadataColumnId="Package\LoaddiBricksData\diBricks\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[brickId]"
+                          lineageId="Package\LoaddiBricksData\diBricks\OLE DB Source.Outputs[OLE DB Source Output].Columns[brickId]" />
+                        <inputColumn
+                          refId="Package\LoaddiBricksData\diBricks\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[brickLevel]"
+                          cachedDataType="r8"
+                          cachedName="brickLevel"
+                          externalMetadataColumnId="Package\LoaddiBricksData\diBricks\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[brickLevel]"
+                          lineageId="Package\LoaddiBricksData\diBricks\OLE DB Source.Outputs[OLE DB Source Output].Columns[brickLevel]" />
+                        <inputColumn
+                          refId="Package\LoaddiBricksData\diBricks\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[L1.label]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="L1.label"
+                          externalMetadataColumnId="Package\LoaddiBricksData\diBricks\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[L1.label]"
+                          lineageId="Package\LoaddiBricksData\diBricks\OLE DB Source.Outputs[OLE DB Source Output].Columns[L1.label]" />
+                        <inputColumn
+                          refId="Package\LoaddiBricksData\diBricks\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[L2.label]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="L2.label"
+                          externalMetadataColumnId="Package\LoaddiBricksData\diBricks\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[L2.label]"
+                          lineageId="Package\LoaddiBricksData\diBricks\OLE DB Source.Outputs[OLE DB Source Output].Columns[L2.label]" />
+                        <inputColumn
+                          refId="Package\LoaddiBricksData\diBricks\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[L3.label]"
+                          cachedDataType="wstr"
+                          cachedLength="255"
+                          cachedName="L3.label"
+                          externalMetadataColumnId="Package\LoaddiBricksData\diBricks\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[L3.label]"
+                          lineageId="Package\LoaddiBricksData\diBricks\OLE DB Source.Outputs[OLE DB Source Output].Columns[L3.label]" />
+                      </inputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\LoaddiBricksData\diBricks\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[brickId]"
+                          dataType="wstr"
+                          length="255"
+                          name="brickId" />
+                        <externalMetadataColumn
+                          refId="Package\LoaddiBricksData\diBricks\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[brickLevel]"
+                          dataType="ui1"
+                          name="brickLevel" />
+                        <externalMetadataColumn
+                          refId="Package\LoaddiBricksData\diBricks\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[L1.label]"
+                          dataType="wstr"
+                          length="255"
+                          name="L1.label" />
+                        <externalMetadataColumn
+                          refId="Package\LoaddiBricksData\diBricks\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[L2.label]"
+                          dataType="wstr"
+                          length="255"
+                          name="L2.label" />
+                        <externalMetadataColumn
+                          refId="Package\LoaddiBricksData\diBricks\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[L3.label]"
+                          dataType="wstr"
+                          length="255"
+                          name="L3.label" />
+                      </externalMetadataColumns>
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\LoaddiBricksData\diBricks\OLE DB Destination.Outputs[OLE DB Destination Error Output]"
+                      exclusionGroup="1"
+                      isErrorOut="true"
+                      name="OLE DB Destination Error Output"
+                      synchronousInputId="Package\LoaddiBricksData\diBricks\OLE DB Destination.Inputs[OLE DB Destination Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\LoaddiBricksData\diBricks\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\LoaddiBricksData\diBricks\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\LoaddiBricksData\diBricks\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\LoaddiBricksData\diBricks\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\LoaddiBricksData\diBricks\OLE DB Source"
+                  componentClassID="Microsoft.OLEDBSource"
+                  contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+                  description="OLE DB Source"
+                  name="OLE DB Source"
+                  usesDispositions="true"
+                  version="7">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                      name="CommandTimeout">0</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the name of the database object used to open a rowset."
+                      name="OpenRowset">[Valeant].[diBricks]</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the variable that contains the name of the database object used to open a rowset."
+                      name="OpenRowsetVariable"></property>
+                    <property
+                      dataType="System.String"
+                      description="The SQL command to be executed."
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                    <property
+                      dataType="System.String"
+                      description="The variable that contains the SQL command to be executed."
+                      name="SqlCommandVariable"></property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the column code page to use when code page information is unavailable from the data source."
+                      name="DefaultCodePage">1251</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Forces the use of the DefaultCodePage property value when describing character data."
+                      name="AlwaysUseDefaultCodePage">false</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the mode used to access the database."
+                      name="AccessMode"
+                      typeConverter="AccessMode">0</property>
+                    <property
+                      dataType="System.String"
+                      description="The mappings between the parameters in the SQL command and variables."
+                      name="ParameterMapping"></property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\LoaddiBricksData\diBricks\OLE DB Source.Connections[OleDbConnection]"
+                      connectionManagerID="{F9BEB98F-BB20-4EA6-896E-43F424A8F2D8}:invalid"
+                      connectionManagerRefId="{F9BEB98F-BB20-4EA6-896E-43F424A8F2D8}:invalid"
+                      description="The OLE DB runtime connection used to access the database."
+                      name="OleDbConnection" />
+                  </connections>
+                  <outputs>
+                    <output
+                      refId="Package\LoaddiBricksData\diBricks\OLE DB Source.Outputs[OLE DB Source Output]"
+                      name="OLE DB Source Output">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\LoaddiBricksData\diBricks\OLE DB Source.Outputs[OLE DB Source Output].Columns[brickId]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\LoaddiBricksData\diBricks\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[brickId]"
+                          length="255"
+                          lineageId="Package\LoaddiBricksData\diBricks\OLE DB Source.Outputs[OLE DB Source Output].Columns[brickId]"
+                          name="brickId"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\LoaddiBricksData\diBricks\OLE DB Source.Outputs[OLE DB Source Output].Columns[brickLevel]"
+                          dataType="r8"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\LoaddiBricksData\diBricks\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[brickLevel]"
+                          lineageId="Package\LoaddiBricksData\diBricks\OLE DB Source.Outputs[OLE DB Source Output].Columns[brickLevel]"
+                          name="brickLevel"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\LoaddiBricksData\diBricks\OLE DB Source.Outputs[OLE DB Source Output].Columns[L1.label]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\LoaddiBricksData\diBricks\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[L1.label]"
+                          length="255"
+                          lineageId="Package\LoaddiBricksData\diBricks\OLE DB Source.Outputs[OLE DB Source Output].Columns[L1.label]"
+                          name="L1.label"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\LoaddiBricksData\diBricks\OLE DB Source.Outputs[OLE DB Source Output].Columns[L2.label]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\LoaddiBricksData\diBricks\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[L2.label]"
+                          length="255"
+                          lineageId="Package\LoaddiBricksData\diBricks\OLE DB Source.Outputs[OLE DB Source Output].Columns[L2.label]"
+                          name="L2.label"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\LoaddiBricksData\diBricks\OLE DB Source.Outputs[OLE DB Source Output].Columns[L3.label]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\LoaddiBricksData\diBricks\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[L3.label]"
+                          length="255"
+                          lineageId="Package\LoaddiBricksData\diBricks\OLE DB Source.Outputs[OLE DB Source Output].Columns[L3.label]"
+                          name="L3.label"
+                          truncationRowDisposition="FailComponent" />
+                      </outputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\LoaddiBricksData\diBricks\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[brickId]"
+                          dataType="wstr"
+                          length="255"
+                          name="brickId" />
+                        <externalMetadataColumn
+                          refId="Package\LoaddiBricksData\diBricks\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[brickLevel]"
+                          dataType="r8"
+                          name="brickLevel" />
+                        <externalMetadataColumn
+                          refId="Package\LoaddiBricksData\diBricks\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[L1.label]"
+                          dataType="wstr"
+                          length="255"
+                          name="L1.label" />
+                        <externalMetadataColumn
+                          refId="Package\LoaddiBricksData\diBricks\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[L2.label]"
+                          dataType="wstr"
+                          length="255"
+                          name="L2.label" />
+                        <externalMetadataColumn
+                          refId="Package\LoaddiBricksData\diBricks\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[L3.label]"
+                          dataType="wstr"
+                          length="255"
+                          name="L3.label" />
+                      </externalMetadataColumns>
+                    </output>
+                    <output
+                      refId="Package\LoaddiBricksData\diBricks\OLE DB Source.Outputs[OLE DB Source Error Output]"
+                      isErrorOut="true"
+                      name="OLE DB Source Error Output">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\LoaddiBricksData\diBricks\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[brickId]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\LoaddiBricksData\diBricks\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[brickId]"
+                          name="brickId" />
+                        <outputColumn
+                          refId="Package\LoaddiBricksData\diBricks\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[brickLevel]"
+                          dataType="r8"
+                          lineageId="Package\LoaddiBricksData\diBricks\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[brickLevel]"
+                          name="brickLevel" />
+                        <outputColumn
+                          refId="Package\LoaddiBricksData\diBricks\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[L1.label]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\LoaddiBricksData\diBricks\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[L1.label]"
+                          name="L1.label" />
+                        <outputColumn
+                          refId="Package\LoaddiBricksData\diBricks\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[L2.label]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\LoaddiBricksData\diBricks\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[L2.label]"
+                          name="L2.label" />
+                        <outputColumn
+                          refId="Package\LoaddiBricksData\diBricks\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[L3.label]"
+                          dataType="wstr"
+                          length="255"
+                          lineageId="Package\LoaddiBricksData\diBricks\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[L3.label]"
+                          name="L3.label" />
+                        <outputColumn
+                          refId="Package\LoaddiBricksData\diBricks\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\LoaddiBricksData\diBricks\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\LoaddiBricksData\diBricks\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\LoaddiBricksData\diBricks\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+              </components>
+              <paths>
+                <path
+                  refId="Package\LoaddiBricksData\diBricks.Paths[OLE DB Source Output]"
+                  endId="Package\LoaddiBricksData\diBricks\OLE DB Destination.Inputs[OLE DB Destination Input]"
+                  name="OLE DB Source Output"
+                  startId="Package\LoaddiBricksData\diBricks\OLE DB Source.Outputs[OLE DB Source Output]" />
+              </paths>
+            </pipeline>
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\LoaddiBricksData\Truncate stg_diBricks"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:DTSID="{00578EE1-FD66-4867-8A41-9D956817D2DF}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Truncate stg_diBricks"
+          DTS:ThreadHint="1">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{F3FF52B2-226D-4CBC-BDFC-F604DDDDFEB3}"
+              SQLTask:SqlStatementSource="TRUNCATE TABLE stg.diBricks" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+      <DTS:PrecedenceConstraints>
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\LoaddiBricksData.PrecedenceConstraints[Constraint]"
+          DTS:CreationName=""
+          DTS:DTSID="{40DDF31C-B369-44E9-B00D-3A7CD6EEB6F4}"
+          DTS:From="Package\LoaddiBricksData\Truncate stg_diBricks"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint"
+          DTS:To="Package\LoaddiBricksData\diBricks" />
+      </DTS:PrecedenceConstraints>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\LoaddiSellTypeData"
+      DTS:CreationName="STOCK:SEQUENCE"
+      DTS:Description="Sequence Container"
+      DTS:DTSID="{7CBE8A5C-8C0F-4310-96B6-FE8F2D70B36F}"
+      DTS:ExecutableType="STOCK:SEQUENCE"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="LoaddiSellTypeData">
+      <DTS:Variables />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\LoaddiSellTypeData\diSellType"
+          DTS:CreationName="Microsoft.Pipeline"
+          DTS:DelayValidation="True"
+          DTS:DTSID="{70477db6-5641-43ce-ac94-382e2da11e17}"
+          DTS:ExecutableType="Microsoft.Pipeline"
+          DTS:FailPackageOnFailure="True"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="diSellType"
+          DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <pipeline
+              defaultBufferSize="3145728"
+              version="1">
+              <components>
+                <component
+                  refId="Package\LoaddiSellTypeData\diSellType\diSellType"
+                  componentClassID="Microsoft.OLEDBSource"
+                  contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+                  description="OLE DB Source"
+                  name="diSellType"
+                  usesDispositions="true"
+                  version="7">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                      name="CommandTimeout">0</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the name of the database object used to open a rowset."
+                      name="OpenRowset">[Valeant].[diSellType]</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the variable that contains the name of the database object used to open a rowset."
+                      name="OpenRowsetVariable"></property>
+                    <property
+                      dataType="System.String"
+                      description="The SQL command to be executed."
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                    <property
+                      dataType="System.String"
+                      description="The variable that contains the SQL command to be executed."
+                      name="SqlCommandVariable"></property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the column code page to use when code page information is unavailable from the data source."
+                      name="DefaultCodePage">1251</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Forces the use of the DefaultCodePage property value when describing character data."
+                      name="AlwaysUseDefaultCodePage">false</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the mode used to access the database."
+                      name="AccessMode"
+                      typeConverter="AccessMode">0</property>
+                    <property
+                      dataType="System.String"
+                      description="The mappings between the parameters in the SQL command and variables."
+                      name="ParameterMapping"></property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\LoaddiSellTypeData\diSellType\diSellType.Connections[OleDbConnection]"
+                      connectionManagerID="{F9BEB98F-BB20-4EA6-896E-43F424A8F2D8}:invalid"
+                      connectionManagerRefId="{F9BEB98F-BB20-4EA6-896E-43F424A8F2D8}:invalid"
+                      description="The OLE DB runtime connection used to access the database."
+                      name="OleDbConnection" />
+                  </connections>
+                  <outputs>
+                    <output
+                      refId="Package\LoaddiSellTypeData\diSellType\diSellType.Outputs[OLE DB Source Output]"
+                      name="OLE DB Source Output">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\LoaddiSellTypeData\diSellType\diSellType.Outputs[OLE DB Source Output].Columns[diSellType]"
+                          dataType="bool"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\LoaddiSellTypeData\diSellType\diSellType.Outputs[OLE DB Source Output].ExternalColumns[diSellType]"
+                          lineageId="Package\LoaddiSellTypeData\diSellType\diSellType.Outputs[OLE DB Source Output].Columns[diSellType]"
+                          name="diSellType"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\LoaddiSellTypeData\diSellType\diSellType.Outputs[OLE DB Source Output].Columns[diSellTypeName]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\LoaddiSellTypeData\diSellType\diSellType.Outputs[OLE DB Source Output].ExternalColumns[diSellTypeName]"
+                          length="10"
+                          lineageId="Package\LoaddiSellTypeData\diSellType\diSellType.Outputs[OLE DB Source Output].Columns[diSellTypeName]"
+                          name="diSellTypeName"
+                          truncationRowDisposition="FailComponent" />
+                      </outputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\LoaddiSellTypeData\diSellType\diSellType.Outputs[OLE DB Source Output].ExternalColumns[diSellType]"
+                          dataType="bool"
+                          name="diSellType" />
+                        <externalMetadataColumn
+                          refId="Package\LoaddiSellTypeData\diSellType\diSellType.Outputs[OLE DB Source Output].ExternalColumns[diSellTypeName]"
+                          dataType="wstr"
+                          length="10"
+                          name="diSellTypeName" />
+                      </externalMetadataColumns>
+                    </output>
+                    <output
+                      refId="Package\LoaddiSellTypeData\diSellType\diSellType.Outputs[OLE DB Source Error Output]"
+                      isErrorOut="true"
+                      name="OLE DB Source Error Output">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\LoaddiSellTypeData\diSellType\diSellType.Outputs[OLE DB Source Error Output].Columns[diSellType]"
+                          dataType="bool"
+                          lineageId="Package\LoaddiSellTypeData\diSellType\diSellType.Outputs[OLE DB Source Error Output].Columns[diSellType]"
+                          name="diSellType" />
+                        <outputColumn
+                          refId="Package\LoaddiSellTypeData\diSellType\diSellType.Outputs[OLE DB Source Error Output].Columns[diSellTypeName]"
+                          dataType="wstr"
+                          length="10"
+                          lineageId="Package\LoaddiSellTypeData\diSellType\diSellType.Outputs[OLE DB Source Error Output].Columns[diSellTypeName]"
+                          name="diSellTypeName" />
+                        <outputColumn
+                          refId="Package\LoaddiSellTypeData\diSellType\diSellType.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\LoaddiSellTypeData\diSellType\diSellType.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\LoaddiSellTypeData\diSellType\diSellType.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\LoaddiSellTypeData\diSellType\diSellType.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\LoaddiSellTypeData\diSellType\OLE DB Destination"
+                  componentClassID="Microsoft.OLEDBDestination"
+                  contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+                  description="OLE DB Destination"
+                  name="OLE DB Destination"
+                  usesDispositions="true"
+                  version="4">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                      name="CommandTimeout">0</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the name of the database object used to open a rowset."
+                      name="OpenRowset">[stg].[diSellType]</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the variable that contains the name of the database object used to open a rowset."
+                      name="OpenRowsetVariable"></property>
+                    <property
+                      dataType="System.String"
+                      description="The SQL command to be executed."
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the column code page to use when code page information is unavailable from the data source."
+                      name="DefaultCodePage">1251</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Forces the use of the DefaultCodePage property value when describing character data."
+                      name="AlwaysUseDefaultCodePage">false</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the mode used to access the database."
+                      name="AccessMode"
+                      typeConverter="AccessMode">3</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                      name="FastLoadKeepIdentity">false</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                      name="FastLoadKeepNulls">false</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                      name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                      name="FastLoadMaxInsertCommitSize">2147483647</property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\LoaddiSellTypeData\diSellType\OLE DB Destination.Connections[OleDbConnection]"
+                      connectionManagerID="{F3FF52B2-226D-4CBC-BDFC-F604DDDDFEB3}:invalid"
+                      connectionManagerRefId="{F3FF52B2-226D-4CBC-BDFC-F604DDDDFEB3}:invalid"
+                      description="The OLE DB runtime connection used to access the database."
+                      name="OleDbConnection" />
+                  </connections>
+                  <inputs>
+                    <input
+                      refId="Package\LoaddiSellTypeData\diSellType\OLE DB Destination.Inputs[OLE DB Destination Input]"
+                      errorOrTruncationOperation="Insert"
+                      errorRowDisposition="FailComponent"
+                      hasSideEffects="true"
+                      name="OLE DB Destination Input">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\LoaddiSellTypeData\diSellType\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[diSellType]"
+                          cachedDataType="bool"
+                          cachedName="diSellType"
+                          externalMetadataColumnId="Package\LoaddiSellTypeData\diSellType\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[diSellType]"
+                          lineageId="Package\LoaddiSellTypeData\diSellType\diSellType.Outputs[OLE DB Source Output].Columns[diSellType]" />
+                        <inputColumn
+                          refId="Package\LoaddiSellTypeData\diSellType\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[diSellTypeName]"
+                          cachedDataType="wstr"
+                          cachedLength="10"
+                          cachedName="diSellTypeName"
+                          externalMetadataColumnId="Package\LoaddiSellTypeData\diSellType\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[diSellTypeName]"
+                          lineageId="Package\LoaddiSellTypeData\diSellType\diSellType.Outputs[OLE DB Source Output].Columns[diSellTypeName]" />
+                      </inputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\LoaddiSellTypeData\diSellType\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[diSellType]"
+                          dataType="bool"
+                          name="diSellType" />
+                        <externalMetadataColumn
+                          refId="Package\LoaddiSellTypeData\diSellType\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[diSellTypeName]"
+                          dataType="wstr"
+                          length="10"
+                          name="diSellTypeName" />
+                      </externalMetadataColumns>
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\LoaddiSellTypeData\diSellType\OLE DB Destination.Outputs[OLE DB Destination Error Output]"
+                      exclusionGroup="1"
+                      isErrorOut="true"
+                      name="OLE DB Destination Error Output"
+                      synchronousInputId="Package\LoaddiSellTypeData\diSellType\OLE DB Destination.Inputs[OLE DB Destination Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\LoaddiSellTypeData\diSellType\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\LoaddiSellTypeData\diSellType\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\LoaddiSellTypeData\diSellType\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\LoaddiSellTypeData\diSellType\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+              </components>
+              <paths>
+                <path
+                  refId="Package\LoaddiSellTypeData\diSellType.Paths[OLE DB Source Output]"
+                  endId="Package\LoaddiSellTypeData\diSellType\OLE DB Destination.Inputs[OLE DB Destination Input]"
+                  name="OLE DB Source Output"
+                  startId="Package\LoaddiSellTypeData\diSellType\diSellType.Outputs[OLE DB Source Output]" />
+              </paths>
+            </pipeline>
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\LoaddiSellTypeData\Truncate stg_diSellType"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:DTSID="{20DFB2DD-F5B0-4D2D-906E-B3F04615E129}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Truncate stg_diSellType"
+          DTS:ThreadHint="2">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{F3FF52B2-226D-4CBC-BDFC-F604DDDDFEB3}"
+              SQLTask:SqlStatementSource="TRUNCATE TABLE stg.diSellType" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+      <DTS:PrecedenceConstraints>
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\LoaddiSellTypeData.PrecedenceConstraints[Constraint]"
+          DTS:CreationName=""
+          DTS:DTSID="{FBF2400E-D125-40DE-8C6F-61E54FEE2CE7}"
+          DTS:From="Package\LoaddiSellTypeData\Truncate stg_diSellType"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint"
+          DTS:To="Package\LoaddiSellTypeData\diSellType" />
+      </DTS:PrecedenceConstraints>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\LoaddiTypeData"
+      DTS:CreationName="STOCK:SEQUENCE"
+      DTS:Description="Sequence Container"
+      DTS:DTSID="{BF36D51A-7708-4021-87B6-81A98EB23963}"
+      DTS:ExecutableType="STOCK:SEQUENCE"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="LoaddiTypeData">
+      <DTS:Variables />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\LoaddiTypeData\diType"
+          DTS:CreationName="Microsoft.Pipeline"
+          DTS:DelayValidation="True"
+          DTS:DTSID="{9167544d-654e-4b44-83f7-c416b4b143b7}"
+          DTS:ExecutableType="Microsoft.Pipeline"
+          DTS:FailPackageOnFailure="True"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="diType"
+          DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <pipeline
+              defaultBufferSize="3145728"
+              version="1">
+              <components>
+                <component
+                  refId="Package\LoaddiTypeData\diType\diType"
+                  componentClassID="Microsoft.OLEDBSource"
+                  contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+                  description="OLE DB Source"
+                  name="diType"
+                  usesDispositions="true"
+                  version="7">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                      name="CommandTimeout">0</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the name of the database object used to open a rowset."
+                      name="OpenRowset">[Valeant].[diType]</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the variable that contains the name of the database object used to open a rowset."
+                      name="OpenRowsetVariable"></property>
+                    <property
+                      dataType="System.String"
+                      description="The SQL command to be executed."
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                    <property
+                      dataType="System.String"
+                      description="The variable that contains the SQL command to be executed."
+                      name="SqlCommandVariable"></property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the column code page to use when code page information is unavailable from the data source."
+                      name="DefaultCodePage">1251</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Forces the use of the DefaultCodePage property value when describing character data."
+                      name="AlwaysUseDefaultCodePage">false</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the mode used to access the database."
+                      name="AccessMode"
+                      typeConverter="AccessMode">0</property>
+                    <property
+                      dataType="System.String"
+                      description="The mappings between the parameters in the SQL command and variables."
+                      name="ParameterMapping"></property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\LoaddiTypeData\diType\diType.Connections[OleDbConnection]"
+                      connectionManagerID="{F9BEB98F-BB20-4EA6-896E-43F424A8F2D8}:invalid"
+                      connectionManagerRefId="{F9BEB98F-BB20-4EA6-896E-43F424A8F2D8}:invalid"
+                      description="The OLE DB runtime connection used to access the database."
+                      name="OleDbConnection" />
+                  </connections>
+                  <outputs>
+                    <output
+                      refId="Package\LoaddiTypeData\diType\diType.Outputs[OLE DB Source Output]"
+                      name="OLE DB Source Output">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\LoaddiTypeData\diType\diType.Outputs[OLE DB Source Output].Columns[diType]"
+                          dataType="i2"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\LoaddiTypeData\diType\diType.Outputs[OLE DB Source Output].ExternalColumns[diType]"
+                          lineageId="Package\LoaddiTypeData\diType\diType.Outputs[OLE DB Source Output].Columns[diType]"
+                          name="diType"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\LoaddiTypeData\diType\diType.Outputs[OLE DB Source Output].Columns[diTypeName]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\LoaddiTypeData\diType\diType.Outputs[OLE DB Source Output].ExternalColumns[diTypeName]"
+                          length="10"
+                          lineageId="Package\LoaddiTypeData\diType\diType.Outputs[OLE DB Source Output].Columns[diTypeName]"
+                          name="diTypeName"
+                          truncationRowDisposition="FailComponent" />
+                      </outputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\LoaddiTypeData\diType\diType.Outputs[OLE DB Source Output].ExternalColumns[diType]"
+                          dataType="i2"
+                          name="diType" />
+                        <externalMetadataColumn
+                          refId="Package\LoaddiTypeData\diType\diType.Outputs[OLE DB Source Output].ExternalColumns[diTypeName]"
+                          dataType="wstr"
+                          length="10"
+                          name="diTypeName" />
+                      </externalMetadataColumns>
+                    </output>
+                    <output
+                      refId="Package\LoaddiTypeData\diType\diType.Outputs[OLE DB Source Error Output]"
+                      isErrorOut="true"
+                      name="OLE DB Source Error Output">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\LoaddiTypeData\diType\diType.Outputs[OLE DB Source Error Output].Columns[diType]"
+                          dataType="i2"
+                          lineageId="Package\LoaddiTypeData\diType\diType.Outputs[OLE DB Source Error Output].Columns[diType]"
+                          name="diType" />
+                        <outputColumn
+                          refId="Package\LoaddiTypeData\diType\diType.Outputs[OLE DB Source Error Output].Columns[diTypeName]"
+                          dataType="wstr"
+                          length="10"
+                          lineageId="Package\LoaddiTypeData\diType\diType.Outputs[OLE DB Source Error Output].Columns[diTypeName]"
+                          name="diTypeName" />
+                        <outputColumn
+                          refId="Package\LoaddiTypeData\diType\diType.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\LoaddiTypeData\diType\diType.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\LoaddiTypeData\diType\diType.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\LoaddiTypeData\diType\diType.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\LoaddiTypeData\diType\OLE DB Destination 1"
+                  componentClassID="Microsoft.OLEDBDestination"
+                  contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+                  description="OLE DB Destination"
+                  name="OLE DB Destination 1"
+                  usesDispositions="true"
+                  version="4">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                      name="CommandTimeout">0</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the name of the database object used to open a rowset."
+                      name="OpenRowset">[stg].[diType]</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the variable that contains the name of the database object used to open a rowset."
+                      name="OpenRowsetVariable"></property>
+                    <property
+                      dataType="System.String"
+                      description="The SQL command to be executed."
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the column code page to use when code page information is unavailable from the data source."
+                      name="DefaultCodePage">1251</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Forces the use of the DefaultCodePage property value when describing character data."
+                      name="AlwaysUseDefaultCodePage">false</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the mode used to access the database."
+                      name="AccessMode"
+                      typeConverter="AccessMode">3</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                      name="FastLoadKeepIdentity">false</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                      name="FastLoadKeepNulls">false</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                      name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                      name="FastLoadMaxInsertCommitSize">2147483647</property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\LoaddiTypeData\diType\OLE DB Destination 1.Connections[OleDbConnection]"
+                      connectionManagerID="{F3FF52B2-226D-4CBC-BDFC-F604DDDDFEB3}:invalid"
+                      connectionManagerRefId="{F3FF52B2-226D-4CBC-BDFC-F604DDDDFEB3}:invalid"
+                      description="The OLE DB runtime connection used to access the database."
+                      name="OleDbConnection" />
+                  </connections>
+                  <inputs>
+                    <input
+                      refId="Package\LoaddiTypeData\diType\OLE DB Destination 1.Inputs[OLE DB Destination Input]"
+                      errorOrTruncationOperation="Insert"
+                      errorRowDisposition="FailComponent"
+                      hasSideEffects="true"
+                      name="OLE DB Destination Input">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\LoaddiTypeData\diType\OLE DB Destination 1.Inputs[OLE DB Destination Input].Columns[diType]"
+                          cachedDataType="i2"
+                          cachedName="diType"
+                          externalMetadataColumnId="Package\LoaddiTypeData\diType\OLE DB Destination 1.Inputs[OLE DB Destination Input].ExternalColumns[diType]"
+                          lineageId="Package\LoaddiTypeData\diType\diType.Outputs[OLE DB Source Output].Columns[diType]" />
+                        <inputColumn
+                          refId="Package\LoaddiTypeData\diType\OLE DB Destination 1.Inputs[OLE DB Destination Input].Columns[diTypeName]"
+                          cachedDataType="wstr"
+                          cachedLength="10"
+                          cachedName="diTypeName"
+                          externalMetadataColumnId="Package\LoaddiTypeData\diType\OLE DB Destination 1.Inputs[OLE DB Destination Input].ExternalColumns[diTypeName]"
+                          lineageId="Package\LoaddiTypeData\diType\diType.Outputs[OLE DB Source Output].Columns[diTypeName]" />
+                      </inputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\LoaddiTypeData\diType\OLE DB Destination 1.Inputs[OLE DB Destination Input].ExternalColumns[diType]"
+                          dataType="i2"
+                          name="diType" />
+                        <externalMetadataColumn
+                          refId="Package\LoaddiTypeData\diType\OLE DB Destination 1.Inputs[OLE DB Destination Input].ExternalColumns[diTypeName]"
+                          dataType="wstr"
+                          length="10"
+                          name="diTypeName" />
+                      </externalMetadataColumns>
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\LoaddiTypeData\diType\OLE DB Destination 1.Outputs[OLE DB Destination Error Output]"
+                      exclusionGroup="1"
+                      isErrorOut="true"
+                      name="OLE DB Destination Error Output"
+                      synchronousInputId="Package\LoaddiTypeData\diType\OLE DB Destination 1.Inputs[OLE DB Destination Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\LoaddiTypeData\diType\OLE DB Destination 1.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\LoaddiTypeData\diType\OLE DB Destination 1.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\LoaddiTypeData\diType\OLE DB Destination 1.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\LoaddiTypeData\diType\OLE DB Destination 1.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+              </components>
+              <paths>
+                <path
+                  refId="Package\LoaddiTypeData\diType.Paths[OLE DB Source Output]"
+                  endId="Package\LoaddiTypeData\diType\OLE DB Destination 1.Inputs[OLE DB Destination Input]"
+                  name="OLE DB Source Output"
+                  startId="Package\LoaddiTypeData\diType\diType.Outputs[OLE DB Source Output]" />
+              </paths>
+            </pipeline>
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\LoaddiTypeData\Truncate stg_diType"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:DTSID="{8927445B-F4BE-4599-9A30-72E4ABC6DCB5}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Truncate stg_diType"
+          DTS:ThreadHint="3">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{F3FF52B2-226D-4CBC-BDFC-F604DDDDFEB3}"
+              SQLTask:SqlStatementSource="TRUNCATE TABLE stg.diType" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+      <DTS:PrecedenceConstraints>
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\LoaddiTypeData.PrecedenceConstraints[Constraint]"
+          DTS:CreationName=""
+          DTS:DTSID="{63ABF033-835E-4BC4-8002-5C1DE56BC9D8}"
+          DTS:From="Package\LoaddiTypeData\Truncate stg_diType"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint"
+          DTS:To="Package\LoaddiTypeData\diType" />
+      </DTS:PrecedenceConstraints>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\LoadINNGroupData"
+      DTS:CreationName="STOCK:SEQUENCE"
+      DTS:Description="Sequence Container"
+      DTS:DTSID="{8A71690B-FD16-4E1F-8655-963A998198A8}"
+      DTS:ExecutableType="STOCK:SEQUENCE"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="LoadINNGroupData">
+      <DTS:Variables />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\LoadINNGroupData\INNGroup"
+          DTS:CreationName="Microsoft.Pipeline"
+          DTS:DelayValidation="True"
+          DTS:Description="Data Flow Task"
+          DTS:DTSID="{1e6ffde9-37e3-4ea4-ba4d-277820bc1360}"
+          DTS:ExecutableType="Microsoft.Pipeline"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="INNGroup"
+          DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <pipeline
+              version="1">
+              <components>
+                <component
+                  refId="Package\LoadINNGroupData\INNGroup\OLE DB Destination"
+                  componentClassID="Microsoft.OLEDBDestination"
+                  contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+                  description="OLE DB Destination"
+                  name="OLE DB Destination"
+                  usesDispositions="true"
+                  version="4">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                      name="CommandTimeout">0</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the name of the database object used to open a rowset."
+                      name="OpenRowset">[stg].[INNGroup]</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the variable that contains the name of the database object used to open a rowset."
+                      name="OpenRowsetVariable"></property>
+                    <property
+                      dataType="System.String"
+                      description="The SQL command to be executed."
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the column code page to use when code page information is unavailable from the data source."
+                      name="DefaultCodePage">1251</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Forces the use of the DefaultCodePage property value when describing character data."
+                      name="AlwaysUseDefaultCodePage">false</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the mode used to access the database."
+                      name="AccessMode"
+                      typeConverter="AccessMode">3</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                      name="FastLoadKeepIdentity">false</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                      name="FastLoadKeepNulls">false</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                      name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                      name="FastLoadMaxInsertCommitSize">2147483647</property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\LoadINNGroupData\INNGroup\OLE DB Destination.Connections[OleDbConnection]"
+                      connectionManagerID="{F3FF52B2-226D-4CBC-BDFC-F604DDDDFEB3}:invalid"
+                      connectionManagerRefId="{F3FF52B2-226D-4CBC-BDFC-F604DDDDFEB3}:invalid"
+                      description="The OLE DB runtime connection used to access the database."
+                      name="OleDbConnection" />
+                  </connections>
+                  <inputs>
+                    <input
+                      refId="Package\LoadINNGroupData\INNGroup\OLE DB Destination.Inputs[OLE DB Destination Input]"
+                      errorOrTruncationOperation="Insert"
+                      errorRowDisposition="FailComponent"
+                      hasSideEffects="true"
+                      name="OLE DB Destination Input">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\LoadINNGroupData\INNGroup\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Id]"
+                          cachedDataType="i8"
+                          cachedName="Id"
+                          externalMetadataColumnId="Package\LoadINNGroupData\INNGroup\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Id]"
+                          lineageId="Package\LoadINNGroupData\INNGroup\OLE DB Source.Outputs[OLE DB Source Output].Columns[Id]" />
+                        <inputColumn
+                          refId="Package\LoadINNGroupData\INNGroup\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Description]"
+                          cachedDataType="wstr"
+                          cachedLength="1000"
+                          cachedName="Description"
+                          externalMetadataColumnId="Package\LoadINNGroupData\INNGroup\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Description]"
+                          lineageId="Package\LoadINNGroupData\INNGroup\OLE DB Source.Outputs[OLE DB Source Output].Columns[Description]" />
+                      </inputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\LoadINNGroupData\INNGroup\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Id]"
+                          dataType="i4"
+                          name="Id" />
+                        <externalMetadataColumn
+                          refId="Package\LoadINNGroupData\INNGroup\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Description]"
+                          dataType="wstr"
+                          length="1000"
+                          name="Description" />
+                      </externalMetadataColumns>
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\LoadINNGroupData\INNGroup\OLE DB Destination.Outputs[OLE DB Destination Error Output]"
+                      exclusionGroup="1"
+                      isErrorOut="true"
+                      name="OLE DB Destination Error Output"
+                      synchronousInputId="Package\LoadINNGroupData\INNGroup\OLE DB Destination.Inputs[OLE DB Destination Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\LoadINNGroupData\INNGroup\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\LoadINNGroupData\INNGroup\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\LoadINNGroupData\INNGroup\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\LoadINNGroupData\INNGroup\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\LoadINNGroupData\INNGroup\OLE DB Source"
+                  componentClassID="Microsoft.OLEDBSource"
+                  contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+                  description="OLE DB Source"
+                  name="OLE DB Source"
+                  usesDispositions="true"
+                  version="7">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                      name="CommandTimeout">0</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the name of the database object used to open a rowset."
+                      name="OpenRowset">[Valeant].[INNGroup]</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the variable that contains the name of the database object used to open a rowset."
+                      name="OpenRowsetVariable"></property>
+                    <property
+                      dataType="System.String"
+                      description="The SQL command to be executed."
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                    <property
+                      dataType="System.String"
+                      description="The variable that contains the SQL command to be executed."
+                      name="SqlCommandVariable"></property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the column code page to use when code page information is unavailable from the data source."
+                      name="DefaultCodePage">1251</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Forces the use of the DefaultCodePage property value when describing character data."
+                      name="AlwaysUseDefaultCodePage">false</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the mode used to access the database."
+                      name="AccessMode"
+                      typeConverter="AccessMode">0</property>
+                    <property
+                      dataType="System.String"
+                      description="The mappings between the parameters in the SQL command and variables."
+                      name="ParameterMapping"></property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\LoadINNGroupData\INNGroup\OLE DB Source.Connections[OleDbConnection]"
+                      connectionManagerID="{F9BEB98F-BB20-4EA6-896E-43F424A8F2D8}:invalid"
+                      connectionManagerRefId="{F9BEB98F-BB20-4EA6-896E-43F424A8F2D8}:invalid"
+                      description="The OLE DB runtime connection used to access the database."
+                      name="OleDbConnection" />
+                  </connections>
+                  <outputs>
+                    <output
+                      refId="Package\LoadINNGroupData\INNGroup\OLE DB Source.Outputs[OLE DB Source Output]"
+                      name="OLE DB Source Output">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\LoadINNGroupData\INNGroup\OLE DB Source.Outputs[OLE DB Source Output].Columns[Id]"
+                          dataType="i8"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\LoadINNGroupData\INNGroup\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Id]"
+                          lineageId="Package\LoadINNGroupData\INNGroup\OLE DB Source.Outputs[OLE DB Source Output].Columns[Id]"
+                          name="Id"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\LoadINNGroupData\INNGroup\OLE DB Source.Outputs[OLE DB Source Output].Columns[Description]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\LoadINNGroupData\INNGroup\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Description]"
+                          length="1000"
+                          lineageId="Package\LoadINNGroupData\INNGroup\OLE DB Source.Outputs[OLE DB Source Output].Columns[Description]"
+                          name="Description"
+                          truncationRowDisposition="FailComponent" />
+                      </outputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\LoadINNGroupData\INNGroup\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Id]"
+                          dataType="i8"
+                          name="Id" />
+                        <externalMetadataColumn
+                          refId="Package\LoadINNGroupData\INNGroup\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Description]"
+                          dataType="wstr"
+                          length="300"
+                          name="Description" />
+                      </externalMetadataColumns>
+                    </output>
+                    <output
+                      refId="Package\LoadINNGroupData\INNGroup\OLE DB Source.Outputs[OLE DB Source Error Output]"
+                      isErrorOut="true"
+                      name="OLE DB Source Error Output">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\LoadINNGroupData\INNGroup\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Id]"
+                          dataType="i8"
+                          lineageId="Package\LoadINNGroupData\INNGroup\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Id]"
+                          name="Id" />
+                        <outputColumn
+                          refId="Package\LoadINNGroupData\INNGroup\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Description]"
+                          dataType="wstr"
+                          length="300"
+                          lineageId="Package\LoadINNGroupData\INNGroup\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Description]"
+                          name="Description" />
+                        <outputColumn
+                          refId="Package\LoadINNGroupData\INNGroup\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\LoadINNGroupData\INNGroup\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\LoadINNGroupData\INNGroup\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\LoadINNGroupData\INNGroup\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+              </components>
+              <paths>
+                <path
+                  refId="Package\LoadINNGroupData\INNGroup.Paths[OLE DB Source Output]"
+                  endId="Package\LoadINNGroupData\INNGroup\OLE DB Destination.Inputs[OLE DB Destination Input]"
+                  name="OLE DB Source Output"
+                  startId="Package\LoadINNGroupData\INNGroup\OLE DB Source.Outputs[OLE DB Source Output]" />
+              </paths>
+            </pipeline>
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\LoadINNGroupData\Truncate stg_INNGroup"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:DTSID="{D3F0F305-3C0E-4317-A484-99289DC50869}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Truncate stg_INNGroup"
+          DTS:ThreadHint="4">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{F3FF52B2-226D-4CBC-BDFC-F604DDDDFEB3}"
+              SQLTask:SqlStatementSource="TRUNCATE TABLE stg.INNGroup" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+      <DTS:PrecedenceConstraints>
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\LoadINNGroupData.PrecedenceConstraints[Constraint]"
+          DTS:CreationName=""
+          DTS:DTSID="{5890DB04-DA9A-4495-AFBD-3B178382175E}"
+          DTS:From="Package\LoadINNGroupData\Truncate stg_INNGroup"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint"
+          DTS:To="Package\LoadINNGroupData\INNGroup" />
+      </DTS:PrecedenceConstraints>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\LoadwdiSellTypeData"
+      DTS:CreationName="STOCK:SEQUENCE"
+      DTS:Description="Sequence Container"
+      DTS:DTSID="{30E0BB0F-3921-4D5D-BC07-5C5741853031}"
+      DTS:ExecutableType="STOCK:SEQUENCE"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="LoadwdiSellTypeData">
+      <DTS:Variables />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\LoadwdiSellTypeData\Truncate stg_wdiSellType"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:DTSID="{21C45FD0-9B2E-4EA0-A386-4CCB0C8238A8}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Truncate stg_wdiSellType"
+          DTS:ThreadHint="5">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{F3FF52B2-226D-4CBC-BDFC-F604DDDDFEB3}"
+              SQLTask:SqlStatementSource="TRUNCATE TABLE stg.wdiSellType" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\LoadwdiSellTypeData\wdiSellType"
+          DTS:CreationName="Microsoft.Pipeline"
+          DTS:DelayValidation="True"
+          DTS:DTSID="{faf1b713-8d90-445c-be17-1673a509c833}"
+          DTS:ExecutableType="Microsoft.Pipeline"
+          DTS:FailPackageOnFailure="True"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="wdiSellType"
+          DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <pipeline
+              defaultBufferSize="3145728"
+              version="1">
+              <components>
+                <component
+                  refId="Package\LoadwdiSellTypeData\wdiSellType\OLE DB Destination"
+                  componentClassID="Microsoft.OLEDBDestination"
+                  contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+                  description="OLE DB Destination"
+                  name="OLE DB Destination"
+                  usesDispositions="true"
+                  version="4">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                      name="CommandTimeout">0</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the name of the database object used to open a rowset."
+                      name="OpenRowset">[stg].[wdiSellType]</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the variable that contains the name of the database object used to open a rowset."
+                      name="OpenRowsetVariable"></property>
+                    <property
+                      dataType="System.String"
+                      description="The SQL command to be executed."
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the column code page to use when code page information is unavailable from the data source."
+                      name="DefaultCodePage">1251</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Forces the use of the DefaultCodePage property value when describing character data."
+                      name="AlwaysUseDefaultCodePage">false</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the mode used to access the database."
+                      name="AccessMode"
+                      typeConverter="AccessMode">3</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                      name="FastLoadKeepIdentity">false</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                      name="FastLoadKeepNulls">false</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                      name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                      name="FastLoadMaxInsertCommitSize">2147483647</property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\LoadwdiSellTypeData\wdiSellType\OLE DB Destination.Connections[OleDbConnection]"
+                      connectionManagerID="{F3FF52B2-226D-4CBC-BDFC-F604DDDDFEB3}:invalid"
+                      connectionManagerRefId="{F3FF52B2-226D-4CBC-BDFC-F604DDDDFEB3}:invalid"
+                      description="The OLE DB runtime connection used to access the database."
+                      name="OleDbConnection" />
+                  </connections>
+                  <inputs>
+                    <input
+                      refId="Package\LoadwdiSellTypeData\wdiSellType\OLE DB Destination.Inputs[OLE DB Destination Input]"
+                      errorOrTruncationOperation="Insert"
+                      errorRowDisposition="FailComponent"
+                      hasSideEffects="true"
+                      name="OLE DB Destination Input">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\LoadwdiSellTypeData\wdiSellType\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[wdiSellTypeName]"
+                          cachedDataType="wstr"
+                          cachedLength="50"
+                          cachedName="wdiSellTypeName"
+                          externalMetadataColumnId="Package\LoadwdiSellTypeData\wdiSellType\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[wdiSellTypeName]"
+                          lineageId="Package\LoadwdiSellTypeData\wdiSellType\wdiSellType.Outputs[OLE DB Source Output].Columns[wdiSellTypeName]" />
+                        <inputColumn
+                          refId="Package\LoadwdiSellTypeData\wdiSellType\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[wdiSellType]"
+                          cachedDataType="i2"
+                          cachedName="wdiSellType"
+                          externalMetadataColumnId="Package\LoadwdiSellTypeData\wdiSellType\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[wdiSellType]"
+                          lineageId="Package\LoadwdiSellTypeData\wdiSellType\wdiSellType.Outputs[OLE DB Source Output].Columns[wdiSellType]" />
+                      </inputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\LoadwdiSellTypeData\wdiSellType\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[wdiSellTypeName]"
+                          dataType="wstr"
+                          length="50"
+                          name="wdiSellTypeName" />
+                        <externalMetadataColumn
+                          refId="Package\LoadwdiSellTypeData\wdiSellType\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[wdiSellType]"
+                          dataType="i2"
+                          name="wdiSellType" />
+                      </externalMetadataColumns>
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\LoadwdiSellTypeData\wdiSellType\OLE DB Destination.Outputs[OLE DB Destination Error Output]"
+                      exclusionGroup="1"
+                      isErrorOut="true"
+                      name="OLE DB Destination Error Output"
+                      synchronousInputId="Package\LoadwdiSellTypeData\wdiSellType\OLE DB Destination.Inputs[OLE DB Destination Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\LoadwdiSellTypeData\wdiSellType\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\LoadwdiSellTypeData\wdiSellType\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\LoadwdiSellTypeData\wdiSellType\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\LoadwdiSellTypeData\wdiSellType\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\LoadwdiSellTypeData\wdiSellType\wdiSellType"
+                  componentClassID="Microsoft.OLEDBSource"
+                  contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+                  description="OLE DB Source"
+                  name="wdiSellType"
+                  usesDispositions="true"
+                  version="7">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                      name="CommandTimeout">0</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the name of the database object used to open a rowset."
+                      name="OpenRowset">[Valeant].[wdiSellType]</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the variable that contains the name of the database object used to open a rowset."
+                      name="OpenRowsetVariable"></property>
+                    <property
+                      dataType="System.String"
+                      description="The SQL command to be executed."
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                    <property
+                      dataType="System.String"
+                      description="The variable that contains the SQL command to be executed."
+                      name="SqlCommandVariable"></property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the column code page to use when code page information is unavailable from the data source."
+                      name="DefaultCodePage">1251</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Forces the use of the DefaultCodePage property value when describing character data."
+                      name="AlwaysUseDefaultCodePage">false</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the mode used to access the database."
+                      name="AccessMode"
+                      typeConverter="AccessMode">0</property>
+                    <property
+                      dataType="System.String"
+                      description="The mappings between the parameters in the SQL command and variables."
+                      name="ParameterMapping"></property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\LoadwdiSellTypeData\wdiSellType\wdiSellType.Connections[OleDbConnection]"
+                      connectionManagerID="{F9BEB98F-BB20-4EA6-896E-43F424A8F2D8}:invalid"
+                      connectionManagerRefId="{F9BEB98F-BB20-4EA6-896E-43F424A8F2D8}:invalid"
+                      description="The OLE DB runtime connection used to access the database."
+                      name="OleDbConnection" />
+                  </connections>
+                  <outputs>
+                    <output
+                      refId="Package\LoadwdiSellTypeData\wdiSellType\wdiSellType.Outputs[OLE DB Source Output]"
+                      name="OLE DB Source Output">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\LoadwdiSellTypeData\wdiSellType\wdiSellType.Outputs[OLE DB Source Output].Columns[wdiSellTypeName]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\LoadwdiSellTypeData\wdiSellType\wdiSellType.Outputs[OLE DB Source Output].ExternalColumns[wdiSellTypeName]"
+                          length="50"
+                          lineageId="Package\LoadwdiSellTypeData\wdiSellType\wdiSellType.Outputs[OLE DB Source Output].Columns[wdiSellTypeName]"
+                          name="wdiSellTypeName"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\LoadwdiSellTypeData\wdiSellType\wdiSellType.Outputs[OLE DB Source Output].Columns[wdiSellType]"
+                          dataType="i2"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\LoadwdiSellTypeData\wdiSellType\wdiSellType.Outputs[OLE DB Source Output].ExternalColumns[wdiSellType]"
+                          lineageId="Package\LoadwdiSellTypeData\wdiSellType\wdiSellType.Outputs[OLE DB Source Output].Columns[wdiSellType]"
+                          name="wdiSellType"
+                          truncationRowDisposition="FailComponent" />
+                      </outputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\LoadwdiSellTypeData\wdiSellType\wdiSellType.Outputs[OLE DB Source Output].ExternalColumns[wdiSellTypeName]"
+                          dataType="wstr"
+                          length="50"
+                          name="wdiSellTypeName" />
+                        <externalMetadataColumn
+                          refId="Package\LoadwdiSellTypeData\wdiSellType\wdiSellType.Outputs[OLE DB Source Output].ExternalColumns[wdiSellType]"
+                          dataType="i2"
+                          name="wdiSellType" />
+                      </externalMetadataColumns>
+                    </output>
+                    <output
+                      refId="Package\LoadwdiSellTypeData\wdiSellType\wdiSellType.Outputs[OLE DB Source Error Output]"
+                      isErrorOut="true"
+                      name="OLE DB Source Error Output">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\LoadwdiSellTypeData\wdiSellType\wdiSellType.Outputs[OLE DB Source Error Output].Columns[wdiSellType]"
+                          dataType="i2"
+                          lineageId="Package\LoadwdiSellTypeData\wdiSellType\wdiSellType.Outputs[OLE DB Source Error Output].Columns[wdiSellType]"
+                          name="wdiSellType" />
+                        <outputColumn
+                          refId="Package\LoadwdiSellTypeData\wdiSellType\wdiSellType.Outputs[OLE DB Source Error Output].Columns[wdiSellTypeName]"
+                          dataType="wstr"
+                          length="50"
+                          lineageId="Package\LoadwdiSellTypeData\wdiSellType\wdiSellType.Outputs[OLE DB Source Error Output].Columns[wdiSellTypeName]"
+                          name="wdiSellTypeName" />
+                        <outputColumn
+                          refId="Package\LoadwdiSellTypeData\wdiSellType\wdiSellType.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\LoadwdiSellTypeData\wdiSellType\wdiSellType.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\LoadwdiSellTypeData\wdiSellType\wdiSellType.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\LoadwdiSellTypeData\wdiSellType\wdiSellType.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+              </components>
+              <paths>
+                <path
+                  refId="Package\LoadwdiSellTypeData\wdiSellType.Paths[OLE DB Source Output]"
+                  endId="Package\LoadwdiSellTypeData\wdiSellType\OLE DB Destination.Inputs[OLE DB Destination Input]"
+                  name="OLE DB Source Output"
+                  startId="Package\LoadwdiSellTypeData\wdiSellType\wdiSellType.Outputs[OLE DB Source Output]" />
+              </paths>
+            </pipeline>
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+      <DTS:PrecedenceConstraints>
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\LoadwdiSellTypeData.PrecedenceConstraints[Constraint]"
+          DTS:CreationName=""
+          DTS:DTSID="{B2CE9BFE-2B0C-49DA-B781-6607D5A1F322}"
+          DTS:From="Package\LoadwdiSellTypeData\Truncate stg_wdiSellType"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint"
+          DTS:To="Package\LoadwdiSellTypeData\wdiSellType" />
+      </DTS:PrecedenceConstraints>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{F29B1040-1D76-4A0C-96B0-A33473E11666}"
+      DTS:EvalOp="3"
+      DTS:Expression="@[User::diTypeDataExists] ==1"
+      DTS:From="Package\CheckdiTypeDataExists"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\LoaddiTypeData" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{D05D6505-7688-4BDD-B247-5D4E619C3870}"
+      DTS:EvalOp="3"
+      DTS:Expression="@[User::diSellTypeDataExists] == 1"
+      DTS:From="Package\CheckdiSellTypeDataExists"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\LoaddiSellTypeData" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
+      DTS:CreationName=""
+      DTS:DTSID="{5EAF4516-75E2-4B64-BDCA-4ABD94620250}"
+      DTS:EvalOp="3"
+      DTS:Expression="@[User::wdiSellTypeDataExists] == 1"
+      DTS:From="Package\CheckwdiSellTypeDataExists"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2"
+      DTS:To="Package\LoadwdiSellTypeData" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 3]"
+      DTS:CreationName=""
+      DTS:DTSID="{65C669FB-BC65-4CA7-8AE2-F4E836528D1D}"
+      DTS:EvalOp="3"
+      DTS:Expression="@[User::diBricksDataExists] == 1"
+      DTS:From="Package\CheckdiBricksDataExists"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 3"
+      DTS:To="Package\LoaddiBricksData" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 4]"
+      DTS:CreationName=""
+      DTS:DTSID="{60885AB9-E774-4E81-BFD3-4732980C80E6}"
+      DTS:EvalOp="3"
+      DTS:Expression="@[User::BrandDataExists] == 1"
+      DTS:From="Package\CheckBrandDataExists"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 4"
+      DTS:To="Package\LoadBrandData" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 5]"
+      DTS:CreationName=""
+      DTS:DTSID="{EA9C2310-1D92-4166-9A3A-9628B1410DA3}"
+      DTS:EvalOp="3"
+      DTS:Expression="@[User::INNGroupDataExists] == 1"
+      DTS:From="Package\CheckINNGroupDataExists"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 5"
+      DTS:To="Package\LoadINNGroupData" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="64" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="184,42"
+          Id="Package\CheckBrandDataExists"
+          TopLeft="983,76" />
+        <NodeLayout
+          Size="192,42"
+          Id="Package\CheckdiBricksDataExists"
+          TopLeft="725,76" />
+        <NodeLayout
+          Size="206,42"
+          Id="Package\CheckdiSellTypeDataExists"
+          TopLeft="260,76" />
+        <NodeLayout
+          Size="187,42"
+          Id="Package\CheckdiTypeDataExists"
+          TopLeft="54,76" />
+        <NodeLayout
+          Size="203,42"
+          Id="Package\CheckINNGroupDataExists"
+          TopLeft="1218,76" />
+        <NodeLayout
+          Size="172,42"
+          Id="Package\CheckwdiSellTypeDataExists"
+          TopLeft="499,76" />
+        <NodeLayout
+          Size="163,42"
+          Id="Package\LoadBrandData\Truncate stg_Brand"
+          TopLeft="32,12" />
+        <NodeLayout
+          Size="107,42"
+          Id="Package\LoadBrandData\Brand"
+          TopLeft="72.5,85" />
+        <EdgeLayout
+          Id="Package\LoadBrandData.PrecedenceConstraints[Constraint]"
+          TopLeft="113.5,54">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="12.5,31"
+              Start="0,0"
+              End="12.5,23.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,11.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,11.5"
+                    Point2="0,15.5"
+                    Point3="4,15.5" />
+                  <mssgle:LineSegment
+                    End="8.5,15.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="8.5,15.5"
+                    Point2="12.5,15.5"
+                    Point3="12.5,19.5" />
+                  <mssgle:LineSegment
+                    End="12.5,23.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="244,179"
+          Size="244,222"
+          Id="Package\LoadBrandData"
+          TopLeft="950.6,155" />
+        <NodeLayout
+          Size="163,42"
+          Id="Package\LoaddiBricksData\Truncate stg_diBricks"
+          TopLeft="27,11" />
+        <NodeLayout
+          Size="115,42"
+          Id="Package\LoaddiBricksData\diBricks"
+          TopLeft="50,92" />
+        <EdgeLayout
+          Id="Package\LoaddiBricksData.PrecedenceConstraints[Constraint]"
+          TopLeft="108,53">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,39"
+              Start="0,0"
+              End="0,31.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,31.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="231,189"
+          Size="231,232"
+          Id="Package\LoaddiBricksData"
+          TopLeft="709.2,155" />
+        <NodeLayout
+          Size="127,42"
+          Id="Package\LoaddiSellTypeData\diSellType"
+          TopLeft="32,81" />
+        <NodeLayout
+          Size="163,42"
+          Id="Package\LoaddiSellTypeData\Truncate stg_diSellType"
+          TopLeft="19,12" />
+        <EdgeLayout
+          Id="Package\LoaddiSellTypeData.PrecedenceConstraints[Constraint]"
+          TopLeft="98,54">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,27"
+              Start="0,0"
+              End="0,19.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,19.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="205,179"
+          Size="205,222"
+          Id="Package\LoaddiSellTypeData"
+          TopLeft="258.4,155" />
+        <NodeLayout
+          Size="112,42"
+          Id="Package\LoaddiTypeData\diType"
+          TopLeft="42,82" />
+        <NodeLayout
+          Size="163,42"
+          Id="Package\LoaddiTypeData\Truncate stg_diType"
+          TopLeft="24,7" />
+        <EdgeLayout
+          Id="Package\LoaddiTypeData.PrecedenceConstraints[Constraint]"
+          TopLeft="101.75,49">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,33"
+              Start="0,0"
+              End="0,25.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,25.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="205,179"
+          Size="205,222"
+          Id="Package\LoaddiTypeData"
+          TopLeft="43,155" />
+        <NodeLayout
+          Size="126,42"
+          Id="Package\LoadINNGroupData\INNGroup"
+          TopLeft="54,84" />
+        <NodeLayout
+          Size="163,42"
+          Id="Package\LoadINNGroupData\Truncate stg_INNGroup"
+          TopLeft="30,12" />
+        <EdgeLayout
+          Id="Package\LoadINNGroupData.PrecedenceConstraints[Constraint]"
+          TopLeft="114.25,54">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,30"
+              Start="0,0"
+              End="0,22.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,22.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="241,179"
+          Size="241,222"
+          Id="Package\LoadINNGroupData"
+          TopLeft="1205,155" />
+        <NodeLayout
+          Size="163,42"
+          Id="Package\LoadwdiSellTypeData\Truncate stg_wdiSellType"
+          TopLeft="22,11" />
+        <NodeLayout
+          Size="137,42"
+          Id="Package\LoadwdiSellTypeData\wdiSellType"
+          TopLeft="32,80" />
+        <EdgeLayout
+          Id="Package\LoadwdiSellTypeData.PrecedenceConstraints[Constraint]"
+          TopLeft="102,53">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,27"
+              Start="0,0"
+              End="0,19.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,19.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="225,179"
+          Size="225,222"
+          Id="Package\LoadwdiSellTypeData"
+          TopLeft="473.8,155" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="146.5,118">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,37"
+              Start="0,0"
+              End="0,29.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,29.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-8,6.75,16,16"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="361.95,118">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,37"
+              Start="0,0"
+              End="0,29.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,29.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-8,6.75,16,16"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="585.65,118">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,37"
+              Start="0,0"
+              End="0,29.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,29.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-8,6.75,16,16"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 3]"
+          TopLeft="822.85,118">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,37"
+              Start="0,0"
+              End="0,29.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,29.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-8,6.75,16,16"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 4]"
+          TopLeft="1073.8,118">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,37"
+              Start="0,0"
+              End="0,29.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,29.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-8,6.75,16,16"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 5]"
+          TopLeft="1322.5,118">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,37"
+              Start="0,0"
+              End="0,29.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,29.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-8,6.75,16,16"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\LoaddiBricksData\diBricks">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="171,42"
+          Id="Package\LoaddiBricksData\diBricks\OLE DB Destination"
+          TopLeft="269,235" />
+        <NodeLayout
+          Size="150,42"
+          Id="Package\LoaddiBricksData\diBricks\OLE DB Source"
+          TopLeft="91,65" />
+        <EdgeLayout
+          Id="Package\LoaddiBricksData\diBricks.Paths[OLE DB Source Output]"
+          TopLeft="166,107">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="188.5,128"
+              Start="0,0"
+              End="188.5,120.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,60" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,60"
+                    Point2="0,64"
+                    Point3="4,64" />
+                  <mssgle:LineSegment
+                    End="184.5,64" />
+                  <mssgle:CubicBezierSegment
+                    Point1="184.5,64"
+                    Point2="188.5,64"
+                    Point3="188.5,68" />
+                  <mssgle:LineSegment
+                    End="188.5,120.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <TaskHost
+    design-time-name="Package\LoadBrandData\Brand">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="150,42"
+          Id="Package\LoadBrandData\Brand\OLE DB Source"
+          TopLeft="95,73" />
+        <NodeLayout
+          Size="171,42"
+          Id="Package\LoadBrandData\Brand\OLE DB Destination"
+          TopLeft="339,254" />
+        <EdgeLayout
+          Id="Package\LoadBrandData\Brand.Paths[OLE DB Source Output]"
+          TopLeft="170,115">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="254.5,139"
+              Start="0,0"
+              End="254.5,131.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,65.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,65.5"
+                    Point2="0,69.5"
+                    Point3="4,69.5" />
+                  <mssgle:LineSegment
+                    End="250.5,69.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="250.5,69.5"
+                    Point2="254.5,69.5"
+                    Point3="254.5,73.5" />
+                  <mssgle:LineSegment
+                    End="254.5,131.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <TaskHost
+    design-time-name="Package\LoaddiSellTypeData\diSellType">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="173,42"
+          Id="Package\LoaddiSellTypeData\diSellType\OLE DB Destination"
+          TopLeft="301,249" />
+        <NodeLayout
+          Size="129,42"
+          Id="Package\LoaddiSellTypeData\diSellType\diSellType"
+          TopLeft="319.5,77.5" />
+        <EdgeLayout
+          Id="Package\LoaddiSellTypeData\diSellType.Paths[OLE DB Source Output]"
+          TopLeft="385.75,119.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,129.5"
+              Start="0,0"
+              End="0,122">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,122" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <TaskHost
+    design-time-name="Package\LoaddiTypeData\diType">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="182,42"
+          Id="Package\LoaddiTypeData\diType\OLE DB Destination 1"
+          TopLeft="296,224" />
+        <NodeLayout
+          Size="112,42"
+          Id="Package\LoaddiTypeData\diType\diType"
+          TopLeft="319.5,77.5" />
+        <EdgeLayout
+          Id="Package\LoaddiTypeData\diType.Paths[OLE DB Source Output]"
+          TopLeft="375.5,119.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="11.5,104.5"
+              Start="0,0"
+              End="11.5,97">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,48.25" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,48.25"
+                    Point2="0,52.25"
+                    Point3="4,52.25" />
+                  <mssgle:LineSegment
+                    End="7.5,52.25" />
+                  <mssgle:CubicBezierSegment
+                    Point1="7.5,52.25"
+                    Point2="11.5,52.25"
+                    Point3="11.5,56.25" />
+                  <mssgle:LineSegment
+                    End="11.5,97" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <TaskHost
+    design-time-name="Package\LoadINNGroupData\INNGroup">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="150,42"
+          Id="Package\LoadINNGroupData\INNGroup\OLE DB Source"
+          TopLeft="104,69" />
+        <NodeLayout
+          Size="171,42"
+          Id="Package\LoadINNGroupData\INNGroup\OLE DB Destination"
+          TopLeft="299,266" />
+        <EdgeLayout
+          Id="Package\LoadINNGroupData\INNGroup.Paths[OLE DB Source Output]"
+          TopLeft="179,111">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="205.5,155"
+              Start="0,0"
+              End="205.5,147.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,73.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,73.5"
+                    Point2="0,77.5"
+                    Point3="4,77.5" />
+                  <mssgle:LineSegment
+                    End="201.5,77.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="201.5,77.5"
+                    Point2="205.5,77.5"
+                    Point3="205.5,81.5" />
+                  <mssgle:LineSegment
+                    End="205.5,147.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\LoadINNGroupData\INNGroup\OLE DB Destination">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <TaskHost
+    design-time-name="Package\LoadwdiSellTypeData\wdiSellType">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="137,42"
+          Id="Package\LoadwdiSellTypeData\wdiSellType\wdiSellType"
+          TopLeft="319.5,77.5" />
+        <NodeLayout
+          Size="173,42"
+          Id="Package\LoadwdiSellTypeData\wdiSellType\OLE DB Destination"
+          TopLeft="291.5,225.5" />
+        <EdgeLayout
+          Id="Package\LoadwdiSellTypeData\wdiSellType.Paths[OLE DB Source Output]"
+          TopLeft="388,119.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-10,106"
+              Start="0,0"
+              End="-10,98.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,49" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,49"
+                    Point2="0,53"
+                    Point3="-4,53" />
+                  <mssgle:LineSegment
+                    End="-6,53" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-6,53"
+                    Point2="-10,53"
+                    Point3="-10,57" />
+                  <mssgle:LineSegment
+                    End="-10,98.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

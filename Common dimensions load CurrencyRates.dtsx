@@ -1,0 +1,523 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="12/6/2019 11:40:24 AM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="MOS-L1-DMSIZO"
+  DTS:CreatorName="VALEANT\Dmitry.Sizov"
+  DTS:DTSID="{24D1861D-05B1-46D6-BAC8-7D8329380522}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="16.0.5397.1"
+  DTS:LocaleID="1049"
+  DTS:ObjectName="Common dimensions load CurrencyRates"
+  DTS:PackageType="5"
+  DTS:VersionBuild="5"
+  DTS:VersionGUID="{FEEAA850-DAAF-445A-AA34-68E30CA7FE46}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{B2720D32-2732-422A-99C0-E25721C3BE2D}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="SourceDataExists">
+      <DTS:VariableValue
+        DTS:DataType="3">1</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\CheckSourceDataExists"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:DTSID="{7125AEBE-C8CB-4F89-BEFB-83979F42D0AE}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="CheckSourceDataExists"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{F9BEB98F-BB20-4EA6-896E-43F424A8F2D8}"
+          SQLTask:SqlStatementSource="IF EXISTS(SELECT * FROM Valeant.CurrencyRates)&#xA;&#x9;SELECT 1&#xA;ELSE&#xA;&#x9;SELECT 0"
+          SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="0"
+            SQLTask:DtsVariableName="User::SourceDataExists" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Load stg_CurrencyRates"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{f6cde56e-4e2e-40f0-befd-53cb2875d886}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Load stg_CurrencyRates"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Load stg_CurrencyRates\stg_CurrencyRates"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="stg_CurrencyRates"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[stg].[CurrencyRates]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1251</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load stg_CurrencyRates\stg_CurrencyRates.Connections[OleDbConnection]"
+                  connectionManagerID="{F3FF52B2-226D-4CBC-BDFC-F604DDDDFEB3}:invalid"
+                  connectionManagerRefId="{F3FF52B2-226D-4CBC-BDFC-F604DDDDFEB3}:invalid"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Load stg_CurrencyRates\stg_CurrencyRates.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Load stg_CurrencyRates\stg_CurrencyRates.Inputs[OLE DB Destination Input].Columns[period]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="period"
+                      externalMetadataColumnId="Package\Load stg_CurrencyRates\stg_CurrencyRates.Inputs[OLE DB Destination Input].ExternalColumns[Period]"
+                      lineageId="Package\Load stg_CurrencyRates\Valeant_CurrencyRates.Outputs[OLE DB Source Output].Columns[period]" />
+                    <inputColumn
+                      refId="Package\Load stg_CurrencyRates\stg_CurrencyRates.Inputs[OLE DB Destination Input].Columns[averagerate]"
+                      cachedDataType="r8"
+                      cachedName="averagerate"
+                      externalMetadataColumnId="Package\Load stg_CurrencyRates\stg_CurrencyRates.Inputs[OLE DB Destination Input].ExternalColumns[AverageRate]"
+                      lineageId="Package\Load stg_CurrencyRates\Valeant_CurrencyRates.Outputs[OLE DB Source Output].Columns[averagerate]" />
+                    <inputColumn
+                      refId="Package\Load stg_CurrencyRates\stg_CurrencyRates.Inputs[OLE DB Destination Input].Columns[currency]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="currency"
+                      externalMetadataColumnId="Package\Load stg_CurrencyRates\stg_CurrencyRates.Inputs[OLE DB Destination Input].ExternalColumns[Currency]"
+                      lineageId="Package\Load stg_CurrencyRates\Valeant_CurrencyRates.Outputs[OLE DB Source Output].Columns[currency]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Load stg_CurrencyRates\stg_CurrencyRates.Inputs[OLE DB Destination Input].ExternalColumns[Period]"
+                      dataType="wstr"
+                      length="6"
+                      name="Period" />
+                    <externalMetadataColumn
+                      refId="Package\Load stg_CurrencyRates\stg_CurrencyRates.Inputs[OLE DB Destination Input].ExternalColumns[AverageRate]"
+                      dataType="r8"
+                      name="AverageRate" />
+                    <externalMetadataColumn
+                      refId="Package\Load stg_CurrencyRates\stg_CurrencyRates.Inputs[OLE DB Destination Input].ExternalColumns[Currency]"
+                      dataType="wstr"
+                      length="3"
+                      name="Currency" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load stg_CurrencyRates\stg_CurrencyRates.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Load stg_CurrencyRates\stg_CurrencyRates.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load stg_CurrencyRates\stg_CurrencyRates.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load stg_CurrencyRates\stg_CurrencyRates.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load stg_CurrencyRates\stg_CurrencyRates.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load stg_CurrencyRates\stg_CurrencyRates.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load stg_CurrencyRates\Valeant_CurrencyRates"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="Valeant_CurrencyRates"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[Valeant].[CurrencyRates]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1251</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load stg_CurrencyRates\Valeant_CurrencyRates.Connections[OleDbConnection]"
+                  connectionManagerID="{F9BEB98F-BB20-4EA6-896E-43F424A8F2D8}:invalid"
+                  connectionManagerRefId="{F9BEB98F-BB20-4EA6-896E-43F424A8F2D8}:invalid"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Load stg_CurrencyRates\Valeant_CurrencyRates.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load stg_CurrencyRates\Valeant_CurrencyRates.Outputs[OLE DB Source Output].Columns[period]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load stg_CurrencyRates\Valeant_CurrencyRates.Outputs[OLE DB Source Output].ExternalColumns[period]"
+                      length="255"
+                      lineageId="Package\Load stg_CurrencyRates\Valeant_CurrencyRates.Outputs[OLE DB Source Output].Columns[period]"
+                      name="period"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load stg_CurrencyRates\Valeant_CurrencyRates.Outputs[OLE DB Source Output].Columns[averagerate]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load stg_CurrencyRates\Valeant_CurrencyRates.Outputs[OLE DB Source Output].ExternalColumns[averagerate]"
+                      lineageId="Package\Load stg_CurrencyRates\Valeant_CurrencyRates.Outputs[OLE DB Source Output].Columns[averagerate]"
+                      name="averagerate"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load stg_CurrencyRates\Valeant_CurrencyRates.Outputs[OLE DB Source Output].Columns[currency]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load stg_CurrencyRates\Valeant_CurrencyRates.Outputs[OLE DB Source Output].ExternalColumns[currency]"
+                      length="255"
+                      lineageId="Package\Load stg_CurrencyRates\Valeant_CurrencyRates.Outputs[OLE DB Source Output].Columns[currency]"
+                      name="currency"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Load stg_CurrencyRates\Valeant_CurrencyRates.Outputs[OLE DB Source Output].ExternalColumns[period]"
+                      dataType="wstr"
+                      length="255"
+                      name="period" />
+                    <externalMetadataColumn
+                      refId="Package\Load stg_CurrencyRates\Valeant_CurrencyRates.Outputs[OLE DB Source Output].ExternalColumns[averagerate]"
+                      dataType="r8"
+                      name="averagerate" />
+                    <externalMetadataColumn
+                      refId="Package\Load stg_CurrencyRates\Valeant_CurrencyRates.Outputs[OLE DB Source Output].ExternalColumns[currency]"
+                      dataType="wstr"
+                      length="255"
+                      name="currency" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Load stg_CurrencyRates\Valeant_CurrencyRates.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load stg_CurrencyRates\Valeant_CurrencyRates.Outputs[OLE DB Source Error Output].Columns[period]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Load stg_CurrencyRates\Valeant_CurrencyRates.Outputs[OLE DB Source Error Output].Columns[period]"
+                      name="period" />
+                    <outputColumn
+                      refId="Package\Load stg_CurrencyRates\Valeant_CurrencyRates.Outputs[OLE DB Source Error Output].Columns[averagerate]"
+                      dataType="r8"
+                      lineageId="Package\Load stg_CurrencyRates\Valeant_CurrencyRates.Outputs[OLE DB Source Error Output].Columns[averagerate]"
+                      name="averagerate" />
+                    <outputColumn
+                      refId="Package\Load stg_CurrencyRates\Valeant_CurrencyRates.Outputs[OLE DB Source Error Output].Columns[currency]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Load stg_CurrencyRates\Valeant_CurrencyRates.Outputs[OLE DB Source Error Output].Columns[currency]"
+                      name="currency" />
+                    <outputColumn
+                      refId="Package\Load stg_CurrencyRates\Valeant_CurrencyRates.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load stg_CurrencyRates\Valeant_CurrencyRates.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load stg_CurrencyRates\Valeant_CurrencyRates.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load stg_CurrencyRates\Valeant_CurrencyRates.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Load stg_CurrencyRates.Paths[OLE DB Source Output]"
+              endId="Package\Load stg_CurrencyRates\stg_CurrencyRates.Inputs[OLE DB Destination Input]"
+              name="OLE DB Source Output"
+              startId="Package\Load stg_CurrencyRates\Valeant_CurrencyRates.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Truncate CurrencyRates"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{19bd26ee-18c4-48ad-8380-83c9fc65f1ed}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Truncate CurrencyRates"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2016; © 2015 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{F3FF52B2-226D-4CBC-BDFC-F604DDDDFEB3}"
+          SQLTask:SqlStatementSource="TRUNCATE TABLE stg.CurrencyRates" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{98943ded-d19e-49ab-9126-1b700f4aca15}"
+      DTS:From="Package\Truncate CurrencyRates"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Load stg_CurrencyRates" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{7AFC3631-4902-4B57-8808-CF3B9A13B69D}"
+      DTS:EvalOp="3"
+      DTS:Expression="@[User::SourceDataExists] == 1"
+      DTS:From="Package\CheckSourceDataExists"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\Truncate CurrencyRates" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="195,42"
+          Id="Package\Load stg_CurrencyRates"
+          TopLeft="118,189" />
+        <NodeLayout
+          Size="194,42"
+          Id="Package\Truncate CurrencyRates"
+          TopLeft="118.5,110.5" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="215.5,152.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,36.5"
+              Start="0,0"
+              End="0,29">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,29" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="188,42"
+          Id="Package\CheckSourceDataExists"
+          TopLeft="121.5,32" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="215.5,74">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,36.5"
+              Start="0,0"
+              End="0,29">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,29" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-8,6.5,16,16"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Load stg_CurrencyRates">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="190,42"
+          Id="Package\Load stg_CurrencyRates\Valeant_CurrencyRates"
+          TopLeft="119.75,67" />
+        <NodeLayout
+          Size="167,42"
+          Id="Package\Load stg_CurrencyRates\stg_CurrencyRates"
+          TopLeft="129.25,179" />
+        <EdgeLayout
+          Id="Package\Load stg_CurrencyRates.Paths[OLE DB Source Output]"
+          TopLeft="213.75,109">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,70"
+              Start="0,0"
+              End="0,62.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,62.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Load stg_CurrencyRates\stg_CurrencyRates">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<DTS:ConnectionManager xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:ObjectName="SSAS dev001 AlphaRM"
+  DTS:DTSID="{5DB95AF0-7D40-48D5-8CAA-ABCD82D87ACB}"
+  DTS:CreationName="MSOLAP100">
+  <DTS:ObjectData>
+    <DTS:ConnectionManager
+      DTS:ConnectRetryCount="0"
+      DTS:ConnectRetryInterval="0"
+      DTS:ConnectionString="Data Source=SWIEUWDTPMOCP01;Initial Catalog=AlphaRM;Provider=MSOLAP.8;Integrated Security=SSPI;Impersonation Level=Impersonate;" />
+  </DTS:ObjectData>
+</DTS:ConnectionManager>

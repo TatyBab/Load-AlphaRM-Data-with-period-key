@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<DTS:ConnectionManager xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:ObjectName="dev002 AlphaRM"
+  DTS:DTSID="{F3FF52B2-226D-4CBC-BDFC-F604DDDDFEB3}"
+  DTS:CreationName="OLEDB">
+  <DTS:ObjectData>
+    <DTS:ConnectionManager
+      DTS:ConnectRetryCount="1"
+      DTS:ConnectRetryInterval="5"
+      DTS:ConnectionString="Data Source=SWIEUWDOLAPCP01;Initial Catalog=AlphaRM;Provider=SQLOLEDB.1;Integrated Security=SSPI;Auto Translate=False;Application Name=SSIS-Load AlphaRM Data-{F3FF52B2-226D-4CBC-BDFC-F604DDDDFEB3}seumosdev002.AlphaRM;" />
+  </DTS:ObjectData>
+</DTS:ConnectionManager>

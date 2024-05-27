@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<DTS:ConnectionManager xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:ObjectName="AlphaRM OFD"
+  DTS:DTSID="{7967B152-36D9-4024-B9B4-087A5D752600}"
+  DTS:CreationName="OLEDB">
+  <DTS:ObjectData>
+    <DTS:ConnectionManager
+      DTS:ConnectRetryCount="1"
+      DTS:ConnectRetryInterval="5"
+      DTS:ConnectionString="Data Source=outsql.alpharm.ru,443;User ID=client_valeant;Initial Catalog=OFD_OUT;Provider=SQLNCLI11.1;Persist Security Info=True;Auto Translate=False;">
+      <DTS:Password
+        DTS:Name="Password"
+        Sensitive="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAIv1KlRv8ZUK8QOJ1ihfFbgAAAAACAAAAAAAQZgAAAAEAACAAAAAcU3+iSknH4tvYNlz7njVBs+0vXgplxE8fVztiCX3FCwAAAAAOgAAAAAIAACAAAACAD4AkHc23uNGfRx16x1Co2uQTo//oHDyxsLs3Yb774YAAAABtFac1/UyKQ1sb6520dVWrsTQR7ro2iKvKMRALp8H3ooOSF2bmVUO7dWur8HYKyt2OwTu3ocxO5eVqLzcb/X2SbxhKPcurQ6myLNl2WRG4EFdfhmHefQOZvF8NgRpc6pKSinSwM5lKzztq/4V6KJyqNUCO0d8lXRa+KeyStaUM90AAAABXWJ4XJlogDdYwMNZHDUR6uu0aVor29eZ2K9GV8OVFvub96wV8LDW30LtOxC7Def4cLN7EdGs2byi5Peg1zaQ0</DTS:Password>
+    </DTS:ConnectionManager>
+  </DTS:ObjectData>
+</DTS:ConnectionManager>

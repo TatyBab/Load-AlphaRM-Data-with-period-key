@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<DTS:ConnectionManager xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:ObjectName="AlphaRM QLIK"
+  DTS:DTSID="{F9BEB98F-BB20-4EA6-896E-43F424A8F2D8}"
+  DTS:CreationName="OLEDB">
+  <DTS:ObjectData>
+    <DTS:ConnectionManager
+      DTS:ConnectRetryCount="1"
+      DTS:ConnectRetryInterval="5"
+      DTS:ConnectionString="Data Source=outsql.alpharm.ru,443;User ID=client_valeant;Initial Catalog=QLIK_OUT;Provider=SQLNCLI11.1;Persist Security Info=True;Auto Translate=False;">
+      <DTS:Password
+        DTS:Name="Password"
+        Sensitive="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAIv1KlRv8ZUK8QOJ1ihfFbgAAAAACAAAAAAAQZgAAAAEAACAAAAAdhskeKcB9q5qOURoVZzoUuFQzflQNkliU7FnInmgxOAAAAAAOgAAAAAIAACAAAABri3+8Hbpnfmi1I/4ufvKYT0pv5d04QsjU+J/bmXc67YAAAACrulBccRxEYuqZG5EmJr4GNzEw3y720QdEUHGK/HmAjvTlPot4VKlE770Ffttx76nrwghRYB8uuQncnLFRe5S8N3Bi8oJNDEcSxsWs7gfJk+MGSOAw3W21G1HvEaPxuQ9Kzbfl9NyeQGD40xevFKDgMbLwpxkQOhp7N7ePYz4dRkAAAAAsltXiVkQygCvqTRiDySgO2yAMBuNyTwp2zwsWpVbMplgwddhGTh4goB5LNc2weYbmsAr9YwiJyLwPu8c6ZqpT</DTS:Password>
+    </DTS:ConnectionManager>
+  </DTS:ObjectData>
+</DTS:ConnectionManager>

@@ -1,0 +1,1616 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="11/28/2019 4:13:08 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="MOS-L1-DMSIZO"
+  DTS:CreatorName="VALEANT\Dmitry.Sizov"
+  DTS:DTSID="{3462F523-D23B-473A-B2C1-21B225335667}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="16.0.5397.1"
+  DTS:LocaleID="1049"
+  DTS:ObjectName="Retail load L3ecomm"
+  DTS:PackageType="5"
+  DTS:VersionBuild="55"
+  DTS:VersionGUID="{B609344C-84A0-49FD-B968-D8ABDE12B739}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:PackageParameters>
+    <DTS:PackageParameter
+      DTS:CreationName=""
+      DTS:DataType="8"
+      DTS:DTSID="{DCA3E2F0-9E15-4DC9-8082-1E6AC60410B5}"
+      DTS:ObjectName="PeriodKeyFrom">
+      <DTS:Property
+        DTS:DataType="8"
+        DTS:Name="ParameterValue">202301</DTS:Property>
+    </DTS:PackageParameter>
+    <DTS:PackageParameter
+      DTS:CreationName=""
+      DTS:DataType="8"
+      DTS:DTSID="{54C63F8A-7447-40D7-AF96-A25A7F790DBA}"
+      DTS:ObjectName="PeriodKeyTo">
+      <DTS:Property
+        DTS:DataType="8"
+        DTS:Name="ParameterValue">202306</DTS:Property>
+    </DTS:PackageParameter>
+    <DTS:PackageParameter
+      DTS:CreationName=""
+      DTS:DataType="8"
+      DTS:DTSID="{4021D27D-2FD2-4AA7-B488-D51BC2F3E973}"
+      DTS:ObjectName="VariableName_NeedCheckIncomingData">
+      <DTS:Property
+        DTS:DataType="8"
+        DTS:Name="ParameterValue"
+        xml:space="preserve"></DTS:Property>
+    </DTS:PackageParameter>
+  </DTS:PackageParameters>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{3C1547A3-EA58-45C6-895E-79D35EC0D8F6}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="CheckResult">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{6CA95003-5074-4CB6-8021-42875D75524F}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="@[$Package::PeriodKeyFrom]"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="period_key_from">
+      <DTS:VariableValue
+        DTS:DataType="8">202301</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{6EF099BA-0912-4E38-91F7-4504E648A363}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="@[$Package::PeriodKeyTo]"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="period_key_to">
+      <DTS:VariableValue
+        DTS:DataType="8">202306</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{48D91035-C2E3-4AD5-8382-90B55432A9FE}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="&quot;SELECT&#xA;[PERIOD_KEY]&#xA;,[brickLevel3Id]&#xA;,[ClassifierId]&#xA;,[SellingSumRounded]&#xA;,[SellingCountRounded]&#xA;&#xA;FROM &#xA;[Valeant].[AggregateL3Ecom]&#xA;&#xA;where&#xA;[PERIOD_KEY] BETWEEN &quot;+   @[User::period_key_from]  + &quot; AND &quot; + @[User::period_key_to]"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="SQL_AggregateL3Ecom">
+      <DTS:VariableValue
+        DTS:DataType="8">SELECT
+[PERIOD_KEY]
+,[brickLevel3Id]
+,[ClassifierId]
+,[SellingSumRounded]
+,[SellingCountRounded]
+
+FROM 
+[Valeant].[AggregateL3Ecom]
+
+where
+[PERIOD_KEY] BETWEEN 202301 AND 202306</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{3EEDF2F8-FA1B-4AAF-9A0E-03D9C315E3A4}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="&quot;&#xA;SET NOCOUNT ON&#xA;&#xA;BEGIN TRY&#xA;&#xA;&#x9;BEGIN TRANSACTION&#xA;&#xA;&#xA;&#x9;&#x9;truncate table &quot;+ @[User::Table_Destination_Del] +&quot;&#xA;&#xA;&#x9;&#x9;insert into &quot;+ @[User::Table_Destination_Del] +&quot; with(tablock)&#xA;&#x9;&#x9;select * from &quot;+ @[User::Table_Destination_full] +&quot;&#xA;&#x9;&#x9;where [PERIOD_KEY] between &quot;+  @[User::period_key_from] +&quot; and &quot;+ @[User::period_key_to]  +&quot;&#xA;&#xA;&#x9;&#x9;delete &quot;+ @[User::Table_Destination_full] +&quot;&#xA;&#x9;&#x9;where [PERIOD_KEY] between &quot; + @[User::period_key_from] + &quot; and &quot;+ @[User::period_key_to]  +&quot;&#xA;&#xA;&#x9;&#x9;insert into &quot;+ @[User::Table_Destination_full] +&quot; with(tablock)&#xA;&#x9;&#x9;select * from &quot;+ @[User::Table_Destination_PartitionBuffer] +&quot; &#xA;&#x9;&#x9;where [PERIOD_KEY] between &quot;+ @[User::period_key_from] +&quot; and &quot;+ @[User::period_key_to]  +&quot;&#xA;&#xA;&#xA;&#x9;&#x9;truncate table &quot;+ @[User::Table_Destination_PartitionBuffer] +&quot;&#xA;&#xA;&#xA;&#x9;COMMIT TRANSACTION&#xA;&#xA;END TRY&#xA;BEGIN CATCH&#xA;&#xA;&#x9;IF @@TRANCOUNT &gt; 0&#xA;&#x9;BEGIN&#xA;&#x9;&#x9;IF XACT_STATE() &lt;&gt; 0&#xA;&#x9;&#x9;&#x9;ROLLBACK TRANSACTION&#xA;&#x9;END;&#xA;&#xA;&#x9;THROW;&#xA;&#xA;END CATCH&#xA;&quot;"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="SQL_Destination_full">
+      <DTS:VariableValue
+        DTS:DataType="8">
+SET NOCOUNT ON
+
+BEGIN TRY
+
+	BEGIN TRANSACTION
+
+
+		truncate table [stg].[AggregateL3Ecom_Del]
+
+		insert into [stg].[AggregateL3Ecom_Del] with(tablock)
+		select * from [stg].[AggregateL3Ecom]
+		where [PERIOD_KEY] between 202301 and 202306
+
+		delete [stg].[AggregateL3Ecom]
+		where [PERIOD_KEY] between 202301 and 202306
+
+		insert into [stg].[AggregateL3Ecom] with(tablock)
+		select * from [stg].[AggregateL3Ecom_PartitionBuffer] 
+		where [PERIOD_KEY] between 202301 and 202306
+
+
+		truncate table [stg].[AggregateL3Ecom_PartitionBuffer]
+
+
+	COMMIT TRANSACTION
+
+END TRY
+BEGIN CATCH
+
+	IF @@TRANCOUNT &gt; 0
+	BEGIN
+		IF XACT_STATE() &lt;&gt; 0
+			ROLLBACK TRANSACTION
+	END;
+
+	THROW;
+
+END CATCH
+</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{D012C3D5-9406-487B-986D-546B7B9458BB}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="Table_Destination_Del">
+      <DTS:VariableValue
+        DTS:DataType="8">[stg].[AggregateL3Ecom_Del]</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{C3E3421C-889B-48BA-9A0C-571081CDB4C4}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="Table_Destination_full">
+      <DTS:VariableValue
+        DTS:DataType="8">[stg].[AggregateL3Ecom]</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{2A16C138-6712-4CB9-A206-AAB3D91A0C0B}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="Table_Destination_PartitionBuffer">
+      <DTS:VariableValue
+        DTS:DataType="8">[stg].[AggregateL3Ecom_PartitionBuffer]</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Archive ecom"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Disabled="True"
+      DTS:DTSID="{531A5834-769F-433B-A0E7-62CBC71EC0B9}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Archive ecom"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2016; © 2015 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{F3FF52B2-226D-4CBC-BDFC-F604DDDDFEB3}"
+          SQLTask:SqlStatementSource="EXECUTE arch.Archive_Ecom" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\CheckIncomingData"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{9B2171E5-238A-4EB7-BCDD-C3C02BA76CD0}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="CheckIncomingData"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{F3FF52B2-226D-4CBC-BDFC-F604DDDDFEB3}"
+          SQLTask:SqlStatementSource="EXECUTE [check].CheckEcomIncomingData&#xA;"
+          SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="0"
+            SQLTask:DtsVariableName="User::CheckResult" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Destination Fill"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:DTSID="{da89e64f-fcb0-44df-87f8-acdf2a7a296c}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Destination Fill"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2016; © 2015 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:PropertyExpression
+        DTS:Name="SqlStatementSource">@[User::SQL_Destination_full]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{F3FF52B2-226D-4CBC-BDFC-F604DDDDFEB3}"
+          SQLTask:SqlStatementSource="&#xA;SET NOCOUNT ON&#xA;&#xA;BEGIN TRY&#xA;&#xA;&#x9;BEGIN TRANSACTION&#xA;&#xA;&#xA;&#x9;&#x9;truncate table [stg].[AggregateL3Ecom_Del]&#xA;&#xA;&#x9;&#x9;insert into [stg].[AggregateL3Ecom_Del] with(tablock)&#xA;&#x9;&#x9;select * from [stg].[AggregateL3Ecom]&#xA;&#x9;&#x9;where [PERIOD_KEY] between 202301 and 202306&#xA;&#xA;&#x9;&#x9;delete [stg].[AggregateL3Ecom]&#xA;&#x9;&#x9;where [PERIOD_KEY] between 202301 and 202306&#xA;&#xA;&#x9;&#x9;insert into [stg].[AggregateL3Ecom] with(tablock)&#xA;&#x9;&#x9;select * from [stg].[AggregateL3Ecom_PartitionBuffer] &#xA;&#x9;&#x9;where [PERIOD_KEY] between 202301 and 202306&#xA;&#xA;&#xA;&#x9;&#x9;truncate table [stg].[AggregateL3Ecom_PartitionBuffer]&#xA;&#xA;&#xA;&#x9;COMMIT TRANSACTION&#xA;&#xA;END TRY&#xA;BEGIN CATCH&#xA;&#xA;&#x9;IF @@TRANCOUNT &gt; 0&#xA;&#x9;BEGIN&#xA;&#x9;&#x9;IF XACT_STATE() &lt;&gt; 0&#xA;&#x9;&#x9;&#x9;ROLLBACK TRANSACTION&#xA;&#x9;END;&#xA;&#xA;&#x9;THROW;&#xA;&#xA;END CATCH&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Load ecom"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:DelayValidation="True"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{7DF495AB-5036-4A67-95C9-34D2C3AD1BD1}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Load ecom"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          autoAdjustBufferSize="true"
+          defaultBufferMaxRows="1048576"
+          defaultBufferSize="104857600"
+          version="1">
+          <components>
+            <component
+              refId="Package\Load ecom\Aggregate L3 ecom"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="Aggregate L3 ecom"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[Valeant].[AggregateL3Ecom]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable">User::SQL_AggregateL3Ecom</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1251</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load ecom\Aggregate L3 ecom.Connections[OleDbConnection]"
+                  connectionManagerID="{F9BEB98F-BB20-4EA6-896E-43F424A8F2D8}:invalid"
+                  connectionManagerRefId="{F9BEB98F-BB20-4EA6-896E-43F424A8F2D8}:invalid"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Load ecom\Aggregate L3 ecom.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load ecom\Aggregate L3 ecom.Outputs[OLE DB Source Output].Columns[PERIOD_KEY]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load ecom\Aggregate L3 ecom.Outputs[OLE DB Source Output].ExternalColumns[PERIOD_KEY]"
+                      lineageId="Package\Load ecom\Aggregate L3 ecom.Outputs[OLE DB Source Output].Columns[PERIOD_KEY]"
+                      name="PERIOD_KEY"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load ecom\Aggregate L3 ecom.Outputs[OLE DB Source Output].Columns[brickLevel3Id]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load ecom\Aggregate L3 ecom.Outputs[OLE DB Source Output].ExternalColumns[brickLevel3Id]"
+                      length="255"
+                      lineageId="Package\Load ecom\Aggregate L3 ecom.Outputs[OLE DB Source Output].Columns[brickLevel3Id]"
+                      name="brickLevel3Id"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load ecom\Aggregate L3 ecom.Outputs[OLE DB Source Output].Columns[ClassifierId]"
+                      dataType="i8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load ecom\Aggregate L3 ecom.Outputs[OLE DB Source Output].ExternalColumns[ClassifierId]"
+                      lineageId="Package\Load ecom\Aggregate L3 ecom.Outputs[OLE DB Source Output].Columns[ClassifierId]"
+                      name="ClassifierId"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load ecom\Aggregate L3 ecom.Outputs[OLE DB Source Output].Columns[SellingSumRounded]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load ecom\Aggregate L3 ecom.Outputs[OLE DB Source Output].ExternalColumns[SellingSumRounded]"
+                      lineageId="Package\Load ecom\Aggregate L3 ecom.Outputs[OLE DB Source Output].Columns[SellingSumRounded]"
+                      name="SellingSumRounded"
+                      precision="18"
+                      scale="3"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load ecom\Aggregate L3 ecom.Outputs[OLE DB Source Output].Columns[SellingCountRounded]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load ecom\Aggregate L3 ecom.Outputs[OLE DB Source Output].ExternalColumns[SellingCountRounded]"
+                      lineageId="Package\Load ecom\Aggregate L3 ecom.Outputs[OLE DB Source Output].Columns[SellingCountRounded]"
+                      name="SellingCountRounded"
+                      precision="18"
+                      scale="3"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Load ecom\Aggregate L3 ecom.Outputs[OLE DB Source Output].ExternalColumns[PERIOD_KEY]"
+                      dataType="i4"
+                      name="PERIOD_KEY" />
+                    <externalMetadataColumn
+                      refId="Package\Load ecom\Aggregate L3 ecom.Outputs[OLE DB Source Output].ExternalColumns[brickLevel3Id]"
+                      dataType="wstr"
+                      length="255"
+                      name="brickLevel3Id" />
+                    <externalMetadataColumn
+                      refId="Package\Load ecom\Aggregate L3 ecom.Outputs[OLE DB Source Output].ExternalColumns[ClassifierId]"
+                      dataType="i8"
+                      name="ClassifierId" />
+                    <externalMetadataColumn
+                      refId="Package\Load ecom\Aggregate L3 ecom.Outputs[OLE DB Source Output].ExternalColumns[SellingSumRounded]"
+                      dataType="numeric"
+                      name="SellingSumRounded"
+                      precision="18"
+                      scale="3" />
+                    <externalMetadataColumn
+                      refId="Package\Load ecom\Aggregate L3 ecom.Outputs[OLE DB Source Output].ExternalColumns[SellingCountRounded]"
+                      dataType="numeric"
+                      name="SellingCountRounded"
+                      precision="18"
+                      scale="3" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Load ecom\Aggregate L3 ecom.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load ecom\Aggregate L3 ecom.Outputs[OLE DB Source Error Output].Columns[PERIOD_KEY]"
+                      dataType="i4"
+                      lineageId="Package\Load ecom\Aggregate L3 ecom.Outputs[OLE DB Source Error Output].Columns[PERIOD_KEY]"
+                      name="PERIOD_KEY" />
+                    <outputColumn
+                      refId="Package\Load ecom\Aggregate L3 ecom.Outputs[OLE DB Source Error Output].Columns[brickLevel3Id]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Load ecom\Aggregate L3 ecom.Outputs[OLE DB Source Error Output].Columns[brickLevel3Id]"
+                      name="brickLevel3Id" />
+                    <outputColumn
+                      refId="Package\Load ecom\Aggregate L3 ecom.Outputs[OLE DB Source Error Output].Columns[ClassifierId]"
+                      dataType="i8"
+                      lineageId="Package\Load ecom\Aggregate L3 ecom.Outputs[OLE DB Source Error Output].Columns[ClassifierId]"
+                      name="ClassifierId" />
+                    <outputColumn
+                      refId="Package\Load ecom\Aggregate L3 ecom.Outputs[OLE DB Source Error Output].Columns[SellingSumRounded]"
+                      dataType="numeric"
+                      lineageId="Package\Load ecom\Aggregate L3 ecom.Outputs[OLE DB Source Error Output].Columns[SellingSumRounded]"
+                      name="SellingSumRounded"
+                      precision="18"
+                      scale="3" />
+                    <outputColumn
+                      refId="Package\Load ecom\Aggregate L3 ecom.Outputs[OLE DB Source Error Output].Columns[SellingCountRounded]"
+                      dataType="numeric"
+                      lineageId="Package\Load ecom\Aggregate L3 ecom.Outputs[OLE DB Source Error Output].Columns[SellingCountRounded]"
+                      name="SellingCountRounded"
+                      precision="18"
+                      scale="3" />
+                    <outputColumn
+                      refId="Package\Load ecom\Aggregate L3 ecom.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load ecom\Aggregate L3 ecom.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load ecom\Aggregate L3 ecom.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load ecom\Aggregate L3 ecom.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load ecom\stg aggregate L3 ecomm"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="stg aggregate L3 ecomm"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[stg].[AggregateL3Ecom]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable">User::Table_Destination_PartitionBuffer</property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1251</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">4</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">CHECK_CONSTRAINTS,ROWS_PER_BATCH = 1048576</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">1048576</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load ecom\stg aggregate L3 ecomm.Connections[OleDbConnection]"
+                  connectionManagerID="{F3FF52B2-226D-4CBC-BDFC-F604DDDDFEB3}:invalid"
+                  connectionManagerRefId="{F3FF52B2-226D-4CBC-BDFC-F604DDDDFEB3}:invalid"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Load ecom\stg aggregate L3 ecomm.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Load ecom\stg aggregate L3 ecomm.Inputs[OLE DB Destination Input].Columns[PERIOD_KEY]"
+                      cachedDataType="i4"
+                      cachedName="PERIOD_KEY"
+                      externalMetadataColumnId="Package\Load ecom\stg aggregate L3 ecomm.Inputs[OLE DB Destination Input].ExternalColumns[PERIOD_KEY]"
+                      lineageId="Package\Load ecom\Aggregate L3 ecom.Outputs[OLE DB Source Output].Columns[PERIOD_KEY]" />
+                    <inputColumn
+                      refId="Package\Load ecom\stg aggregate L3 ecomm.Inputs[OLE DB Destination Input].Columns[brickLevel3Id]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="brickLevel3Id"
+                      externalMetadataColumnId="Package\Load ecom\stg aggregate L3 ecomm.Inputs[OLE DB Destination Input].ExternalColumns[brickLevel3Id]"
+                      lineageId="Package\Load ecom\Aggregate L3 ecom.Outputs[OLE DB Source Output].Columns[brickLevel3Id]" />
+                    <inputColumn
+                      refId="Package\Load ecom\stg aggregate L3 ecomm.Inputs[OLE DB Destination Input].Columns[ClassifierId]"
+                      cachedDataType="i8"
+                      cachedName="ClassifierId"
+                      externalMetadataColumnId="Package\Load ecom\stg aggregate L3 ecomm.Inputs[OLE DB Destination Input].ExternalColumns[ClassifierId]"
+                      lineageId="Package\Load ecom\Aggregate L3 ecom.Outputs[OLE DB Source Output].Columns[ClassifierId]" />
+                    <inputColumn
+                      refId="Package\Load ecom\stg aggregate L3 ecomm.Inputs[OLE DB Destination Input].Columns[SellingSumRounded]"
+                      cachedDataType="numeric"
+                      cachedName="SellingSumRounded"
+                      cachedPrecision="18"
+                      cachedScale="3"
+                      externalMetadataColumnId="Package\Load ecom\stg aggregate L3 ecomm.Inputs[OLE DB Destination Input].ExternalColumns[SellingSumRounded]"
+                      lineageId="Package\Load ecom\Aggregate L3 ecom.Outputs[OLE DB Source Output].Columns[SellingSumRounded]" />
+                    <inputColumn
+                      refId="Package\Load ecom\stg aggregate L3 ecomm.Inputs[OLE DB Destination Input].Columns[SellingCountRounded]"
+                      cachedDataType="numeric"
+                      cachedName="SellingCountRounded"
+                      cachedPrecision="18"
+                      cachedScale="3"
+                      externalMetadataColumnId="Package\Load ecom\stg aggregate L3 ecomm.Inputs[OLE DB Destination Input].ExternalColumns[SellingCountRounded]"
+                      lineageId="Package\Load ecom\Aggregate L3 ecom.Outputs[OLE DB Source Output].Columns[SellingCountRounded]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Load ecom\stg aggregate L3 ecomm.Inputs[OLE DB Destination Input].ExternalColumns[PERIOD_KEY]"
+                      dataType="i4"
+                      name="PERIOD_KEY" />
+                    <externalMetadataColumn
+                      refId="Package\Load ecom\stg aggregate L3 ecomm.Inputs[OLE DB Destination Input].ExternalColumns[brickLevel3Id]"
+                      dataType="wstr"
+                      length="33"
+                      name="brickLevel3Id" />
+                    <externalMetadataColumn
+                      refId="Package\Load ecom\stg aggregate L3 ecomm.Inputs[OLE DB Destination Input].ExternalColumns[ClassifierId]"
+                      dataType="i4"
+                      name="ClassifierId" />
+                    <externalMetadataColumn
+                      refId="Package\Load ecom\stg aggregate L3 ecomm.Inputs[OLE DB Destination Input].ExternalColumns[SellingSumRounded]"
+                      dataType="numeric"
+                      name="SellingSumRounded"
+                      precision="18"
+                      scale="3" />
+                    <externalMetadataColumn
+                      refId="Package\Load ecom\stg aggregate L3 ecomm.Inputs[OLE DB Destination Input].ExternalColumns[SellingCountRounded]"
+                      dataType="numeric"
+                      name="SellingCountRounded"
+                      precision="18"
+                      scale="3" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load ecom\stg aggregate L3 ecomm.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Load ecom\stg aggregate L3 ecomm.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load ecom\stg aggregate L3 ecomm.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load ecom\stg aggregate L3 ecomm.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load ecom\stg aggregate L3 ecomm.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load ecom\stg aggregate L3 ecomm.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Load ecom.Paths[OLE DB Source Output]"
+              endId="Package\Load ecom\stg aggregate L3 ecomm.Inputs[OLE DB Destination Input]"
+              name="OLE DB Source Output"
+              startId="Package\Load ecom\Aggregate L3 ecom.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\SendCheckDataMessage"
+      DTS:CreationName="Microsoft.SendMailTask"
+      DTS:Disabled="True"
+      DTS:DTSID="{CDFD4864-6750-481E-85BD-57476243106F}"
+      DTS:ExecutableType="Microsoft.SendMailTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="SendCheckDataMessage"
+      DTS:ThreadHint="1">
+      <DTS:Variables />
+      <DTS:PropertyExpression
+        DTS:Name="FromLine">@[System::MachineName] + "@bauschhealth.com"</DTS:PropertyExpression>
+      <DTS:PropertyExpression
+        DTS:Name="ToLine">@[$Project::MailRecipients]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <SendMailTask:SendMailTaskData
+          SendMailTask:SMTPServer="{813D89F7-0C59-421C-B7AD-0DB4FE5000CE}"
+          SendMailTask:From="BHC-PF464E2Y@bauschhealth.com"
+          SendMailTask:To="igor.sharkov@bauschhealth.com"
+          SendMailTask:Subject="AlphaRM - проверка входящих данных"
+          SendMailTask:Priority="High"
+          SendMailTask:MessageSource="Необходимо проверить входящие данные по гос. сегменту." xmlns:SendMailTask="www.microsoft.com/sqlserver/dts/tasks/sendmailtask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\SendCheckDataReport"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:DTSID="{0AAB90C0-62AD-4A4F-BCA1-7AAC0E4001AC}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="SendCheckDataReport"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{F3FF52B2-226D-4CBC-BDFC-F604DDDDFEB3}"
+          SQLTask:SqlStatementSource="EXECUTE [check].SendDifferencesReport_Ecom ?, ?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="$Project::SqlMailProfileName"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="130"
+            SQLTask:ParameterSize="-1" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="1"
+            SQLTask:DtsVariableName="$Project::MailRecipients"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="130"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\SetVariableNeedCheckIncomingData"
+      DTS:CreationName="Microsoft.ScriptTask"
+      DTS:DTSID="{E9CC7C1B-BFF9-4B45-8CC1-C7F322A45622}"
+      DTS:ExecutableType="Microsoft.ScriptTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="SetVariableNeedCheckIncomingData"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:PropertyExpression
+        DTS:Name="ReadWriteVariables">@[$Package::VariableName_NeedCheckIncomingData]</DTS:PropertyExpression>
+      <DTS:ObjectData>
+        <ScriptProject
+          Name="ST_d647a1f156594bf5a8f3486a4c487670"
+          VSTAMajorVersion="15"
+          VSTAMinorVersion="0"
+          Language="CSharp"
+          ReadOnlyVariables="$Package::VariableName_NeedCheckIncomingData">
+          <ProjectItem
+            Name="Properties\Settings.settings"
+            Encoding="UTF8"><![CDATA[<?xml version='1.0' encoding='iso-8859-1'?>
+<SettingsFile xmlns="uri:settings" CurrentProfile="(Default)">
+  <Profiles>
+    <Profile Name="(Default)" />
+  </Profiles>
+  <Settings />
+</SettingsFile>]]></ProjectItem>
+          <ProjectItem
+            Name="Properties\Resources.resx"
+            Encoding="UTF8"><![CDATA[<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+</root>]]></ProjectItem>
+          <ProjectItem
+            Name="ST_d647a1f156594bf5a8f3486a4c487670.csproj"
+            Encoding="UTF8"><![CDATA[<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectTypeGuids>{30D016F9-3734-4E33-A861-5E7D899E18F3};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{75f085b8-f24b-4efa-ac97-568d1ba91323}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ST_d647a1f156594bf5a8f3486a4c487670</RootNamespace>
+    <AssemblyName>ST_d647a1f156594bf5a8f3486a4c487670</AssemblyName>
+    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ResolveAssemblyReferenceIgnoreTargetFrameworkAttributeVersionMismatch>true</ResolveAssemblyReferenceIgnoreTargetFrameworkAttributeVersionMismatch>
+    <TargetFrameworkProfile></TargetFrameworkProfile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>.\bin\Debug\</OutputPath>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DebugSymbols>false</DebugSymbols>
+    <Optimize>true</Optimize>
+    <OutputPath>.\bin\Release\</OutputPath>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.SqlServer.ManagedDTS, Version=16.0.0.0, Culture=Neutral, PublicKeyToken=89845dcd8080cc91" />
+    <Reference Include="Microsoft.SqlServer.ScriptTask, Version=16.0.0.0, Culture=Neutral, PublicKeyToken=89845dcd8080cc91" />
+  </ItemGroup>
+  <ItemGroup>
+    <AppDesigner Include="Properties\" />
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="ScriptMain.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <!-- Include the build rules for a C# project.-->
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{30D016F9-3734-4E33-A861-5E7D899E18F3}">
+        <ProjectProperties HostName="ScriptTask" HostPackage="{B3A685AA-7EAF-4BC6-9940-57959FA5AC07}" ApplicationType="usd" Language="cs" TemplatesPath="" DebugInfoCommandLine="" DebugInfoWorkingDir="" IconImageList="" />
+        <Host Name="ScriptTask" GeneratedNamespace="$safeprojectname" IconIndex=""></Host>
+        <ProjectClient>
+          <HostIdentifier>SSIS_ST160</HostIdentifier>
+        </ProjectClient>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>]]></ProjectItem>
+          <ProjectItem
+            Name="ScriptMain.cs"
+            Encoding="UTF8"><![CDATA[#region Help:  Introduction to the script task
+/* The Script Task allows you to perform virtually any operation that can be accomplished in
+ * a .Net application within the context of an Integration Services control flow. 
+ * 
+ * Expand the other regions which have "Help" prefixes for examples of specific ways to use
+ * Integration Services features within this script task. */
+#endregion
+
+
+#region Namespaces
+using System;
+using System.Data;
+using Microsoft.SqlServer.Dts.Runtime;
+using System.Windows.Forms;
+#endregion
+
+namespace ST_d647a1f156594bf5a8f3486a4c487670
+{
+    /// <summary>
+    /// ScriptMain is the entry point class of the script.  Do not change the name, attributes,
+    /// or parent of this class.
+    /// </summary>
+	[Microsoft.SqlServer.Dts.Tasks.ScriptTask.SSISScriptTaskEntryPointAttribute]
+	public partial class ScriptMain : Microsoft.SqlServer.Dts.Tasks.ScriptTask.VSTARTScriptObjectModelBase
+	{
+        #region Help:  Using Integration Services variables and parameters in a script
+        /* To use a variable in this script, first ensure that the variable has been added to 
+         * either the list contained in the ReadOnlyVariables property or the list contained in 
+         * the ReadWriteVariables property of this script task, according to whether or not your
+         * code needs to write to the variable.  To add the variable, save this script, close this instance of
+         * Visual Studio, and update the ReadOnlyVariables and 
+         * ReadWriteVariables properties in the Script Transformation Editor window.
+         * To use a parameter in this script, follow the same steps. Parameters are always read-only.
+         * 
+         * Example of reading from a variable:
+         *  DateTime startTime = (DateTime) Dts.Variables["System::StartTime"].Value;
+         * 
+         * Example of writing to a variable:
+         *  Dts.Variables["User::myStringVariable"].Value = "new value";
+         * 
+         * Example of reading from a package parameter:
+         *  int batchId = (int) Dts.Variables["$Package::batchId"].Value;
+         *  
+         * Example of reading from a project parameter:
+         *  int batchId = (int) Dts.Variables["$Project::batchId"].Value;
+         * 
+         * Example of reading from a sensitive project parameter:
+         *  int batchId = (int) Dts.Variables["$Project::batchId"].GetSensitiveValue();
+         * */
+
+        #endregion
+
+        #region Help:  Firing Integration Services events from a script
+        /* This script task can fire events for logging purposes.
+         * 
+         * Example of firing an error event:
+         *  Dts.Events.FireError(18, "Process Values", "Bad value", "", 0);
+         * 
+         * Example of firing an information event:
+         *  Dts.Events.FireInformation(3, "Process Values", "Processing has started", "", 0, ref fireAgain)
+         * 
+         * Example of firing a warning event:
+         *  Dts.Events.FireWarning(14, "Process Values", "No values received for input", "", 0);
+         * */
+        #endregion
+
+        #region Help:  Using Integration Services connection managers in a script
+        /* Some types of connection managers can be used in this script task.  See the topic 
+         * "Working with Connection Managers Programatically" for details.
+         * 
+         * Example of using an ADO.Net connection manager:
+         *  object rawConnection = Dts.Connections["Sales DB"].AcquireConnection(Dts.Transaction);
+         *  SqlConnection myADONETConnection = (SqlConnection)rawConnection;
+         *  //Use the connection in some code here, then release the connection
+         *  Dts.Connections["Sales DB"].ReleaseConnection(rawConnection);
+         *
+         * Example of using a File connection manager
+         *  object rawConnection = Dts.Connections["Prices.zip"].AcquireConnection(Dts.Transaction);
+         *  string filePath = (string)rawConnection;
+         *  //Use the connection in some code here, then release the connection
+         *  Dts.Connections["Prices.zip"].ReleaseConnection(rawConnection);
+         * */
+        #endregion
+
+
+		/// <summary>
+        /// This method is called when this script task executes in the control flow.
+        /// Before returning from this method, set the value of Dts.TaskResult to indicate success or failure.
+        /// To open Help, press F1.
+        /// </summary>
+		public void Main()
+		{
+            string variableName = Dts.Variables["$Package::VariableName_NeedCheckIncomingData"].Value.ToString();
+
+            if (Dts.Variables.Contains(variableName))
+            {
+                Dts.Variables[variableName].Value = true;
+            }
+
+            Dts.TaskResult = (int)ScriptResults.Success;
+		}
+
+        #region ScriptResults declaration
+        /// <summary>
+        /// This enum provides a convenient shorthand within the scope of this class for setting the
+        /// result of the script.
+        /// 
+        /// This code was generated automatically.
+        /// </summary>
+        enum ScriptResults
+        {
+            Success = Microsoft.SqlServer.Dts.Runtime.DTSExecResult.Success,
+            Failure = Microsoft.SqlServer.Dts.Runtime.DTSExecResult.Failure
+        };
+        #endregion
+
+	}
+}]]></ProjectItem>
+          <ProjectItem
+            Name="Project"
+            Encoding="UTF16LE"><![CDATA[<?xml version="1.0" encoding="UTF-16" standalone="yes"?>
+<c:Project xmlns:c="http://schemas.microsoft.com/codeprojectml/2010/08/main" xmlns:msb="http://schemas.microsoft.com/developer/msbuild/2003" runtimeVersion="4.0" schemaVersion="1.0">
+  <msb:PropertyGroup>
+    <msb:CodeName>ST_d647a1f156594bf5a8f3486a4c487670</msb:CodeName>
+    <msb:Language>msBuild</msb:Language>
+    <msb:DisplayName>ST_d647a1f156594bf5a8f3486a4c487670</msb:DisplayName>
+    <msb:ProjectId>{9A1855CB-A2C6-462B-B848-2485C3E61F37}</msb:ProjectId>
+  </msb:PropertyGroup>
+  <msb:ItemGroup>
+    <msb:Project Include="ST_d647a1f156594bf5a8f3486a4c487670.csproj" />
+    <msb:File Include="Properties\Settings.settings" />
+    <msb:File Include="Properties\AssemblyInfo.cs" />
+    <msb:File Include="Properties\Resources.resx" />
+    <msb:File Include="Properties\Resources.Designer.cs" />
+    <msb:File Include="Properties\Settings.Designer.cs" />
+    <msb:File Include="ScriptMain.cs" />
+  </msb:ItemGroup>
+</c:Project>]]></ProjectItem>
+          <ProjectItem
+            Name="Properties\Settings.Designer.cs"
+            Encoding="UTF8"><![CDATA[//------------------------------------------------------------------------------
+// <auto-generated>
+//     This code was generated by a tool.
+//
+//     Changes to this file may cause incorrect behavior and will be lost if
+//     the code is regenerated.
+// </auto-generated>
+//------------------------------------------------------------------------------
+
+[assembly: global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Scope="member", Target="ST_d647a1f156594bf5a8f3486a4c487670.Properties.Settings.get_Default():ST_d647a1f156594bf5a8f3486a4c487670.Properties.Sett" +
+    "ings")]
+
+namespace ST_d647a1f156594bf5a8f3486a4c487670.Properties {
+    
+    
+    internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
+        
+        [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
+        private static Settings defaultInstance = new Settings();
+        
+        public static Settings Default {
+            get {
+                return defaultInstance;
+            }
+        }
+    }
+}]]></ProjectItem>
+          <ProjectItem
+            Name="Properties\AssemblyInfo.cs"
+            Encoding="UTF8"><![CDATA[using System.Reflection;
+using System.Runtime.CompilerServices;
+
+//
+// General Information about an assembly is controlled through the following 
+// set of attributes. Change these attribute values to modify the information
+// associated with an assembly.
+//
+[assembly: AssemblyTitle("ST_d647a1f156594bf5a8f3486a4c487670")]
+[assembly: AssemblyDescription("")]
+[assembly: AssemblyConfiguration("")]
+[assembly: AssemblyCompany("")]
+[assembly: AssemblyProduct("ST_d647a1f156594bf5a8f3486a4c487670")]
+[assembly: AssemblyCopyright("Copyright @  2020")]
+[assembly: AssemblyTrademark("")]
+[assembly: AssemblyCulture("")]
+//
+// Version information for an assembly consists of the following four values:
+//
+//      Major Version
+//      Minor Version 
+//      Build Number
+//      Revision
+//
+// You can specify all the values or you can default the Revision and Build Numbers 
+// by using the '*' as shown below:
+
+[assembly: AssemblyVersion("1.0.*")]]]></ProjectItem>
+          <ProjectItem
+            Name="Properties\Resources.Designer.cs"
+            Encoding="UTF8"><![CDATA[//------------------------------------------------------------------------------
+// <auto-generated>
+//     This code was generated by a tool.
+//
+//     Changes to this file may cause incorrect behavior and will be lost if
+//     the code is regenerated.
+// </auto-generated>
+//------------------------------------------------------------------------------
+
+[assembly: global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Scope="member", Target="ST_d647a1f156594bf5a8f3486a4c487670.Properties.Resources.get_ResourceManager():System.Resources.Resou" +
+    "rceManager")]
+[assembly: global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Scope="member", Target="ST_d647a1f156594bf5a8f3486a4c487670.Properties.Resources.get_Culture():System.Globalization.CultureIn" +
+    "fo")]
+[assembly: global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Scope="member", Target="ST_d647a1f156594bf5a8f3486a4c487670.Properties.Resources.set_Culture(System.Globalization.CultureInfo" +
+    "):Void")]
+
+namespace ST_d647a1f156594bf5a8f3486a4c487670.Properties {
+    
+    
+    /// <summary>
+    ///   A strongly-typed resource class, for looking up localized strings, etc.
+    /// </summary>
+    // This class was auto-generated by the StronglyTypedResourceBuilder
+    // class via a tool like ResGen or Visual Studio.
+    // To add or remove a member, edit your .ResX file then rerun ResGen
+    // with the /str option, or rebuild your VS project.
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+    internal class Resources {
+        
+        private static global::System.Resources.ResourceManager resourceMan;
+        
+        private static global::System.Globalization.CultureInfo resourceCulture;
+        
+        [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+        internal Resources() {
+        }
+        
+        /// <summary>
+        ///   Returns the cached ResourceManager instance used by this class.
+        /// </summary>
+        [global::System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        internal static global::System.Resources.ResourceManager ResourceManager {
+            get {
+                if ((resourceMan == null)) {
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("ST_d647a1f156594bf5a8f3486a4c487670.Properties.Resources", typeof(Resources).Assembly);
+                    resourceMan = temp;
+                }
+                return resourceMan;
+            }
+        }
+        
+        /// <summary>
+        ///   Overrides the current thread's CurrentUICulture property for all
+        ///   resource lookups using this strongly typed resource class.
+        /// </summary>
+        [global::System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        internal static global::System.Globalization.CultureInfo Culture {
+            get {
+                return resourceCulture;
+            }
+            set {
+                resourceCulture = value;
+            }
+        }
+    }
+}]]></ProjectItem>
+          <BinaryItem
+            Name="ST_d647a1f156594bf5a8f3486a4c487670.dll">TVqQAAMAAAAEAAAA//8AALgAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAgAAAAA4fug4AtAnNIbgBTM0hVGhpcyBwcm9ncmFtIGNhbm5vdCBiZSBydW4gaW4gRE9TIG1v
+ZGUuDQ0KJAAAAAAAAABQRQAATAEDAA6YVGYAAAAAAAAAAOAAIiALATAAABAAAAAIAAAAAAAAKi4A
+AAAgAAAAQAAAAAAAEAAgAAAAAgAABAAAAAAAAAAGAAAAAAAAAACAAAAAAgAAAAAAAAMAYIUAABAA
+ABAAAAAAEAAAEAAAAAAAABAAAAAAAAAAAAAAANgtAABPAAAAAEAAAHgEAAAAAAAAAAAAAAAAAAAA
+AAAAAGAAAAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAIAAACAAAAAAAAAAAAAAACCAAAEgAAAAAAAAAAAAAAC50ZXh0AAAAMA4AAAAgAAAAEAAAAAIA
+AAAAAAAAAAAAAAAAACAAAGAucnNyYwAAAHgEAAAAQAAAAAYAAAASAAAAAAAAAAAAAAAAAABAAABA
+LnJlbG9jAAAMAAAAAGAAAAACAAAAGAAAAAAAAAAAAAAAAAAAQAAAQgAAAAAAAAAAAAAAAAAAAAAM
+LgAAAAAAAEgAAAACAAUAICEAAAAMAAABAAAAAAAAACAtAAC4AAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAABMwAgBcAAAAAQAAEQIoEAAACm8RAAAKcgEAAHBvEgAACm8T
+AAAKbxQAAAoKAigQAAAKbxEAAAoGbxUAAAosHAIoEAAACm8RAAAKBm8SAAAKF4wbAAABbxYAAAoC
+KBAAAAoWbxcAAAoqHgIoGAAACioeAigZAAAKKq5+AQAABC0eclsAAHDQAwAAAigaAAAKbxsAAApz
+HAAACoABAAAEfgEAAAQqGn4CAAAEKh4CgAIAAAQqGn4DAAAEKh4CKB0AAAoqLnMIAAAGgAMAAAQq
+AABCU0pCAQABAAAAAAAMAAAAdjQuMC4zMDMxOQAAAAAFAGwAAADQAwAAI34AADwEAAB4BQAAI1N0
+cmluZ3MAAAAAtAkAANAAAAAjVVMAhAoAABAAAAAjR1VJRAAAAJQKAABsAQAAI0Jsb2IAAAAAAAAA
+AgAAAVcdogEJAwAAAPoBMwAWAAABAAAAHgAAAAUAAAAGAAAACQAAAAEAAAAdAAAAAgAAABAAAAAB
+AAAAAgAAAAMAAAAEAAAAAQAAAAQAAAABAAAAAQAAAAAAfwMBAAAAAAAGACUCVwQGALQCVwQGAHEB
+RAQPAMsEAAAGAJ4BBQQGAAgCBQQGAOkBBQQGAJsCBQQGAEUCBQQGAF4CBQQGALUBBQQGANAB7AIK
+AHkCLgMKAPAALgMGALcDsAMGAFQBRAQGAEcFsAMGACcEdwQGABcE8AMOACQBaQMOAIUBaQMOAAwB
+2wMGADkBVwQKAFcDLgMSAA0FmwASAG4AmwAGAMgDsAMGALsAsAMGAHcAsAMGAG0FBQQAAAAAJQAA
+AAAAAQABAAEAEADQAwEAOQABAAEAAAAQAH4E2gRFAAEAAwAAARAAFwXaBFkAAwAHAAMBAAA5BQAA
+PQAEAAoAEQC8A3AAEQDgAHQAEQBeAHgABgZNAHwAVoApBX8AVoDAAH8AUCAAAAAAhgDWAwYAAQC4
+IAAAAACGGDcEBgABAMAgAAAAAIMYNwQGAAEAyCAAAAAAkwgjBIMAAQD0IAAAAACTCMgAiAABAPsg
+AAAAAJMI1ACNAAEAAyEAAAAAlghOBZMAAgAKIQAAAACGGDcEBgACABIhAAAAAJEYPQSYAAIAAAAB
+AOYCCQA3BAEAEQA3BAYAGQA3BAoAKQA3BBAAMQA3BBAAOQA3BBAAQQA3BBAASQA3BBAAUQA3BBAA
+WQA3BBAAYQA3BBAAaQA3BAYAgQA3BAYAqQA3BBUAuQA3BAYAcQAxBR8AwQAJBSQAyQCnAykA0QDS
+Ai8AiQAGAzMAyQAgBTcA0QDcAjwAwQBaBQEAcQA3BAYAiQA3BAYA4QCJAEEA4QBpBUgAkQA3BE0A
+sQA3BAYACAAUAGYACAAYAGsAKQBzANMALgALAKsALgATALQALgAbANMALgAjANwALgArAAUBLgAz
+AAUBLgA7AAUBLgBDANwALgBLAAsBLgBTAAUBLgBbACIBQwBjAGsASQBzANMAYQB7AGsAYwBrAGsA
+GwADAAEABAADAAAAJwScAAAA6AChAAAAUgWmAAIABAADAAIABQAFAAEABgAFAAIABwAHAASAAAAB
+AAAA0SKfegAAAAAAAAEAAAAEAAAAAAAAAAAAAABUAFUAAAAAABAAAAAAAAAAAAAAAF0ADwMAAAAA
+BAAAAAAAAAAAAAAAVACwAwAAAAAQAAAAAAAAAAAAAABdAC4AAAAAAAAAAAABAAAAiAQAAAUAAgAA
+AAAAAFNUX2Q2NDdhMWYxNTY1OTRiZjVhOGYzNDg2YTRjNDg3NjcwADxNb2R1bGU+AE1pY3Jvc29m
+dC5TcWxTZXJ2ZXIuTWFuYWdlZERUUwB2YWx1ZV9fAG1zY29ybGliAGRlZmF1bHRJbnN0YW5jZQBW
+YXJpYWJsZQBSdW50aW1lVHlwZUhhbmRsZQBHZXRUeXBlRnJvbUhhbmRsZQBNaWNyb3NvZnQuU3Fs
+U2VydmVyLkR0cy5SdW50aW1lAFR5cGUARmFpbHVyZQBnZXRfQ3VsdHVyZQBzZXRfQ3VsdHVyZQBy
+ZXNvdXJjZUN1bHR1cmUAVlNUQVJUU2NyaXB0T2JqZWN0TW9kZWxCYXNlAEFwcGxpY2F0aW9uU2V0
+dGluZ3NCYXNlAEVkaXRvckJyb3dzYWJsZVN0YXRlAENvbXBpbGVyR2VuZXJhdGVkQXR0cmlidXRl
+AERlYnVnZ2VyTm9uVXNlckNvZGVBdHRyaWJ1dGUARGVidWdnYWJsZUF0dHJpYnV0ZQBFZGl0b3JC
+cm93c2FibGVBdHRyaWJ1dGUAQXNzZW1ibHlUaXRsZUF0dHJpYnV0ZQBBc3NlbWJseVRyYWRlbWFy
+a0F0dHJpYnV0ZQBUYXJnZXRGcmFtZXdvcmtBdHRyaWJ1dGUAQXNzZW1ibHlDb25maWd1cmF0aW9u
+QXR0cmlidXRlAEFzc2VtYmx5RGVzY3JpcHRpb25BdHRyaWJ1dGUAQ29tcGlsYXRpb25SZWxheGF0
+aW9uc0F0dHJpYnV0ZQBBc3NlbWJseVByb2R1Y3RBdHRyaWJ1dGUAQXNzZW1ibHlDb3B5cmlnaHRB
+dHRyaWJ1dGUAU1NJU1NjcmlwdFRhc2tFbnRyeVBvaW50QXR0cmlidXRlAEFzc2VtYmx5Q29tcGFu
+eUF0dHJpYnV0ZQBSdW50aW1lQ29tcGF0aWJpbGl0eUF0dHJpYnV0ZQBnZXRfVmFsdWUAc2V0X1Zh
+bHVlAHZhbHVlAFN5c3RlbS5SdW50aW1lLlZlcnNpb25pbmcAVG9TdHJpbmcATWljcm9zb2Z0LlNx
+bFNlcnZlci5TY3JpcHRUYXNrAE1pY3Jvc29mdC5TcWxTZXJ2ZXIuRHRzLlRhc2tzLlNjcmlwdFRh
+c2sAU2NyaXB0T2JqZWN0TW9kZWwAU3lzdGVtLkNvbXBvbmVudE1vZGVsAFNUX2Q2NDdhMWYxNTY1
+OTRiZjVhOGYzNDg2YTRjNDg3NjcwLmRsbABnZXRfSXRlbQBTeXN0ZW0ARW51bQByZXNvdXJjZU1h
+bgBCb29sZWFuAFNjcmlwdE1haW4AU3lzdGVtLkNvbmZpZ3VyYXRpb24AU3lzdGVtLkdsb2JhbGl6
+YXRpb24AU3lzdGVtLlJlZmxlY3Rpb24AQ3VsdHVyZUluZm8AZ2V0X1Jlc291cmNlTWFuYWdlcgAu
+Y3RvcgAuY2N0b3IAU3lzdGVtLkRpYWdub3N0aWNzAFN5c3RlbS5SdW50aW1lLkNvbXBpbGVyU2Vy
+dmljZXMAU3lzdGVtLlJlc291cmNlcwBTVF9kNjQ3YTFmMTU2NTk0YmY1YThmMzQ4NmE0YzQ4NzY3
+MC5Qcm9wZXJ0aWVzLlJlc291cmNlcy5yZXNvdXJjZXMARGVidWdnaW5nTW9kZXMAU1RfZDY0N2Ex
+ZjE1NjU5NGJmNWE4ZjM0ODZhNGM0ODc2NzAuUHJvcGVydGllcwBnZXRfVmFyaWFibGVzAFNldHRp
+bmdzAENvbnRhaW5zAFN1Y2Nlc3MAZ2V0X0R0cwBTY3JpcHRSZXN1bHRzAE9iamVjdABnZXRfRGVm
+YXVsdABzZXRfVGFza1Jlc3VsdABnZXRfQXNzZW1ibHkAAAAAWSQAUABhAGMAawBhAGcAZQA6ADoA
+VgBhAHIAaQBhAGIAbABlAE4AYQBtAGUAXwBOAGUAZQBkAEMAaABlAGMAawBJAG4AYwBvAG0AaQBu
+AGcARABhAHQAYQAAcVMAVABfAGQANgA0ADcAYQAxAGYAMQA1ADYANQA5ADQAYgBmADUAYQA4AGYA
+MwA0ADgANgBhADQAYwA0ADgANwA2ADcAMAAuAFAAcgBvAHAAZQByAHQAaQBlAHMALgBSAGUAcwBv
+AHUAcgBjAGUAcwAAAAAANg68O8X6MEGBf7YVOH90sgAEIAEBCAMgAAEFIAEBEREEIAEBDgUgAQER
+UQMHAQ4EIAASYQQgABJlBSABEmkcAyAAHAMgAA4EIAECHAQgAQEcBgABEnERdQQgABJ5BiACAQ4S
+eQi3elxWGTTgiQiJhF3NgIDMkQQAAAAABAEAAAADBhJJAwYSTQMGEhACBggDBhEUBAAAEkkEAAAS
+TQUAAQESTQQAABIQAwAAAQQIABJJBAgAEk0ECAASEAgBAAgAAAAAAB4BAAEAVAIWV3JhcE5vbkV4
+Y2VwdGlvblRocm93cwEIAQACAAAAAAAoAQAjU1RfZDY0N2ExZjE1NjU5NGJmNWE4ZjM0ODZhNGM0
+ODc2NzAAAAUBAAAAABYBABFDb3B5cmlnaHQgQCAgMjAyMAAASQEAGi5ORVRGcmFtZXdvcmssVmVy
+c2lvbj12NC43AQBUDhRGcmFtZXdvcmtEaXNwbGF5TmFtZRIuTkVUIEZyYW1ld29yayA0Lje0AAAA
+zsrvvgEAAACRAAAAbFN5c3RlbS5SZXNvdXJjZXMuUmVzb3VyY2VSZWFkZXIsIG1zY29ybGliLCBW
+ZXJzaW9uPTQuMC4wLjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49Yjc3YTVjNTYx
+OTM0ZTA4OSNTeXN0ZW0uUmVzb3VyY2VzLlJ1bnRpbWVSZXNvdXJjZVNldAIAAAAAAAAAAAAAAFBB
+RFBBRFC0AAAAAC4AAAAAAAAAAAAAGi4AAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwuAAAAAAAA
+AAAAAAAAX0NvckRsbE1haW4AbXNjb3JlZS5kbGwAAAAAAP8lACAAEAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAABABAAAAAYAACAAAAAAAAAAAAAAAAAAAABAAEAAAAwAACAAAAAAAAAAAAAAAAAAAABAAAA
+AABIAAAAWEAAABoEAAAAAAAAAAAAABoENAAAAFYAUwBfAFYARQBSAFMASQBPAE4AXwBJAE4ARgBP
+AAAAAAC9BO/+AAABAAAAAQCfetEiAAABAJ960SI/AAAAAAAAAAQAAAACAAAAAAAAAAAAAAAAAAAA
+RAAAAAEAVgBhAHIARgBpAGwAZQBJAG4AZgBvAAAAAAAkAAQAAABUAHIAYQBuAHMAbABhAHQAaQBv
+AG4AAAAAAAAAsAR6AwAAAQBTAHQAcgBpAG4AZwBGAGkAbABlAEkAbgBmAG8AAABWAwAAAQAwADAA
+MAAwADAANABiADAAAAAaAAEAAQBDAG8AbQBtAGUAbgB0AHMAAAAAAAAAIgABAAEAQwBvAG0AcABh
+AG4AeQBOAGEAbQBlAAAAAAAAAAAAcAAkAAEARgBpAGwAZQBEAGUAcwBjAHIAaQBwAHQAaQBvAG4A
+AAAAAFMAVABfAGQANgA0ADcAYQAxAGYAMQA1ADYANQA5ADQAYgBmADUAYQA4AGYAMwA0ADgANgBh
+ADQAYwA0ADgANwA2ADcAMAAAAD4ADwABAEYAaQBsAGUAVgBlAHIAcwBpAG8AbgAAAAAAMQAuADAA
+LgA4ADkAMQAzAC4AMwAxADMAOQAxAAAAAABwACgAAQBJAG4AdABlAHIAbgBhAGwATgBhAG0AZQAA
+AFMAVABfAGQANgA0ADcAYQAxAGYAMQA1ADYANQA5ADQAYgBmADUAYQA4AGYAMwA0ADgANgBhADQA
+YwA0ADgANwA2ADcAMAAuAGQAbABsAAAASAASAAEATABlAGcAYQBsAEMAbwBwAHkAcgBpAGcAaAB0
+AAAAQwBvAHAAeQByAGkAZwBoAHQAIABAACAAIAAyADAAMgAwAAAAKgABAAEATABlAGcAYQBsAFQA
+cgBhAGQAZQBtAGEAcgBrAHMAAAAAAAAAAAB4ACgAAQBPAHIAaQBnAGkAbgBhAGwARgBpAGwAZQBu
+AGEAbQBlAAAAUwBUAF8AZAA2ADQANwBhADEAZgAxADUANgA1ADkANABiAGYANQBhADgAZgAzADQA
+OAA2AGEANABjADQAOAA3ADYANwAwAC4AZABsAGwAAABoACQAAQBQAHIAbwBkAHUAYwB0AE4AYQBt
+AGUAAAAAAFMAVABfAGQANgA0ADcAYQAxAGYAMQA1ADYANQA5ADQAYgBmADUAYQA4AGYAMwA0ADgA
+NgBhADQAYwA0ADgANwA2ADcAMAAAAEIADwABAFAAcgBvAGQAdQBjAHQAVgBlAHIAcwBpAG8AbgAA
+ADEALgAwAC4AOAA5ADEAMwAuADMAMQAzADkAMQAAAAAARgAPAAEAQQBzAHMAZQBtAGIAbAB5ACAA
+VgBlAHIAcwBpAG8AbgAAADEALgAwAC4AOAA5ADEAMwAuADMAMQAzADkAMQAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAwAAAAsPgAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</BinaryItem>
+        </ScriptProject>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{96B47BD5-80C5-4B69-A493-A2E638D97F1B}"
+      DTS:From="Package\Archive ecom"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Load ecom" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{80A24F06-717E-43DC-B81A-88F18E616013}"
+      DTS:From="Package\Destination Fill"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\CheckIncomingData" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
+      DTS:CreationName=""
+      DTS:DTSID="{7ADB31E0-A37E-45F0-AC13-3DB6336BCF6E}"
+      DTS:EvalOp="3"
+      DTS:Expression="@[User::CheckResult] == 1"
+      DTS:From="Package\CheckIncomingData"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2"
+      DTS:To="Package\SendCheckDataReport" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 3]"
+      DTS:CreationName=""
+      DTS:DTSID="{F8B7E2C9-EB89-443F-97A5-530D8A539C4F}"
+      DTS:From="Package\SendCheckDataReport"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 3"
+      DTS:To="Package\SetVariableNeedCheckIncomingData" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 4]"
+      DTS:CreationName=""
+      DTS:DTSID="{671A5A25-B413-4BBD-B1A0-A1AC342039E4}"
+      DTS:From="Package\Load ecom"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 4"
+      DTS:To="Package\Destination Fill" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph" xmlns:mssge="clr-namespace:Microsoft.SqlServer.Graph.Extended;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:av="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+        <NodeLayout
+          Size="142,42"
+          Id="Package\Archive ecom"
+          TopLeft="270.9,35" />
+        <NodeLayout
+          Size="173,42"
+          Id="Package\CheckIncomingData"
+          TopLeft="275.9,190" />
+        <NodeLayout
+          Size="130,42"
+          Id="Package\Load ecom"
+          TopLeft="275.9,114" />
+        <NodeLayout
+          Size="193,42"
+          Id="Package\SendCheckDataMessage"
+          TopLeft="526.9,267" />
+        <NodeLayout
+          Size="184,42"
+          Id="Package\SendCheckDataReport"
+          TopLeft="273,270" />
+        <NodeLayout
+          Size="250,42"
+          Id="Package\SetVariableNeedCheckIncomingData"
+          TopLeft="237.4,346" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="341.4,77">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{x:Null}"
+              EndConnector="0,37"
+              Start="0,0"
+              End="0,29.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,29.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="363.7,232">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{x:Null}"
+              EndConnector="0,38"
+              Start="0,0"
+              End="0,30.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,30.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-99.46421875,7.25,198.9284375,16"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 3]"
+          TopLeft="363.7,312">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{x:Null}"
+              EndConnector="0,34"
+              Start="0,0"
+              End="0,26.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,26.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <AnnotationLayout
+          Text="Данные по E-commerce"
+          ParentId="Package"
+          Size="182,41"
+          Id="0d794a0f-588d-451b-8a88-3351e06d5ba5"
+          TopLeft="31,56">
+          <AnnotationLayout.FontInfo>
+            <mssge:FontInfo
+              Family="Tahoma"
+              Size="14.25"
+              Color="#FF000000">
+              <mssge:FontInfo.TextDecorations>
+                <av:TextDecorationCollection />
+              </mssge:FontInfo.TextDecorations>
+            </mssge:FontInfo>
+          </AnnotationLayout.FontInfo>
+        </AnnotationLayout>
+        <NodeLayout
+          Size="142,42"
+          Id="Package\Destination Fill"
+          TopLeft="551,137" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 4]"
+          TopLeft="405.9,135">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{x:Null}"
+              EndConnector="145.1,23"
+              Start="0,0"
+              End="137.6,23">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="68.55,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="68.55,0"
+                    Point2="72.55,0"
+                    Point3="72.55,4" />
+                  <mssgle:LineSegment
+                    End="72.55,19" />
+                  <mssgle:CubicBezierSegment
+                    Point1="72.55,19"
+                    Point2="72.55,23"
+                    Point3="76.55,23" />
+                  <mssgle:LineSegment
+                    End="137.6,23" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="551,163.666666666667">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{x:Null}"
+              EndConnector="-102.1,47.3333333333333"
+              Start="0,0"
+              End="-94.6,47.3333333333333">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="-39.0880733944954,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-39.0880733944954,0"
+                    Point2="-43.0880733944954,0"
+                    Point3="-43.0880733944954,4" />
+                  <mssgle:LineSegment
+                    End="-43.0880733944954,43.3333333333333" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-43.0880733944954,43.3333333333333"
+                    Point2="-43.0880733944954,47.3333333333333"
+                    Point3="-47.0880733944954,47.3333333333333" />
+                  <mssgle:LineSegment
+                    End="-94.6,47.3333333333333" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Load ecom">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="196,42"
+          Id="Package\Load ecom\stg aggregate L3 ecomm"
+          TopLeft="479,157" />
+        <NodeLayout
+          Size="170,42"
+          Id="Package\Load ecom\Aggregate L3 ecom"
+          TopLeft="475,50" />
+        <EdgeLayout
+          Id="Package\Load ecom.Paths[OLE DB Source Output]"
+          TopLeft="560,92">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{x:Null}"
+              EndConnector="17,65"
+              Start="0,0"
+              End="17,57.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,28.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,28.5"
+                    Point2="0,32.5"
+                    Point3="4,32.5" />
+                  <mssgle:LineSegment
+                    End="13,32.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="13,32.5"
+                    Point2="17,32.5"
+                    Point3="17,36.5" />
+                  <mssgle:LineSegment
+                    End="17,57.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Load ecom\Aggregate L3 ecom">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">View</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Load ecom\stg aggregate L3 ecomm">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PrecedenceConstraint
+    design-time-name="Package.PrecedenceConstraints[Constraint 2]">
+    <ShowAnnotation>ConstraintOptions</ShowAnnotation>
+  </PrecedenceConstraint>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

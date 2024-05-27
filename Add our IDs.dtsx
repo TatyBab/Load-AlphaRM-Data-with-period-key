@@ -1,0 +1,79 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="11/21/2019 10:33:23 AM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="MOS-L2-ALSTOY"
+  DTS:CreatorName="VALEANT\Alexey.Stoyanovsky"
+  DTS:DTSID="{FFACD3B3-4289-4435-9F91-5EC4400509A8}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="16.0.5397.1"
+  DTS:LocaleID="1049"
+  DTS:ObjectName="Add our IDs"
+  DTS:PackageType="5"
+  DTS:VersionBuild="4"
+  DTS:VersionGUID="{C970E699-8626-4DF1-9462-BABBAB1A27CA}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Add brick IDs"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:DelayValidation="True"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{7FB5E7F4-15C7-4FF1-B1FD-739826D3B095}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Add brick IDs"
+      DTS:ThreadHint="1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{F3FF52B2-226D-4CBC-BDFC-F604DDDDFEB3}"
+          SQLTask:SqlStatementSource="with a as&#xA;(&#xA;select distinct a.bricklevel6id as BrickID from stg.[AggregateL6] a&#xA;union&#xA;select distinct [brickLevel6Id_5plus] from [stg].[Bricks_5plus]&#xA;union &#xA;select distinct [brickLevel4Id] from [stg].[Bricks_5plus]&#xA;union&#xA;select distinct [brickId] from [stg].[DI_linear]&#xA;union&#xA;select distinct [brickId] from [stg].[DI_weighted]&#xA;union&#xA;select distinct [brickLevel6Id] from [stg].[GoodsAggregateL6]&#xA;union&#xA;select distinct [brickLevel4Id] from [stg].[ShipmentProd]&#xA;union&#xA;select distinct [brickLevel6Id_5plus] from [dim].[v_alpha_bricks]&#xA;union&#xA;select distinct [brickLevel4Id] from [dim].[v_alpha_bricks]&#xA;union&#xA;select distinct brickOFDid from stg.ofd_brick&#xA;union&#xA;select distinct brickid from [stg].[diBricks]&#xA;)&#xA;&#xA;insert into alpharm.[data].[Brick2id] (brick_key)&#xA;select&#xA;&#x9;a.BrickID&#xA;from a&#xA;&#x9;where a.BrickID not in (select [brick_key] from [data].[Brick2id])" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Add period IDs"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:DelayValidation="True"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{B38AC82E-A5DA-4245-A667-D0EF3CA2BAF9}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Add period IDs"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{F3FF52B2-226D-4CBC-BDFC-F604DDDDFEB3}"
+          SQLTask:SqlStatementSource="with l as&#xA;(&#xA;SELECT distinct&#xA;&#x9;[period_key]&#xA;  FROM [AlphaRM].[stg].[DI_linear]&#xA;&#xA;union&#xA;&#xA;SELECT distinct&#xA;&#x9;[period_key]&#xA;  FROM [AlphaRM].[stg].[DI_weighted]&#xA;&#xA;union&#xA;&#xA;SELECT distinct&#xA;&#x9;cast([period_key] as nvarchar(10))&#xA;  FROM [AlphaRM].[stg].[AggregateL6]&#xA;&#xA;union&#xA;&#xA;SELECT distinct&#xA;&#x9;cast([period_key] as nvarchar(10))&#xA;  FROM [AlphaRM].[stg].[GoodsAggregateL6]&#xA;&#xA;union&#xA;&#xA;SELECT distinct&#xA;&#x9;cast([period_key] as nvarchar(10))&#xA;  FROM [AlphaRM].[stg].[ShipmentProd]&#xA;&#xA;)&#xA;&#xA;insert into [AlphaRM].[data].period2id (period_key)&#xA;select&#xA;&#x9;period_key&#xA;from l&#xA;except&#xA;select&#xA;&#x9;period_key&#xA;from data.period2id" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="142,42"
+          Id="Package\Add brick IDs"
+          TopLeft="213,119" />
+        <NodeLayout
+          Size="149,42"
+          Id="Package\Add period IDs"
+          TopLeft="517,117" />
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

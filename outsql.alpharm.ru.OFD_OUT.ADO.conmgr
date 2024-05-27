@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<DTS:ConnectionManager xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:ObjectName="outsql alpharm ru OFD_OUT ADO"
+  DTS:DTSID="{A4966149-DC5E-4785-A788-7F0E62DE2685}"
+  DTS:CreationName="ADO.NET:System.Data.SqlClient.SqlConnection, System.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+  <DTS:ObjectData>
+    <DTS:ConnectionManager
+      DTS:ConnectionString="Data Source=outsql.alpharm.ru,443;User ID=client_valeant;Initial Catalog=OFD_OUT;Persist Security Info=True;Application Name=&quot;SSIS-Load AlphaRM Data-{A4966149-DC5E-4785-A788-7F0E62DE2685}outsql.alpharm.ru,443.OFD_OUT.client_valeant&quot;;">
+      <DTS:Password
+        DTS:Name="Password"
+        Sensitive="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAIv1KlRv8ZUK8QOJ1ihfFbgAAAAACAAAAAAAQZgAAAAEAACAAAAAGzr/R8VA5o22N7JriQhEUq/1bvG/Ia58AL3NRv1c1RAAAAAAOgAAAAAIAACAAAACZ9Gnh7fUJ9Dme3hy9iHZ0wCS0FFNpuP/oROigsFMur4AAAABhy4eGutGNGH4dSFCY8wJteSQvlrgUIPBD8FT2guSR56RBcgW17XMAcJ7Fzwa52FVs2mROBP1Wdo7P+xoheEzpSrrr3+o8WLMaln9ZyOtg5khpDh24VYTiSeFm4t+YsviE/Uey/JacorIvJKDXz3IgWIvC3KW9vKeLyCjjOGzJQ0AAAAADBb9WVNJHovmLpxKe6cvf+6a3w3xglfdLUHguTC7qhR8ahF6IYYhTUYsvX8vB8hHGAvoWu8MX0Sjx1LD2Ej/Z</DTS:Password>
+    </DTS:ConnectionManager>
+  </DTS:ObjectData>
+</DTS:ConnectionManager>
